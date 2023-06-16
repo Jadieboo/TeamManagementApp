@@ -2,7 +2,6 @@ package com.sparta.tma.Controllers;
 
 import com.sparta.tma.DAOs.DepartmentDAO;
 import com.sparta.tma.DAOs.EmployeeDAO;
-import com.sparta.tma.DAOs.ProjectDAO;
 import com.sparta.tma.DAOs.RoleDAO;
 import com.sparta.tma.DTOs.EmployeeDTO;
 import com.sparta.tma.Entities.Employee;
@@ -20,7 +19,7 @@ import java.util.List;
 
 
 @RestController
-public class EmployeeController {
+public class AdminController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired

@@ -1,13 +1,11 @@
 package com.sparta.tma;
 
-import com.sparta.tma.DAOs.EmployeeDAO;
 import com.sparta.tma.DTOs.EmployeeDTO;
 import com.sparta.tma.Entities.Employee;
 import com.sparta.tma.Repositories.DepartmentRepository;
 import com.sparta.tma.Repositories.EmployeeRepository;
 import com.sparta.tma.Repositories.ProjectRepository;
 import com.sparta.tma.Repositories.RoleRepository;
-import lombok.experimental.StandardException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class EmployeeControllerTests {
+public class AdminControllerTests {
 
     @Autowired
     private EmployeeRepository eRepo;
