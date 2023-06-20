@@ -19,6 +19,6 @@ public class Role {
 
     @Override
     public String toString() {
-        return "role: " + role;
+        return role;
     }
 }
