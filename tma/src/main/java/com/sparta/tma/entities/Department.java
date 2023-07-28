@@ -1,4 +1,4 @@
-package com.sparta.tma.Entities;
+package com.sparta.tma.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,18 +10,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "projects")
-public class Project {
+@Table(name = "departments")
+public class Department {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "project", nullable = false)
-    private String project;
+    @Column(name = "department", nullable = false)
+    private String department;
 
     @Override
     public String toString() {
-        return project;
+        return department;
     }
-
 }

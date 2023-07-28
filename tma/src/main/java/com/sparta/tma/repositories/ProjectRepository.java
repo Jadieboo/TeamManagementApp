@@ -1,6 +1,6 @@
-package com.sparta.tma.Repositories;
+package com.sparta.tma.repositories;
 
-import com.sparta.tma.Entities.Project;
+import com.sparta.tma.entities.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer> {

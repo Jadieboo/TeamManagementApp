@@ -1,8 +1,8 @@
 package com.sparta.tma.DAOs;
 
 import com.sparta.tma.DTOs.EmployeeDTO;
-import com.sparta.tma.Entities.Department;
-import com.sparta.tma.Repositories.DepartmentRepository;
+import com.sparta.tma.entities.Department;
+import com.sparta.tma.repositories.DepartmentRepository;
 
 public class DepartmentDAO {
 

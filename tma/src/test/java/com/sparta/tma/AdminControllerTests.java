@@ -1,20 +1,18 @@
 package com.sparta.tma;
 
 import com.sparta.tma.DAOs.DepartmentDAO;
-import com.sparta.tma.DAOs.ProjectDAO;
 import com.sparta.tma.DTOs.EmployeeDTO;
-import com.sparta.tma.Entities.Employee;
-import com.sparta.tma.Repositories.DepartmentRepository;
-import com.sparta.tma.Repositories.EmployeeRepository;
-import com.sparta.tma.Repositories.ProjectRepository;
-import com.sparta.tma.Repositories.RoleRepository;
+import com.sparta.tma.entities.Employee;
+import com.sparta.tma.repositories.DepartmentRepository;
+import com.sparta.tma.repositories.EmployeeRepository;
+import com.sparta.tma.repositories.ProjectRepository;
+import com.sparta.tma.repositories.RoleRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

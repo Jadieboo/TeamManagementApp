@@ -1,14 +1,14 @@
-package com.sparta.tma.Controllers;
+package com.sparta.tma.controllers;
 
 import com.sparta.tma.DAOs.DepartmentDAO;
 import com.sparta.tma.DAOs.EmployeeDAO;
 import com.sparta.tma.DAOs.RoleDAO;
 import com.sparta.tma.DTOs.EmployeeDTO;
-import com.sparta.tma.Entities.Employee;
-import com.sparta.tma.Repositories.DepartmentRepository;
-import com.sparta.tma.Repositories.EmployeeRepository;
-import com.sparta.tma.Repositories.ProjectRepository;
-import com.sparta.tma.Repositories.RoleRepository;
+import com.sparta.tma.entities.Employee;
+import com.sparta.tma.repositories.DepartmentRepository;
+import com.sparta.tma.repositories.EmployeeRepository;
+import com.sparta.tma.repositories.ProjectRepository;
+import com.sparta.tma.repositories.RoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

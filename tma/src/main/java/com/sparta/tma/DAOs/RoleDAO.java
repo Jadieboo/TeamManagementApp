@@ -1,9 +1,8 @@
 package com.sparta.tma.DAOs;
 
 import com.sparta.tma.DTOs.EmployeeDTO;
-import com.sparta.tma.Entities.Employee;
-import com.sparta.tma.Entities.Role;
-import com.sparta.tma.Repositories.RoleRepository;
+import com.sparta.tma.entities.Role;
+import com.sparta.tma.repositories.RoleRepository;
 
 public class RoleDAO {
 

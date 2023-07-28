@@ -1,9 +1,5 @@
 package com.sparta.tma.DTOs;
 
-import com.sparta.tma.Entities.Department;
-import com.sparta.tma.Entities.Project;
-import com.sparta.tma.Entities.Role;
-
 public class EmployeeDTO {
     private int id;
     private String firstName;

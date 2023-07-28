@@ -1,6 +1,6 @@
-package com.sparta.tma.Repositories;
+package com.sparta.tma.repositories;
 
-import com.sparta.tma.Entities.Role;
+import com.sparta.tma.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role, Integer> {
