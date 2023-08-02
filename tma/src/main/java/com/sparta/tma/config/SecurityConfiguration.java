@@ -20,16 +20,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    private final AppUserService appUserService;
-
-    public SecurityConfiguration(AppUserService appUserService) {
-        this.appUserService = appUserService;
-    }
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .anyRequest().authenticated())
-                .userDetailsService(appUserService);
+                        .anyRequest().authenticated());
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
@@ -46,12 +40,12 @@ public class SecurityConfiguration {
 
     // might not need this
     // because of .userDetailsService(appUserService); in the security filter chain
-//    @Bean
-//    public AuthenticationManager authManager(UserDetailsService detailsService) {
-//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setPasswordEncoder(passwordEncoder());
-//        provider.setUserDetailsService(detailsService);
-//        return new ProviderManager(provider);
-//    }
+    @Bean
+    public AuthenticationManager authManager(UserDetailsService detailsService) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder());
+        provider.setUserDetailsService(detailsService);
+        return new ProviderManager(provider);
+    }
 
 }

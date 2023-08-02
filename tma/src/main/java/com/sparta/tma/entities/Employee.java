@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "employees")
 public class Employee {
+
+    //TODO: need to change dept, project and role to ENUM
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -32,6 +32,65 @@ public class Employee {
     @JoinColumn(name = "project_id")
     private Project project;
 
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "app_user_id", nullable = false)
+    private AppUser userId;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public AppUser getUserId() {
+        return userId;
+    }
+
+    public void setUserId(AppUser userId) {
+        this.userId = userId;
+    }
 
     @Override
     public String toString() {
