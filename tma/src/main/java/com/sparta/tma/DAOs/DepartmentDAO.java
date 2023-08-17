@@ -12,7 +12,16 @@ public class DepartmentDAO {
         this.repo = repo;
     }
 
-    public Department getDepartmentDao(EmployeeDTO jsonBody) {
-        return repo.findByDepartmentIgnoreCase(jsonBody.getDepartment());
+    public Department getDepartment(EmployeeDTO employeeDetails) {
+        // TODO: handle if employeeDetails.getDepartment() is empty
+
+        try {
+            repo.findByDepartmentIgnoreCase(employeeDetails.getDepartment());
+        } catch (NullPointerException nullPointerException) {
+            nullPointerException.getMessage();
+        }
+        if (employeeDetails.getProject().isEmpty()) throw new NullPointerException();
+
+        return ;
     }
 }

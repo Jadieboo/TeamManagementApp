@@ -1,14 +1,10 @@
 package com.sparta.tma.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "employees")
 public class Employee {
-
-    //TODO: need to change dept, project and role to ENUM
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -20,21 +16,17 @@ public class Employee {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "role_id", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false, length = 25)
     private Role role;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "project_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "project_id", nullable = false)
     private Project project;
-
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "app_user_id", nullable = false)
-    private AppUser userId;
 
     public Integer getId() {
         return id;
@@ -84,16 +76,12 @@ public class Employee {
         this.project = project;
     }
 
-    public AppUser getUserId() {
-        return userId;
-    }
-
-    public void setUserId(AppUser userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String toString() {
-        return String.format("Employee{id: %s, firstName: %s, lastName: %s, role: %s, department: %s, project: %s}", id, firstName, lastName, role, department, project);
+        return String.format("Employee{id: %s, firstName: %s, lastName: %s, role: %s, department: %s, project: %s}",
+                id, firstName, lastName, role, department, project);
     }
+
+
+
 }

@@ -11,31 +11,44 @@ import java.util.Collections;
 @Entity
 @Table(name = "accounts")
 public class AppUser implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "app_user_id", nullable = false)
-    private long id;
+    private Long id;
+
+    @Column(name = "username", nullable = false)
     private String username;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
     @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
-    private Boolean locked = false;
+    @Column(name = "role", nullable = false, length = 25)
+    private Role role;
+
+    @Column(name = "enable", nullable = false)
     private Boolean enable = true;
 
-    public AppUser(String username, String password, AppUserRole appUserRole) {
+    @Column(name = "locked", nullable = false)
+    private Boolean locked = false;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "employee_id", nullable = false)
+    private Employee employee;
+
+    public AppUser(String username, String password, Role role) {
         this.username = username;
         this.password = password;
-        this.appUserRole = appUserRole;
+        this.role = role;
     }
 
     public AppUser(){};
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -47,20 +60,25 @@ public class AppUser implements UserDetails {
         this.password = password;
     }
 
-    public AppUserRole getAppUserRole() {
-        return appUserRole;
+    public Role getRole() {
+        return role;
     }
 
-    public void setAppUserRole(AppUserRole appUserRole) {
-        this.appUserRole = appUserRole;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    //TODO: look into whether this breaks Single Responsibility Principle
-    // may need to create a separate class that extends UserDetails
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
         return Collections.singletonList(authority);
     }
 

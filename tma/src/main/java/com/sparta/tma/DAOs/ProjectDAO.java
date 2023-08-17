@@ -6,13 +6,16 @@ import com.sparta.tma.repositories.ProjectRepository;
 
 public class ProjectDAO {
 
-    private ProjectRepository repo;
+    private ProjectRepository projectRepository;
 
-    public ProjectDAO(ProjectRepository repo) {
-        this.repo = repo;
+    public ProjectDAO(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
     }
 
-    public Project getProjectDao(EmployeeDTO jsonBody) {
-        return repo.findByProjectIgnoreCase(jsonBody.getProject());
+    public Project getProject(EmployeeDTO employeeDetails) {
+        // TODO: handle if employeeDetails.getProject() is empty
+        if (employeeDetails.getProject().isEmpty()) return projectRepository.findById(1);
+
+        return projectRepository.findByProjectIgnoreCase(employeeDetails.getProject());
     }
 }

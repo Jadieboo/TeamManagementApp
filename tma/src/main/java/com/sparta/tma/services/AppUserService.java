@@ -1,6 +1,6 @@
 package com.sparta.tma.services;
 
-import com.sparta.tma.entities.AppUserRole;
+import com.sparta.tma.entities.Role;
 import com.sparta.tma.repositories.AppUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,10 +37,6 @@ public class AppUserService implements UserDetailsService {
         logger.trace("user service");
 
         //TODO: validate that the user exists and matches what is in the database
-
-        // useful if user can have more than 1 role
-        Set<AppUserRole> roles = new HashSet<>();
-        roles.add(AppUserRole.ADMIN);
 
         // hard coded user
 //        return new AppUser("user", encoder.encode("password"), AppUserRole.USER);

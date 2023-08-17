@@ -1,6 +1,7 @@
 package com.sparta.tma.config;
 
-import com.sparta.tma.services.AppUserService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@AllArgsConstructor
 @EnableWebSecurity
 public class SecurityConfiguration {
 
@@ -28,18 +30,16 @@ public class SecurityConfiguration {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.httpBasic(Customizer.withDefaults());
-        http.formLogin(Customizer.withDefaults());
+        http.formLogin().disable();
         http.csrf((AbstractHttpConfigurer::disable));
         return http.build();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // might not need this
-    // because of .userDetailsService(appUserService); in the security filter chain
     @Bean
     public AuthenticationManager authManager(UserDetailsService detailsService) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
