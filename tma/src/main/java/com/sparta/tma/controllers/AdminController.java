@@ -58,12 +58,7 @@ public class AdminController {
 
         return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
     }
-
-    // admin access only
-
-    //TODO: this does not work when used with postman, throws a null pointer exception
-    // BEFORE you work on this, upload to git hub! That the initial authorisation is working
-//    Cannot invoke "com.sparta.tma.repositories.DepartmentRepository.findByDepartmentIgnoreCase(String)" because "this.repo" is null
+    
     @Transactional
     @PostMapping("admin/register/employees")
     public Employee createEmployee(@RequestBody EmployeeDTO employeeDetails) {
