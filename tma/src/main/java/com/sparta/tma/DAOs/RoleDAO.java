@@ -2,17 +2,18 @@ package com.sparta.tma.DAOs;
 
 import com.sparta.tma.DTOs.EmployeeDTO;
 import com.sparta.tma.entities.Role;
-import com.sparta.tma.repositories.RoleRepository;
 
 public class RoleDAO {
+    public Role getRole(EmployeeDTO employeeDetails) {
+        String role = employeeDetails.getRole()
+                .trim()
+                .toUpperCase();
 
-    private RoleRepository repo;
-
-    public RoleDAO(RoleRepository repo) {
-        this.repo = repo;
-    }
-
-    public Role getRoleDao(EmployeeDTO jsonBody) {
-        return repo.findRoleByRoleIgnoreCase(jsonBody.getRole());
+        return switch (role) {
+            case "ADMIN" -> Role.ADMIN;
+            case "MANAGER" -> Role.MANAGER;
+            case "EMPLOYEE" -> Role.EMPLOYEE;
+            default -> throw new IllegalStateException("Role not found");
+        };
     }
 }
