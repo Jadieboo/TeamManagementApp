@@ -9,90 +9,64 @@ import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
-import com.sparta.tma.repositories.RoleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.management.relation.Role;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class CreateOrUpdateDaoMethodTests {
     @Autowired
-    private EmployeeRepository eRepo;
+    private EmployeeRepository employeeRepository;
     @Autowired
-    private RoleRepository rRepo;
+    private DepartmentRepository departmentRepository;
     @Autowired
-    private DepartmentRepository dRepo;
-    @Autowired
-    private ProjectRepository pRepo;
+    private ProjectRepository projectRepository;
 
     @BeforeEach
-    public void resetEmployee() {
-        int count = 0;
-        count++;
-        System.out.printf("Test: %s is running", count);
+    public EmployeeDTO employeeDetails() {
+        EmployeeDTO employeeDetails = new EmployeeDTO();
+        employeeDetails.setFirstName("Unit");
+        employeeDetails.setLastName("Test");
+        employeeDetails.setRole("Admin");
+        employeeDetails.setDepartment("Development");
+        employeeDetails.setProject("Web App");
 
-        EmployeeDTO empDto = new EmployeeDTO();
-        empDto.setFirstName("MethodTesting");
-        empDto.setLastName("UnitTest");
-        empDto.setRole("employee");
-        empDto.setDepartment("Marketing");
-        empDto.setProject("unassigned");
-
-        Employee employee = eRepo.findEmployeeById(41);
-        employee.setRole(rRepo.findRoleByRoleIgnoreCase(empDto.getRole()));
-        employee.setDepartment(dRepo.findByDepartmentIgnoreCase(empDto.getDepartment()));
-        employee.setProject(pRepo.findByProjectIgnoreCase(empDto.getProject()));
-
-        eRepo.save(employee);
-
+        return employeeDetails;
     }
 
     @Test
-    @DisplayName("Creating a new employee using newEmployee() DAO method to set id, first and last name")
+    @DisplayName("Creating a new employee using createNewEmployee() DAO method to set id, first name, last name, role, department and project")
     public void newEmployeeDaoMethod() {
-        EmployeeDTO empDto = new EmployeeDTO();
-        empDto.setId(0);
-        empDto.setFirstName("newEmployeeDao");
-        empDto.setLastName("UnitTest");
-        empDto.setRole("Admin");
-        empDto.setDepartment("HR");
-        empDto.setProject("unassigned");
 
-        Employee employee = new EmployeeDAO(eRepo).newEmployee(empDto);
-        employee.setRole(rRepo.findRoleByRoleIgnoreCase(empDto.getRole()));
-        employee.setDepartment(dRepo.findByDepartmentIgnoreCase(empDto.getDepartment()));
-        employee.setProject(pRepo.findByProjectIgnoreCase(empDto.getProject()));
+        Employee employee = new EmployeeDAO(employeeRepository, departmentRepository, projectRepository).createNewEmployee(employeeDetails());
 
-        Employee result = eRepo.save(employee);
+        String result = employee.toString();
 
-        String expected = String.format("Employee{id: %s, firstName: %s, lastName: %s, role: Admin, department: HR, project: Unassigned}", result.getId(), empDto.getFirstName(), empDto.getLastName());
+        String expected = "Employee{id: 0, firstName: Unit, lastName: Test, role: ADMIN, department: Development, project: Web App}";
 
         assertEquals(expected, result.toString());
-
     }
 
     @Test
     @DisplayName("Testing getRoleDao method from RoleDAO to set or update role")
     public void setRoleDaoMethod() {
-        EmployeeDTO empDto = new EmployeeDTO();
-        empDto.setRole("manager");
 
-        Employee employee = eRepo.findEmployeeById(41);
-        employee.setRole(new RoleDAO(rRepo).getRoleDao(empDto));
+        Employee employee = new EmployeeDAO(employeeRepository, departmentRepository, projectRepository).createNewEmployee(employeeDetails());
 
-        Employee result = eRepo.save(employee);
+        EmployeeDTO setNewRole = new EmployeeDTO();
+        setNewRole.setRole("manager");
 
-        String expected = String.format("Employee{id: %s, firstName: %s, lastName: %s, role: Manager, department: %s, project: %s}",
-                employee.getId(),
-                employee.getFirstName(),
-                employee.getLastName(),
-                employee.getDepartment(),
-                employee.getProject()
-        );
+        employee.setRole(new RoleDAO().getRole(setNewRole));
+
+        String result = employee.toString();
+
+        String expected = "Employee{id: 0, firstName: Unit, lastName: Test, role: MANAGER, department: Development, project: Web App}";
 
         assertEquals(expected, result.toString());
 
@@ -101,13 +75,15 @@ public class CreateOrUpdateDaoMethodTests {
     @Test
     @DisplayName("Testing getDepartmentDao method from DepartmentDAO to set or update department")
     public void setDepartmentDaoMethod() {
-        EmployeeDTO empDto = new EmployeeDTO();
-        empDto.setDepartment("Sales");
 
-        Employee employee = eRepo.findEmployeeById(41);
-        employee.setDepartment(new DepartmentDAO(dRepo).getDepartmentDao(empDto));
+        Employee employee = new EmployeeDAO(employeeRepository, departmentRepository, projectRepository).createNewEmployee(employeeDetails());
 
-        Employee result = eRepo.save(employee);
+        EmployeeDTO setNewDepartment = new EmployeeDTO();
+        setNewDepartment.setDepartment("Sales");
+
+        employee.setDepartment(new DepartmentDAO(departmentRepository).getDepartment(setNewDepartment));
+
+        Employee result = employeeRepository.save(employee);
 
         String expected = String.format("Employee{id: %s, firstName: %s, lastName: %s, role: %s, department: Sales, project: %s}",
                 employee.getId(),
@@ -126,10 +102,10 @@ public class CreateOrUpdateDaoMethodTests {
         EmployeeDTO empDto = new EmployeeDTO();
         empDto.setProject("products");
 
-        Employee employee = eRepo.findEmployeeById(41);
-        employee.setProject(new ProjectDAO(pRepo).getProjectDao(empDto));
+        Employee employee = employeeRepository.findEmployeeById(41);
+        employee.setProject(new ProjectDAO(projectRepository).getProject(empDto));
 
-        Employee result = eRepo.save(employee);
+        Employee result = employeeRepository.save(employee);
 
         String expected = String.format("Employee{id: %s, firstName: %s, lastName: %s, role: %s, department: %s, project: Products}",
                 employee.getId(),
