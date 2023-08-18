@@ -58,7 +58,7 @@ public class AdminController {
 
         return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
     }
-    
+
     @Transactional
     @PostMapping("admin/register/employees")
     public Employee createEmployee(@RequestBody EmployeeDTO employeeDetails) {
