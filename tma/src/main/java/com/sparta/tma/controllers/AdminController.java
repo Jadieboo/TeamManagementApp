@@ -40,21 +40,9 @@ public class AdminController {
 
         List<Employee> employeeList = employeeRepository.findAll();
 
-//        TODO: TEST TO SEE WHAT HAPPENS IF I TRY TO CHANGE THE LIST
-//        EmployeeDTO employeeDTO = new EmployeeDTO();
-//        employeeDTO.setId(0);
-//        employeeDTO.setFirstName("jade");
-//        employeeDTO.setLastName("sAle");
-//        employeeDTO.setRole("admin");
-//        employeeDTO.setDepartment("hr");
-//
-//        Employee newEmployee = new EmployeeDAO().setEmployee_Id_FirstName_LastName(employeeDTO);
-//        newEmployee.setRole(new RoleDAO().getRole(employeeDTO.getRole()));
-//        newEmployee.setDepartment(new DepartmentDAO(departmentRepository).getDepartmentDao(employeeDTO));
-//        newEmployee.setProject(projectRepository.findById(1));
-//
-//
-//        employeeList.add(newEmployee);
+        if (employeeList.size() < 1) {
+            logger.error("Employee list is empty, should be a minimum of one", employeeList);
+        }
 
         return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
     }
@@ -63,7 +51,7 @@ public class AdminController {
     @PostMapping("admin/register/employees")
     public Employee createEmployee(@RequestBody EmployeeDTO employeeDetails) {
 
-        Employee newEmployee = new EmployeeDAO(employeeRepository, departmentRepository, projectRepository).createNewEmployee(employeeDetails);
+        Employee newEmployee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
 
         Employee employee = employeeRepository.saveAndFlush(newEmployee);
         logger.info("New employee saved, {}", employee);
