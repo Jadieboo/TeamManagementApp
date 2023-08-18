@@ -1,15 +1,19 @@
 package com.sparta.tma;
 
 import com.sparta.tma.DAOs.DepartmentDAO;
+import com.sparta.tma.DAOs.EmployeeDAO;
+import com.sparta.tma.DAOs.ProjectDAO;
+import com.sparta.tma.DAOs.RoleDAO;
 import com.sparta.tma.DTOs.EmployeeDTO;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
-import com.sparta.tma.repositories.RoleRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,91 +25,84 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 public class AdminControllerTests {
 
-    @Autowired
-    private EmployeeRepository eRepo;
-    @Autowired
-    private RoleRepository rRepo;
-    @Autowired
-    private DepartmentRepository dRepo;
-    @Autowired
-    private ProjectRepository pRepo;
+    Logger logger = LoggerFactory.getLogger(getClass());
 
-    @BeforeEach
-    @AfterEach
-    public void resetEmployee() {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setFirstName("MethodTesting");
-        employeeDTO.setLastName("UnitTest");
-        employeeDTO.setRole("employee");
-        employeeDTO.setDepartment("Marketing");
-        employeeDTO.setProject("Logo");
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
+    @Autowired
+    private ProjectRepository projectRepository;
 
-        Employee employee = eRepo.findEmployeeById(41);
-        employee.setRole(rRepo.findRoleByRoleIgnoreCase(employeeDTO.getRole()));
-        employee.setDepartment(dRepo.findByDepartmentIgnoreCase(employeeDTO.getDepartment()));
-        employee.setProject(pRepo.findByProjectIgnoreCase(employeeDTO.getProject()));
+    public EmployeeDTO employeeDetails() {
+        EmployeeDTO employeeDetails = new EmployeeDTO();
+        employeeDetails.setFirstName("Unit");
+        employeeDetails.setLastName("Test");
+        employeeDetails.setRole("Admin");
+        employeeDetails.setDepartment("Development");
+        employeeDetails.setProject("Web App");
 
-        eRepo.save(employee);
+        return employeeDetails;
     }
 
     @Test
     public void viewAllEmployees() {
-        List<Employee> employeeList = eRepo.findAll();
+        List<Employee> employeeList = employeeRepository.findAll();
 
         assertTrue(employeeList.size() > 0);
     }
 
     @Test
     public void  createNewEmployee() {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setId(0);
-        employeeDTO.setFirstName("TestingDto");
-        employeeDTO.setLastName("UnitTest");
-        employeeDTO.setRole("Admin");
-        employeeDTO.setDepartment("HR");
-        employeeDTO.setProject("unassigned");
+        Employee employee = new EmployeeDAO(employeeRepository, departmentRepository, projectRepository).createNewEmployee(employeeDetails());
 
-        Employee employee = new Employee();
-        employee.setId(employeeDTO.getId());
-        employee.setFirstName(employeeDTO.getFirstName());
-        employee.setLastName(employeeDTO.getLastName());
-        employee.setRole(rRepo.findRoleByRoleIgnoreCase(employeeDTO.getRole()));
-        employee.setDepartment(dRepo.findByDepartmentIgnoreCase(employeeDTO.getDepartment()));
-        employee.setProject(pRepo.findByProjectIgnoreCase(employeeDTO.getProject()));
+        String expected = "Employee{id: 0, firstName: Unit, lastName: Test, role: ADMIN, department: Development, project: Web App}";
 
-        Employee result = eRepo.save(employee);
+        String result = employee.toString();
 
-        String expected = String.format("Employee{id: %s, firstName: %s, lastName: %s, role: Admin, department: HR, project: Unassigned}", result.getId(), employeeDTO.getFirstName(), employeeDTO.getLastName());
-
-        assertEquals(expected, result.toString());
+        assertEquals(expected, result);
     }
 
+    // TODO: add params to unit test or create specific tests, to test null value and values that do not exist for
+    //  BOTH department and project
+    //  THEN create test branch and commit to github repo
+    @Test
+    public void updateEmployeeDepartment() {
+        Employee employee = new EmployeeDAO(employeeRepository, departmentRepository, projectRepository).createNewEmployee(employeeDetails());
+
+        logger.info("Employee information before update: {}", employee);
+
+        EmployeeDTO updateDepartment = new EmployeeDTO();
+        updateDepartment.setDepartment("design");
+
+        employee.setDepartment(new DepartmentDAO(departmentRepository).getDepartment(updateDepartment));
+
+        logger.info("Employee information after update: {}", employee);
+
+        String expected = "Design";
+        String result = employee.getDepartment().toString();
+
+        assertEquals(expected, result);
+    }
 
     @Test
-    public void updateEmployee() {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setDepartment("design");
-        employeeDTO.setProject("logo");
+    public void updateEmployeeProject() {
+        Employee employee = new EmployeeDAO(employeeRepository, departmentRepository, projectRepository).createNewEmployee(employeeDetails());
 
-        Employee original = eRepo.findEmployeeById(41);
-        System.out.println("Original employee data: " + original.toString());
+        logger.info("Employee information before update: {}", employee);
 
-        Employee employee = eRepo.findEmployeeById(41);
-        employee.setDepartment(new DepartmentDAO(dRepo).getDepartmentDao(employeeDTO));
-        employee.setProject(pRepo.findById(1));
+        EmployeeDTO updateProject = new EmployeeDTO();
+        updateProject.setProject("Logo");
 
-        Employee result = eRepo.save(employee);
+        employee.setProject(new ProjectDAO(projectRepository).getProject(updateProject));
 
-        String expected = String.format("Employee{id: %s, firstName: %s, lastName: %s, role: %s, department: Design, project: Unassigned}",
-                employee.getId(),
-                employee.getFirstName(),
-                employee.getLastName(),
-                employee.getRole()
-        );
+        logger.info("Employee information after update: {}", employee);
 
-        System.out.println("Employee data after update: " + employee);
+        String expected = "Logo";
+        String result = employee.getProject().toString();
 
-        assertEquals(expected, result.toString());
-
+        assertEquals(expected, result);
     }
+
+
 }

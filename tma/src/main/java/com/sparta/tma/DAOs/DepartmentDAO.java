@@ -14,14 +14,15 @@ public class DepartmentDAO {
 
     public Department getDepartment(EmployeeDTO employeeDetails) {
         // TODO: handle if employeeDetails.getDepartment() is empty
+//
+//        try {
+//            ;
+//        } catch (NullPointerException nullPointerException) {
+//            nullPointerException.getMessage();
+//        }
 
-        try {
-            repo.findByDepartmentIgnoreCase(employeeDetails.getDepartment());
-        } catch (NullPointerException nullPointerException) {
-            nullPointerException.getMessage();
-        }
-        if (employeeDetails.getProject().isEmpty()) throw new NullPointerException();
+        if (employeeDetails.getDepartment().isEmpty()) throw new NullPointerException("Error: Department field is empty");
 
-        return ;
+        return repo.findByDepartmentIgnoreCase(employeeDetails.getDepartment());
     }
 }

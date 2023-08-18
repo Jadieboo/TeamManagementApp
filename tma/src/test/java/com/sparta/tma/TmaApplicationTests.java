@@ -1,10 +1,10 @@
 package com.sparta.tma;
 
 import com.sparta.tma.entities.Employee;
+import com.sparta.tma.entities.Role;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
-import com.sparta.tma.repositories.RoleRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,13 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class TmaApplicationTests {
 	@Autowired
-	private EmployeeRepository eRepo;
+	private EmployeeRepository employeeRepository;
 	@Autowired
-	private RoleRepository rRepo;
+	private DepartmentRepository departmentRepository;
 	@Autowired
-	private DepartmentRepository dRepo;
-	@Autowired
-	private ProjectRepository pRepo;
+	private ProjectRepository projectRepository;
 
 	TestUtils ut = new TestUtils();
 
@@ -35,12 +33,12 @@ public class TmaApplicationTests {
 		createEmployee.setId(0);
 		createEmployee.setFirstName("Tess");
 		createEmployee.setLastName("Ting");
-		createEmployee.setRole(rRepo.findRoleByRoleIgnoreCase("employee"));
-		createEmployee.setDepartment(dRepo.findById(5));
-		createEmployee.setProject(pRepo.findById(10));
+		createEmployee.setRole(Role.EMPLOYEE);
+		createEmployee.setDepartment(departmentRepository.findById(5));
+		createEmployee.setProject(projectRepository.findById(10));
 
 		// saves obj to database and allows me to access record and get actual id, not 0 as set above
-		Employee newEmployee = eRepo.save(createEmployee);
+		Employee newEmployee = employeeRepository.save(createEmployee);
 
 		ut.setTestId(newEmployee.getId());
 
@@ -48,15 +46,15 @@ public class TmaApplicationTests {
 
 	@AfterEach
 	void deleteEmployee() {
-		eRepo.deleteById(ut.getTestId());
+		employeeRepository.deleteById(ut.getTestId());
 	}
 
 
 	@Test
 	void getEmployee() {
 		int id = ut.getTestId();
-		String expected = String.format("Employee{id: %s, firstName: Tess, lastName: Ting, role: Employee, department: Design, project: Logo}", id);
-		Employee result = eRepo.findEmployeeById(id);
+		String expected = String.format("Employee{id: %s, firstName: Tess, lastName: Ting, role: EMPLOYEE, department: Design, project: Logo}", id);
+		Employee result = employeeRepository.findEmployeeById(id);
 
 		System.out.println(result.toString());
 		assertEquals(expected, result.toString());
