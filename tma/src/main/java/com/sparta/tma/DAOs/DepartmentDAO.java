@@ -15,12 +15,12 @@ public class DepartmentDAO {
         this.departmentRepository = departmentRepository;
     }
 
-    public Department getDepartment(EmployeeDTO employeeDetails) {
+    public Department getDepartment(EmployeeDTO employeeDetails) throws NullPointerException, IllegalArgumentException {
         // TODO: handle if employeeDetails.getDepartment() is empty
 
-        if (employeeDetails.getDepartment() == null) throw new NullPointerException("Error: Department field is null");
+        if (employeeDetails.getDepartment() == null || employeeDetails.getDepartment().isBlank()) throw new NullPointerException("Error: Department field is null or blank");
 
-        String department = employeeDetails.getDepartment().trim().toLowerCase();
+        String departmentField = employeeDetails.getDepartment().trim().toLowerCase();
 
         HashMap<Integer, String> departmentsMap = new HashMap<>();
 
@@ -28,8 +28,8 @@ public class DepartmentDAO {
             departmentsMap.put(d.getId(), d.getDepartment().trim().toLowerCase());
         }
 
-        if (!departmentsMap.containsValue(department)) throw new IllegalArgumentException("Could not find department called \"" + department + "\" in database");
+        if (!departmentsMap.containsValue(departmentField)) throw new IllegalArgumentException("Could not find department called \"" + departmentField + "\" in database");
 
-        return departmentRepository.findByDepartmentIgnoreCase(department);
+        return departmentRepository.findByDepartmentIgnoreCase(departmentField);
     }
 }

@@ -13,7 +13,7 @@ public class RoleDAO {
             case "ADMIN" -> Role.ADMIN;
             case "MANAGER" -> Role.MANAGER;
             case "EMPLOYEE" -> Role.EMPLOYEE;
-            default -> throw new IllegalStateException("Role not found");
+            default -> throw new IllegalArgumentException("Role not found");
         };
     }
 }

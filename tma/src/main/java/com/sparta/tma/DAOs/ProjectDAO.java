@@ -17,7 +17,7 @@ public class ProjectDAO {
     public Project getProject(EmployeeDTO employeeDetails) {
         // TODO: handle if project is empty or null
 
-        if (employeeDetails.getProject() == null || employeeDetails.getProject().isEmpty() || employeeDetails.getProject().isBlank()) return projectRepository.findById(1);
+        if (employeeDetails.getProject() == null || employeeDetails.getProject().isBlank()) return projectRepository.findById(1);
 
         String project = employeeDetails.getProject().trim().toLowerCase();
 
@@ -27,7 +27,7 @@ public class ProjectDAO {
             projectsMap.put(p.getId(), p.getProject().trim().toLowerCase());
         }
 
-        if (!projectsMap.containsValue(project)) throw new IllegalArgumentException("Could not find project called \"" + project + "\" in database ");
+        if (!projectsMap.containsValue(project)) throw new IllegalArgumentException("Could not find project called \"" + project + "\" in database");
 
         return projectRepository.findByProjectIgnoreCase(project);
     }
