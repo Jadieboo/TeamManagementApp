@@ -69,8 +69,6 @@ public class AdminControllerTests {
         assertEquals(expected, result);
     }
 
-    // TODO: add params to unit test or create specific tests, to test null value and values that do not exist for
-    //  BOTH department and project
     @ParameterizedTest
     @DisplayName("method returns a department regardless of the input being uppercase, lowercase, mixed case or has any whitespaces")
     @CsvSource({
@@ -231,27 +229,30 @@ public class AdminControllerTests {
         assertEquals(expected, result);
     }
 
-    @Test
-    @DisplayName("Testing getRoleDao method from RoleDAO to set or update role")
-    public void setOrUpdateRoleDaoMethod() {
+    @ParameterizedTest
+    @ValueSource(strings = {"admin", "MANAGER", " Employee "})
+    @DisplayName("Given a string value of admin, manager or employee is passed, regardless of case or whitespacing, returns correct role")
+    public void setOrUpdateRoleDaoMethod(String fieldInput) {
+
+        String role = fieldInput.toUpperCase().trim();
 
         Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails());
 
         EmployeeDTO setNewRole = new EmployeeDTO();
-        setNewRole.setRole("manager");
+        setNewRole.setRole(fieldInput);
 
         employee.setRole(new RoleDAO().getRole(setNewRole));
 
         String result = employee.toString();
 
-        String expected = "Employee{id: 0, firstName: Unit, lastName: Test, role: MANAGER, department: Development, project: Web App}";
+        String expected = "Employee{id: 0, firstName: Unit, lastName: Test, role: " + role + ", department: Development, project: Web App}";
 
         assertEquals(expected, result);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"Supervisor", "admine", " ", "", "!", "</>", "ABC", "123"})
-    @DisplayName("RoleDAO.getRole() method handles if a null is passed, returns Illegal Argument Exception Message: Role not found")
+    @DisplayName("RoleDAO.getRole() method handles if an illegal argument is passed, returns Illegal Argument Exception Message: Role not found")
     public void roleDaoMethod_IllegalArgumentInput_ReturnsIllegalArgumentExceptionMessage(String fieldInput) {
         Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails());
 
@@ -265,7 +266,7 @@ public class AdminControllerTests {
         assertEquals(expectedExceptionMessage, exception.getMessage());
     }
 
-    //TODO: test RoleDAO for null and change initial setRole test to a parameterized test
+    //TODO: test RoleDAO for null
 
 
 }
