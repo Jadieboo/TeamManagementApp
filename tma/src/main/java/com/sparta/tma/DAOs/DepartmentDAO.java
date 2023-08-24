@@ -16,7 +16,6 @@ public class DepartmentDAO {
     }
 
     public Department getDepartment(EmployeeDTO employeeDetails) throws NullPointerException, IllegalArgumentException {
-        // TODO: handle if employeeDetails.getDepartment() is empty
 
         if (employeeDetails.getDepartment() == null || employeeDetails.getDepartment().isBlank()) throw new NullPointerException("Error: Department field is null or blank");
 

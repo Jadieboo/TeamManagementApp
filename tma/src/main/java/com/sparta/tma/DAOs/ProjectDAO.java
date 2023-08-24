@@ -15,7 +15,6 @@ public class ProjectDAO {
     }
 
     public Project getProject(EmployeeDTO employeeDetails) {
-        // TODO: handle if project is empty or null
 
         if (employeeDetails.getProject() == null || employeeDetails.getProject().isBlank()) return projectRepository.findById(1);
 

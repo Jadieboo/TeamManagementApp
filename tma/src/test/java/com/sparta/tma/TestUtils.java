@@ -1,13 +1,17 @@
 package com.sparta.tma;
 
+import com.sparta.tma.DTOs.EmployeeDTO;
+
 public class TestUtils {
-    private int testId;
 
-    public int getTestId() {
-        return testId;
-    }
+    public EmployeeDTO employeeDetails() {
+        EmployeeDTO testEmployeeDetails = new EmployeeDTO();
+        testEmployeeDetails.setFirstName("Unit");
+        testEmployeeDetails.setLastName("Test");
+        testEmployeeDetails.setRole("Admin");
+        testEmployeeDetails.setDepartment("Development");
+        testEmployeeDetails.setProject("Web App");
 
-    public void setTestId(int testId) {
-        this.testId = testId;
+        return testEmployeeDetails;
     }
 }
