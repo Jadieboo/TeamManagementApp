@@ -14,7 +14,7 @@ public class ProjectDAO {
         this.projectRepository = projectRepository;
     }
 
-    public Project getProject(EmployeeDTO employeeDetails) {
+    public Project getProject(EmployeeDTO employeeDetails) throws IllegalArgumentException {
 
         if (employeeDetails.getProject() == null || employeeDetails.getProject().isBlank()) return projectRepository.findById(1);
 

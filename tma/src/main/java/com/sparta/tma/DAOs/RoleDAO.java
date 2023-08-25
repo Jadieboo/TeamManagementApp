@@ -4,7 +4,7 @@ import com.sparta.tma.DTOs.EmployeeDTO;
 import com.sparta.tma.entities.Role;
 
 public class RoleDAO {
-    public Role getRole(EmployeeDTO employeeDetails) {
+    public Role getRole(EmployeeDTO employeeDetails) throws NullPointerException, IllegalArgumentException {
 
         if(employeeDetails.getRole() == null) throw new NullPointerException("Role not found: field is empty");
 

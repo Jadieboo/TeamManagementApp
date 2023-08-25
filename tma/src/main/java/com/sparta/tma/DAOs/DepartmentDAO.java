@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class DepartmentDAO {
 
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
 
     public DepartmentDAO(DepartmentRepository departmentRepository) {
         this.departmentRepository = departmentRepository;

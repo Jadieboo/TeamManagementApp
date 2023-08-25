@@ -20,7 +20,6 @@ public class TmaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TmaApplication.class, args);
 		System.out.println("Hello, World!");
-
 	}
 
 	@Transactional
