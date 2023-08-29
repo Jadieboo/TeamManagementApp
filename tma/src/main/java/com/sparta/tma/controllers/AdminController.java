@@ -63,7 +63,6 @@ public class AdminController {
         logger.info("New user saved, {}", appUser);
 
         return employeeRepository.findById(employee.getId()).orElseThrow(() -> new EmployeeNotFoundException("Employee " + employee + " not found/created"));
-
     }
 
     @Transactional
