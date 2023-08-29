@@ -56,24 +56,13 @@ public class AdminController {
         Employee employee = employeeRepository.saveAndFlush(newEmployee);
         logger.info("New employee saved, {}", employee);
 
-
         logger.info("New user is being created");
-        // TODO: create a method to handle creating an app user
-        AppUser newAppUser = new AppUser();
-        newAppUser.setId(0L);
-        //TODO: research if its good practice to do dependency injection like this, or just pass dto through as param and have the method handle the details??
-        newAppUser.setUsername(new AppUserDAO().createUserUsername(employeeDetails, employee.getId()));
-        newAppUser.setPassword(encoder.encode(new AppUserDAO().createUserPassword(employeeDetails)));
-        newAppUser.setRole(new RoleDAO().getRole(employeeDetails));
-        newAppUser.setEmployee(employeeRepository.findEmployeeById(employee.getId()));
+        AppUser newAppUser = new AppUserDAO(encoder, employeeRepository).createNewAppUser(employeeDetails, employee.getId());
 
-        //save new user
         AppUser appUser = appUserRepository.saveAndFlush(newAppUser);
         logger.info("New user saved, {}", appUser);
 
-
-        //TODO: hide password in the response.
-        return employeeRepository.findById(employee.getId()).orElseThrow(() -> new EmployeeNotFoundException(String.format("Employee {} not found/created", employee)));
+        return employeeRepository.findById(employee.getId()).orElseThrow(() -> new EmployeeNotFoundException("Employee " + employee + " not found/created"));
 
     }
 
