@@ -38,8 +38,6 @@ public class AppUserTests {
     @Autowired
     PasswordEncoder encoder;
 
-    // TODO: create new class and tests for app user
-
     @Test
     @DisplayName("Given all employeeDTO fields are present -> Creates a new AppUser using createNewAppUser() method to set " +
             "id, username, password, role, employee ")
