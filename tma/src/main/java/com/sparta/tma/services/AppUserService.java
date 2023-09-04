@@ -21,13 +21,13 @@ public class AppUserService implements UserDetailsService {
     private final static String USER_NOT_FOUND_MSG = "User with username: \"%s\" is not found";
 
     @Autowired
-    private final AppUserRepository userRepository;
+    private final AppUserRepository appUserRepository;
 
     @Autowired
     private PasswordEncoder encoder;
 
     public AppUserService(AppUserRepository userRepository) {
-        this.userRepository = userRepository;
+        this.appUserRepository = userRepository;
     }
 
 
@@ -40,7 +40,7 @@ public class AppUserService implements UserDetailsService {
 
         // hard coded user
 //        return new AppUser("user", encoder.encode("password"), AppUserRole.USER);
-        return userRepository.findByUsername(username)
+        return appUserRepository.findByUsername(username)
                 .orElseThrow(() -> new  UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, username)));
     }
 }

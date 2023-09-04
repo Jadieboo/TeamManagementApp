@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 @Entity
 @Table(name = "accounts")
@@ -78,10 +79,9 @@ public class AppUser implements UserDetails {
 
     @Override
     public String toString() {
-        return String.format("AppUser{id: %s, username: %s, password: %s, role: %s, employee: %s}",
+        return String.format("AppUser{id: %s, username: %s, role: %s, employee: %s}",
                 id,
                 username,
-                password,
                 role,
                 employee);
     }
