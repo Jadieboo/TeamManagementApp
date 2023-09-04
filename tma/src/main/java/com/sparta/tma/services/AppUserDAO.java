@@ -1,18 +1,19 @@
-package com.sparta.tma.DAOs;
+package com.sparta.tma.services;
 
+import com.sparta.tma.DAOs.RoleDAO;
 import com.sparta.tma.DTOs.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.repositories.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AppUserDAO {
-    private final PasswordEncoder encoder;
-    private final EmployeeRepository employeeRepository;
-
-    public AppUserDAO(PasswordEncoder encoder, EmployeeRepository employeeRepository) {
-        this.encoder = encoder;
-        this.employeeRepository = employeeRepository;
-    }
+    @Autowired
+    private PasswordEncoder encoder;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public AppUser createNewAppUser(EmployeeDTO employeeDetails, Integer id) throws NullPointerException, IllegalArgumentException {
 

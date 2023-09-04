@@ -1,6 +1,6 @@
 package com.sparta.tma;
 
-import com.sparta.tma.DAOs.AppUserDAO;
+import com.sparta.tma.services.AppUserDAO;
 import com.sparta.tma.DAOs.EmployeeDAO;
 import com.sparta.tma.DTOs.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
@@ -54,7 +54,7 @@ public class AppUserTests {
         Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
         employee.setId(1);
 
-        AppUser user = new AppUserDAO(encoder, employeeRepository).createNewAppUser(employeeDetails, employee.getId());
+        AppUser user = new AppUserDAO().createNewAppUser(employeeDetails, employee.getId());
 
         String expected = "AppUser{id: 0, username: Atest1@company.com, password: " + user.getPassword() + ", role: ADMIN, employee: " + employee + "}";
 
@@ -74,6 +74,16 @@ public class AppUserTests {
         AppUser user = appUserRepository.findById(1);
 
         assertSame(newUser.getClass(), user.getClass());
+    }
+
+    @Test
+    @DisplayName("Given an employee id, return appUser related to that employee")
+    public void findUserByEmployee() {
+        AppUser expected = appUserRepository.findById(1);
+
+        AppUser result = appUserRepository.findByEmployeeId(1);
+
+        assertEquals(expected.toString(), result.toString());
     }
 
     @Test
