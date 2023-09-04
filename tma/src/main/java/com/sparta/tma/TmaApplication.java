@@ -1,8 +1,6 @@
 package com.sparta.tma;
 
-import com.sparta.tma.entities.AppUser;
-import com.sparta.tma.entities.Employee;
-import com.sparta.tma.entities.Role;
+import com.sparta.tma.entities.*;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
@@ -20,7 +18,6 @@ public class TmaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TmaApplication.class, args);
 		System.out.println("Hello, World!");
-
 	}
 
 	@Transactional
@@ -30,12 +27,26 @@ public class TmaApplication {
 						  ProjectRepository projectRepository,
 						  EmployeeRepository employeeRepository) {
 		return args -> {
-			if(appUserRepository.findByUsername("admin").isPresent()) return;
+			if (appUserRepository.findByUsername("admin").isPresent()) return;
+
+			String[] departments = {"HR", "Finance", "Marketing", "Sales", "Design", "Development", "Customer Service"};
+			for (String d : departments) {
+				Department department = new Department();
+				department.setDepartment(d);
+				departmentRepository.saveAndFlush(department);
+			}
+
+			String[] projects = {"Unassigned", "New Starters", "Attendance", "Payroll", "Accounts", "Products", "Advertising", "Web App Frontend", "Web App Backend", "Logo", "Web App"};
+			for (String p : projects) {
+				Project project = new Project();
+				project.setProject(p);
+				projectRepository.saveAndFlush(project);
+			}
 
 			Employee employee = new Employee();
 			employee.setId(0);
-			employee.setFirstName("admin");
-			employee.setLastName("test");
+			employee.setFirstName("Admin");
+			employee.setLastName("Test");
 			employee.setRole(Role.ADMIN);
 			employee.setDepartment(departmentRepository.findByDepartmentIgnoreCase("hr"));
 			employee.setProject(projectRepository.findById(1));

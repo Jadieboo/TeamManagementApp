@@ -4,18 +4,30 @@ import com.sparta.tma.DTOs.EmployeeDTO;
 import com.sparta.tma.entities.Project;
 import com.sparta.tma.repositories.ProjectRepository;
 
+import java.util.HashMap;
+
 public class ProjectDAO {
 
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
 
     public ProjectDAO(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
     }
 
-    public Project getProject(EmployeeDTO employeeDetails) {
-        // TODO: handle if employeeDetails.getProject() is empty
-        if (employeeDetails.getProject().isEmpty()) return projectRepository.findById(1);
+    public Project getProject(EmployeeDTO employeeDetails) throws IllegalArgumentException {
 
-        return projectRepository.findByProjectIgnoreCase(employeeDetails.getProject());
+        if (employeeDetails.getProject() == null || employeeDetails.getProject().isBlank()) return projectRepository.findById(1);
+
+        String project = employeeDetails.getProject().trim().toLowerCase();
+
+        HashMap<Integer, String> projectsMap = new HashMap<>();
+
+        for ( Project p : projectRepository.findAll()) {
+            projectsMap.put(p.getId(), p.getProject().trim().toLowerCase());
+        }
+
+        if (!projectsMap.containsValue(project)) throw new IllegalArgumentException("Could not find project called \"" + project + "\" in database");
+
+        return projectRepository.findByProjectIgnoreCase(project);
     }
 }

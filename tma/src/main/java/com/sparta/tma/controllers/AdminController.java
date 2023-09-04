@@ -40,21 +40,9 @@ public class AdminController {
 
         List<Employee> employeeList = employeeRepository.findAll();
 
-//        TODO: TEST TO SEE WHAT HAPPENS IF I TRY TO CHANGE THE LIST
-//        EmployeeDTO employeeDTO = new EmployeeDTO();
-//        employeeDTO.setId(0);
-//        employeeDTO.setFirstName("jade");
-//        employeeDTO.setLastName("sAle");
-//        employeeDTO.setRole("admin");
-//        employeeDTO.setDepartment("hr");
-//
-//        Employee newEmployee = new EmployeeDAO().setEmployee_Id_FirstName_LastName(employeeDTO);
-//        newEmployee.setRole(new RoleDAO().getRole(employeeDTO.getRole()));
-//        newEmployee.setDepartment(new DepartmentDAO(departmentRepository).getDepartmentDao(employeeDTO));
-//        newEmployee.setProject(projectRepository.findById(1));
-//
-//
-//        employeeList.add(newEmployee);
+        if (employeeList.size() < 1) {
+            logger.error("Employee list is empty, should be a minimum of one", employeeList);
+        }
 
         return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
     }
@@ -63,30 +51,18 @@ public class AdminController {
     @PostMapping("admin/register/employees")
     public Employee createEmployee(@RequestBody EmployeeDTO employeeDetails) {
 
-        Employee newEmployee = new EmployeeDAO(employeeRepository, departmentRepository, projectRepository).createNewEmployee(employeeDetails);
+        Employee newEmployee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
 
         Employee employee = employeeRepository.saveAndFlush(newEmployee);
         logger.info("New employee saved, {}", employee);
 
-
         logger.info("New user is being created");
-        // TODO: create a method to handle creating an app user
-        AppUser newAppUser = new AppUser();
-        newAppUser.setId(0L);
-        //TODO: research if its good practice to do dependency injection like this, or just pass dto through as param and have the method handle the details??
-        newAppUser.setUsername(new AppUserDAO().createUserUsername(employeeDetails, employee.getId()));
-        newAppUser.setPassword(encoder.encode(new AppUserDAO().createUserPassword(employeeDetails)));
-        newAppUser.setRole(new RoleDAO().getRole(employeeDetails));
-        newAppUser.setEmployee(employeeRepository.findEmployeeById(employee.getId()));
+        AppUser newAppUser = new AppUserDAO(encoder, employeeRepository).createNewAppUser(employeeDetails, employee.getId());
 
-        //save new user
         AppUser appUser = appUserRepository.saveAndFlush(newAppUser);
         logger.info("New user saved, {}", appUser);
 
-
-        //TODO: hide password in the response.
-        return employeeRepository.findById(employee.getId()).orElseThrow(() -> new EmployeeNotFoundException(String.format("Employee {} not found/created", employee)));
-
+        return employeeRepository.findById(employee.getId()).orElseThrow(() -> new EmployeeNotFoundException("Employee " + employee + " not found/created"));
     }
 
     @Transactional

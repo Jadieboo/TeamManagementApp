@@ -42,6 +42,5 @@ public class AppUserService implements UserDetailsService {
 //        return new AppUser("user", encoder.encode("password"), AppUserRole.USER);
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new  UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, username)));
-
     }
 }

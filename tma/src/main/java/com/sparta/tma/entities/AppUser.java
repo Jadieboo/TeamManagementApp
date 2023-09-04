@@ -77,6 +77,16 @@ public class AppUser implements UserDetails {
     }
 
     @Override
+    public String toString() {
+        return String.format("AppUser{id: %s, username: %s, password: %s, role: %s, employee: %s}",
+                id,
+                username,
+                password,
+                role,
+                employee);
+    }
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
         return Collections.singletonList(authority);
