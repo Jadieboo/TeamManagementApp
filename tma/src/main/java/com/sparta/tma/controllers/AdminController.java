@@ -68,7 +68,7 @@ public class AdminController {
     }
 
     @Transactional
-    @PatchMapping("employees/{id}")
+    @PatchMapping("admin/employees/{id}")
     public Employee updateEmployee(@PathVariable int id, @RequestBody EmployeeDTO employeeDetails) {
         Employee updateEmployee = employeeRepository.findEmployeeById(id);
         logger.info("Changes being made to " + updateEmployee);
