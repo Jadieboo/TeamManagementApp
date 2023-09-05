@@ -2,17 +2,21 @@ package com.sparta.tma.DAOs;
 
 import com.sparta.tma.DTOs.EmployeeDTO;
 import com.sparta.tma.entities.Role;
-import com.sparta.tma.repositories.RoleRepository;
 
 public class RoleDAO {
+    public Role getRole(EmployeeDTO employeeDetails) throws NullPointerException, IllegalArgumentException {
 
-    private RoleRepository repo;
+        if(employeeDetails.getRole() == null) throw new NullPointerException("Role not found: field is empty");
 
-    public RoleDAO(RoleRepository repo) {
-        this.repo = repo;
-    }
+        String role = employeeDetails.getRole()
+                .trim()
+                .toUpperCase();
 
-    public Role getRoleDao(EmployeeDTO jsonBody) {
-        return repo.findRoleByRoleIgnoreCase(jsonBody.getRole());
+        return switch (role) {
+            case "ADMIN" -> Role.ADMIN;
+            case "MANAGER" -> Role.MANAGER;
+            case "EMPLOYEE" -> Role.EMPLOYEE;
+            default -> throw new IllegalArgumentException("Role not found, please enter a valid role (Admin/Manager/Employee)");
+        };
     }
 }
