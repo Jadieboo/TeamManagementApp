@@ -19,15 +19,18 @@ The API exposes three endpoints
 |---|---|---|---|
 |1|View all employees|GET|http://localhost:8080/employees|
 |2|Create a new employee (single)|POST|http://localhost:8080/admin/register/employees|
-|3|Update an existing employee by employee id|PATCH|http://localhost:8080/employees/{id}|
+|3|Update an existing employee by employee id (provide id number as a replacement for {id} in the endpoint)|PATCH|http://localhost:8080/employees/{id}|
 
-**Note:** #2 POST request has the following requirements:
+**Note:** POST & PATCH requests have the following requirements:
 1. First name, last name, role and department fields must be present.
 2. Role field must be one of the following choices (Admin, Manager or Employee)
 3. Department field must be one of the following choices (HR, Finance, Marketing, Sales, Design, Development or Customer Service)
 4. Project field must be one of the following choices (Unassigned, New Starters, Attendance, Payroll, Accounts, Products, Advertising, Web App Frontend, Web App Backend, Logo or Web App)
-5. Fields are not cap sensitive. 
-6. When using an API platform (such as Postman), provide fields as a request body in the following JSON format
+5. If project field is not present, project: Unassigned, will automatically be assigned. 
+6. Field inputs are not cap sensitive. 
+7. When using an API platform (such as Postman), provide fields as a request body in JSON format (see examples below)
+
+#### POST Request Example
 ```JSON
 {
     "firstName": "Employee",
@@ -37,13 +40,15 @@ The API exposes three endpoints
     "project": "Logo"
 }
 ```
-7. If project field is not present, project: Unassigned, will automatically be assigned. 
+
+#### PATCH Request Example
+PATCH request for updating existing employee does not require project to be provided.
 ```JSON
 {
     "firstName": "Employee",
     "lastName": "Example",
-    "role": "Manager",
-    "department": "Design"
+    "role": "Admin",
+    "department": "HR"
 }
 ```
 ---
