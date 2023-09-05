@@ -1,6 +1,6 @@
 package com.sparta.tma;
 
-import com.sparta.tma.services.AppUserDAO;
+import com.sparta.tma.services.UserAccountService;
 import com.sparta.tma.DAOs.EmployeeDAO;
 import com.sparta.tma.DTOs.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
@@ -37,6 +37,8 @@ public class AppUserTests {
     AppUserRepository appUserRepository;
     @Autowired
     PasswordEncoder encoder;
+    @Autowired
+    UserAccountService userAccountService;
 
     @Test
     @DisplayName("Given all employeeDTO fields are present -> Creates a new AppUser using createNewAppUser() method to set " +
@@ -54,7 +56,7 @@ public class AppUserTests {
         Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
         employee.setId(1);
 
-        AppUser user = new AppUserDAO().createNewAppUser(employeeDetails, employee.getId());
+        AppUser user = userAccountService.createNewAppUser(employeeDetails, employee.getId());
 
         String expected = "AppUser{id: 0, username: Atest1@company.com, password: " + user.getPassword() + ", role: ADMIN, employee: " + employee + "}";
 

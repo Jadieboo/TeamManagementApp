@@ -79,9 +79,10 @@ public class AppUser implements UserDetails {
 
     @Override
     public String toString() {
-        return String.format("AppUser{id: %s, username: %s, role: %s, employee: %s}",
+        return String.format("AppUser{id: %s, username: %s, password: %s, role: %s, employee: %s}",
                 id,
                 username,
+                password,
                 role,
                 employee);
     }
