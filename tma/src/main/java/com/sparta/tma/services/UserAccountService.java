@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AppUserDAO {
+public class UserAccountService {
     @Autowired
     private PasswordEncoder encoder;
     @Autowired

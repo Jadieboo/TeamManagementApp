@@ -4,13 +4,13 @@ import com.sparta.tma.DAOs.*;
 import com.sparta.tma.DTOs.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
-import com.sparta.tma.entities.Role;
 import com.sparta.tma.exceptions.EmployeeNotFoundException;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
-import com.sparta.tma.services.AppUserDAO;
+import com.sparta.tma.services.UserAccountService;
+import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,6 @@ import java.util.Objects;
 @RestController
 public class AdminController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
     @Autowired
     private EmployeeRepository employeeRepository;
     @Autowired
@@ -36,7 +35,7 @@ public class AdminController {
     @Autowired
     private ProjectRepository projectRepository;
     @Autowired
-    private PasswordEncoder encoder;
+    UserAccountService userAccountService;
 
     @GetMapping("employees")
     public List<Employee> viewAllEmployees() {
@@ -60,7 +59,7 @@ public class AdminController {
         logger.info("New employee saved, {}", employee);
 
         logger.info("New user is being created");
-        AppUser newAppUser = new AppUserDAO().createNewAppUser(employeeDetails, employee.getId());
+        AppUser newAppUser = userAccountService.createNewAppUser(employeeDetails, employee.getId());
 
         AppUser appUser = appUserRepository.saveAndFlush(newAppUser);
         logger.info("New user saved, {}", appUser);
@@ -79,7 +78,7 @@ public class AdminController {
             updateEmployee.setLastName(employeeDetails.getLastName());
 
             AppUser updateUser = appUserRepository.findByEmployeeId(updateEmployee.getId());
-            updateUser.setUsername(new AppUserDAO().createUserUsername(employeeDetails, updateEmployee.getId()));
+            updateUser.setUsername(userAccountService.createUserUsername(employeeDetails, updateEmployee.getId()));
             appUserRepository.saveAndFlush(updateUser);
         }
 
@@ -97,7 +96,7 @@ public class AdminController {
         }
 
 
-        logger.info("Employee department and project was updated: {}", updateEmployee);
+        logger.info("Employee information was updated: {}", updateEmployee);
 
         return employeeRepository.save(updateEmployee);
     }
