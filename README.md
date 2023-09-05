@@ -19,7 +19,7 @@ The API exposes three endpoints
 |---|---|---|---|
 |1|View all employees|GET|http://localhost:8080/employees|
 |2|Create a new employee (single)|POST|http://localhost:8080/admin/register/employees|
-|3|Update an existing employee by employee id (provide id number as a replacement for {id} in the endpoint)|PATCH|http://localhost:8080/employees/{id}|
+|3|Update an existing employee by employee id (provide id number as a replacement for {id} in the endpoint)|PATCH|http://localhost:8080/admin/employees/{id}|
 
 **Note:** POST & PATCH requests have the following requirements:
 1. First name, last name, role and department fields must be present.

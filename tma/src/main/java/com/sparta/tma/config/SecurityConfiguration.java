@@ -1,5 +1,6 @@
 package com.sparta.tma.config;
 
+import com.sparta.tma.entities.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,8 +24,19 @@ public class SecurityConfiguration {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth
-                        .anyRequest().authenticated());
+//        http.authorizeHttpRequests(auth -> auth
+//                        .anyRequest().authenticated());
+
+        http.authorizeHttpRequests(auth -> {
+            auth.requestMatchers("admin/**")
+                    .hasAuthority(Role.ADMIN.name());
+            auth.requestMatchers("/manager/**")
+                    .hasAuthority(Role.MANAGER.name());
+            auth.requestMatchers("/employee/**")
+                    .hasAuthority(Role.EMPLOYEE.name());
+            auth.requestMatchers("employees")
+                    .hasAnyAuthority(Role.ADMIN.name(), Role.MANAGER.name(), Role.EMPLOYEE.name());
+        });
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
