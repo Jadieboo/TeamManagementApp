@@ -33,7 +33,7 @@ public class AppUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.info("In the user service");
+        logger.info("In the user service, load user by username: " + username);
         logger.trace("user service");
 
         //TODO: validate that the user exists and matches what is in the database
