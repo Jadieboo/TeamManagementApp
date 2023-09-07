@@ -35,7 +35,7 @@ public class SecurityConfiguration {
             auth.requestMatchers("/employee/**")
                     .hasAuthority(Role.EMPLOYEE.name());
             auth.requestMatchers("employees")
-                    .hasAnyAuthority(Role.ADMIN.name(), Role.MANAGER.name(), Role.EMPLOYEE.name());
+                    .hasAnyAuthority(Role.MANAGER.name(), Role.EMPLOYEE.name());
         });
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
