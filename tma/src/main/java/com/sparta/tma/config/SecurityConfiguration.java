@@ -1,7 +1,9 @@
 package com.sparta.tma.config;
 
 import com.sparta.tma.entities.Role;
+import com.sparta.tma.services.LoginSuccessHandler;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,10 +19,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,7 +49,28 @@ public class SecurityConfiguration {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.httpBasic(Customizer.withDefaults());
-        http.formLogin().disable();
+        http.formLogin()
+                .loginPage("/loginPage")
+                .successHandler(loginSuccessHandler)
+                .permitAll();
+
+//        Set<String> authorities = authentication.getAuthorities()
+//                .stream()
+//                .map(GrantedAuthority::getAuthority)
+//                .collect(Collectors.toSet());
+//
+//        if (authorities.contains("ROLE_ADMIN")) {
+//            response.sendRedirect("/admin_homepage");
+//        } else if (authorities.contains("ROLE_MANAGER")) {
+//            response.sendRedirect("/manager_homepage");
+//        } else if (authorities.contains("ROLE_EMPLOYEE")) {
+//            response.sendRedirect("/employee_homepage");
+//        } else {
+//            // Handle other authorities or redirect to a default page
+//            response.sendRedirect("/default_page");
+//        }
+//    })
+
         http.csrf((AbstractHttpConfigurer::disable));
         return http.build();
     }
