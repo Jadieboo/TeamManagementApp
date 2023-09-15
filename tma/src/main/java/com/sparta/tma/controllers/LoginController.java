@@ -130,10 +130,12 @@ public class LoginController {
     }
 
     @GetMapping("/manager/homepage")
-    public String managerHomepage(Model model, AppUser appUser) {
+    public String managerHomepage(Model model, Authentication authentication) {
         logger.info("manager homepage get method active");
 
-        Employee employee = appUser.getEmployee();
+        Optional<AppUser> user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername());
+
+        Employee employee = user.get().getEmployee();
         logger.info("Employee: {}", employee);
 
         model.addAttribute("employee", employee);
@@ -142,11 +144,12 @@ public class LoginController {
     }
 
     @GetMapping("/employee/homepage")
-    public String employeeHomepage(Model model, AppUser appUser) {
+    public String employeeHomepage(Model model, Authentication authentication) {
         logger.info("employee homepage get method active");
 
-        Employee employee = appUser.getEmployee();
+        Employee employee = ((AppUser) authentication.getPrincipal()).getEmployee();
         logger.info("Employee: {}", employee);
+
 
         model.addAttribute("employee", employee);
 
