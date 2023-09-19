@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Employee</title>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li>
+            <a th:href="@{/admin/homepage}">
+                Home
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/welcome}">
+                Page 1
+            </a>
+        </li>
+        <li>
+            <form th:action="@{/logout}" method="post" >
+                <button type="submit">Logout</button>
+            </form>
+        </li>
+    </ul>
+</nav>
+
+<h1>Create a new employee</h1>
+<form>
+    <label for="firstName">First Name:</label>
+    <input type="text" name="firstName" id="firstName">
+    <br>
+    <label for="lastName">Last Name:</label>
+    <input type="text" name="lastName" id="lastName">
+    <br>
+    <label for="role">Employee's Role:</label>
+    <input type="text" name="role" id="role">
+    <br>
+    <label for="department">Department</label>
+    <input type="text" name="department" id="department">
+    <input type="submit" value="Create">
+</form>
+
+<!--TODO: create a branch to submit and work on this, need to add functionality to the form-->
+
+</body>
+</html>
