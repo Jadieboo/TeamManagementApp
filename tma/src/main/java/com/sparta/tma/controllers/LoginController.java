@@ -162,4 +162,12 @@ public class LoginController {
         return "welcome";
     }
 
+    @GetMapping("/admin/new/employees")
+    public String newEmployees() {
+
+        return "adminCreateNewEmployee";
+    }
+
+    // TODO: need to clean up login controller class
+
 }

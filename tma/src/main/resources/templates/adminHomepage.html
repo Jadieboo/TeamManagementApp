@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
@@ -16,6 +16,11 @@
         <li>
             <a th:href="@{/welcome}">
                 Page 1
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/new/employees}">
+                Create New Employee
             </a>
         </li>
         <li>
