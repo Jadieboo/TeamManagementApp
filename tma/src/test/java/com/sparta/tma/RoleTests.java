@@ -3,7 +3,9 @@ package com.sparta.tma;
 import com.sparta.tma.DAOs.EmployeeDAO;
 import com.sparta.tma.DAOs.RoleDAO;
 import com.sparta.tma.DTOs.EmployeeDTO;
+import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
+import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
@@ -14,8 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class RoleTests {
@@ -25,6 +26,8 @@ public class RoleTests {
     private DepartmentRepository departmentRepository;
     @Autowired
     private ProjectRepository projectRepository;
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     @ParameterizedTest
     @ValueSource(strings = {"admin", "MANAGER", " Employee "})
@@ -74,5 +77,20 @@ public class RoleTests {
         String expectedExceptionMessage = "Role not found: field is empty";
 
         assertEquals(expectedExceptionMessage, exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Return true if getAuthorities() method matches a users role")
+    public void rolesAndAuthoritiesMatch() {
+        AppUser user = appUserRepository.findById(1);
+
+        String auth = user.getAuthorities().toString();
+        System.out.println("User authority: " + auth);
+
+        String role = user.getRole().toString();
+        System.out.println("User role: " + role);
+
+        assertSame(auth, role);
+
     }
 }
