@@ -12,5 +12,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     List<Employee> findAllByDepartment(Department department);
 
-    
+    List<Employee> findAllByProject(Project project);
 }
