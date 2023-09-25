@@ -29,10 +29,10 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<JwtResponse> authenticate(@RequestBody AppUserDTO request) {
-        return ResponseEntity.ok(authenticatee(request));
+        return ResponseEntity.ok(authenticateRequest(request));
     }
 
-    public JwtResponse authenticatee(AppUserDTO request) {
+    public JwtResponse authenticateRequest(AppUserDTO request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                 request.getUsername(),
