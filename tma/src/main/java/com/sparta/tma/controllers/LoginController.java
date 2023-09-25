@@ -94,9 +94,6 @@ public class LoginController {
 
 
 
-
-
-
     // trying to handle LoginSuccessHandler in controller instead of in configuration
 
 //    @Autowired
