@@ -23,9 +23,6 @@ public class AppUserService implements UserDetailsService {
     @Autowired
     private final AppUserRepository appUserRepository;
 
-    @Autowired
-    private PasswordEncoder encoder;
-
     public AppUserService(AppUserRepository userRepository) {
         this.appUserRepository = userRepository;
     }

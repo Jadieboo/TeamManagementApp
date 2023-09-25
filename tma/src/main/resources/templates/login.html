@@ -7,22 +7,24 @@
   </head>
 
   <body>
-    <h1>Login</h1>
+
 
     <!-- Display error message if authentication fails -->
     <div th:if="${param.error}" class="alert alert-danger">
       Invalid username or password.
     </div>
 
-    <section id="login-form">
+    <section id="container">
       <!--  th:action maps to the endpoint of a method    -->
-      <form th:action="@{/loginHandler}" method="post">
-        <label for="username" hidden="hidden"></label>
-        <input class="" type="text" id="username" name="username" placeholder="Enter email" required/>
+      <form class="form-signin" th:action="@{/loginHandler}" method="post">
+        <h1 class="form-signin-heading">Login</h1>
+
+        <label for="username" class="sr-only" hidden="hidden"></label>
+        <input class="form-control" type="text" id="username" name="username" placeholder="Enter email" required/>
         <br/>
-        <label for="password" hidden="hidden"></label>
-        <input class="" type="text" id="password" name="password" placeholder="Enter password" required/>
-        <input type="submit" value="Login"/>
+        <label for="password" class="sr-only" hidden="hidden"></label>
+        <input class="form-control" type="text" id="password" name="password" placeholder="Enter password" required/>
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Login"/>
       </form>
     </section>
   </body>

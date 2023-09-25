@@ -1,6 +1,9 @@
-package com.sparta.tma.controllers;
+package com.sparta.tma.auth;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 @RestController
@@ -17,15 +21,18 @@ public class JwtAuthenticateResource {
     // TODO: look into how to automatically pass token to REST API methods
     // TODO: research how to validate tokens for each users authority/role
 
-    private JwtEncoder encoder;
+    private final JwtEncoder jwtEncoder;
+    record JwtResponse(String token) {}
+
 
     public JwtAuthenticateResource(JwtEncoder encoder) {
-        this.encoder = encoder;
+        this.jwtEncoder = encoder;
     }
 
     @PostMapping("/authenticate")
-    public JwtResponse authenticate(Authentication authentication) {
-        return new JwtResponse(createToken(authentication));
+    public ResponseEntity<JwtResponse> authenticate(Authentication authentication) {
+        JwtResponse token = new JwtResponse(createToken(authentication));
+        return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
     private String createToken(Authentication authentication) {
@@ -39,7 +46,7 @@ public class JwtAuthenticateResource {
 
         JwtEncoderParameters parameters = JwtEncoderParameters.from(claims);
 
-        return encoder.encode(parameters).getTokenValue();
+        return jwtEncoder.encode(parameters).getTokenValue();
     }
 
     private String createScope(Authentication authentication) {
@@ -48,8 +55,10 @@ public class JwtAuthenticateResource {
                 .collect(Collectors.joining(" "));
     }
 
+
+
 }
 
-record JwtResponse(String token) {}
+
 
 
