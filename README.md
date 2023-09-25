@@ -10,7 +10,7 @@ There are 3 different access levels depending on the persons role within the com
 
 ## How to use 
 ### Web App
-With a registered account, in your browser, use endpoint -> http://localhost:8080/login to navigate to the login page and enter your credentials to gain access.
+With a registered account, in your browser, use endpoint -> http://localhost:8080/login to navigate to the login page and enter your credentials to gain access. You will then be directed to your own homepage.
 
 ### Admin Access
 
