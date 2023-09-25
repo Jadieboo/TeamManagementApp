@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li>
+            <a th:href="@{/manager/homepage}">
+                Home
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/welcome}">
+                Page 1
+            </a>
+        </li>
+        <li>
+            <form th:action="@{/logout}" method="post" >
+                <button type="submit">Logout</button>
+            </form>
+        </li>
+    </ul>
+</nav>
+
+<h1>Manager homepage</h1>
+<h2>Welcome,</h2>
+<h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+<br/>
+
+
+
+
+</body>
+</html>

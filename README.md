@@ -17,7 +17,7 @@ With a registered account, in your browser, use endpoint -> http://localhost:808
 The API exposes three endpoints
 |#|Description|Request Type|Endpoint|
 |---|---|---|---|
-|1|View all employees|GET|http://localhost:8080/employees|
+|1|View all employees|GET|http://localhost:8080/admin/employees|
 |2|Create a new employee (single)|POST|http://localhost:8080/admin/register/employees|
 |3|Update an existing employee by employee id (provide id number as a replacement for {id} in the endpoint)|PATCH|http://localhost:8080/admin/employees/{id}|
 

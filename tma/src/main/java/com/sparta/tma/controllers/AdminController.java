@@ -37,7 +37,8 @@ public class AdminController {
     @Autowired
     UserAccountService userAccountService;
 
-    @GetMapping("employees")
+
+    @GetMapping("admin/employees")
     public List<Employee> viewAllEmployees() {
 
         List<Employee> employeeList = employeeRepository.findAll();

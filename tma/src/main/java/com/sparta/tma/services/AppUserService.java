@@ -33,13 +33,10 @@ public class AppUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.info("In the user service");
-        logger.trace("user service");
+        logger.info("In the user service, load user by username: " + username);
 
         //TODO: validate that the user exists and matches what is in the database
 
-        // hard coded user
-//        return new AppUser("user", encoder.encode("password"), AppUserRole.USER);
         return appUserRepository.findByUsername(username)
                 .orElseThrow(() -> new  UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, username)));
     }
