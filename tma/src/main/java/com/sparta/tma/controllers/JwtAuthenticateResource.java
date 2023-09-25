@@ -1,6 +1,7 @@
 package com.sparta.tma.controllers;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -12,12 +13,12 @@ import java.util.stream.Collectors;
 
 @RestController
 public class JwtAuthenticateResource {
-
-    // TODO: create a JWT branch so I can save this work
+    
     // TODO: look into how to automatically pass token to REST API methods
     // TODO: research how to validate tokens for each users authority/role
 
-    private JwtEncoder encoder;
+    record JwtResponse(String token) {}
+    private final JwtEncoder encoder;
 
     public JwtAuthenticateResource(JwtEncoder encoder) {
         this.encoder = encoder;
@@ -44,12 +45,11 @@ public class JwtAuthenticateResource {
 
     private String createScope(Authentication authentication) {
         return authentication.getAuthorities().stream()
-                .map(a -> a.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
     }
 
 }
 
-record JwtResponse(String token) {}
 
 
