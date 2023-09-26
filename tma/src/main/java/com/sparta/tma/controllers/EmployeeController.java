@@ -34,7 +34,7 @@ public class EmployeeController {
 
     @GetMapping("/colleagues")
     public List<Employee> viewAllColleaguesWithinDepartment(Authentication authentication) {
-        //TODO: FIX method is showing colleagues who are higher than EMPLOYEE
+
         logger.info("inside view all colleagues within department GET method");
 
         Optional<AppUser> user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername());
@@ -56,7 +56,7 @@ public class EmployeeController {
 
     @GetMapping("/colleagues/project")
     public List<Employee> viewAllColleaguesWithinProject(Authentication authentication) {
-        //TODO: FIX method is showing colleagues from other departments with the same project
+        
         logger.info("inside view all colleagues within project GET method");
 
         Optional<AppUser> user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername());

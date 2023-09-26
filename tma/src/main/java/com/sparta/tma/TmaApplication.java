@@ -28,7 +28,7 @@ public class TmaApplication {
 						  ProjectRepository projectRepository,
 						  EmployeeRepository employeeRepository) {
 		return args -> {
-			if (appUserRepository.findByUsername("employee").isPresent()) return;
+			if (appUserRepository.findByUsername("admin").isPresent()) return;
 
 			String[] departments = {"HR", "Finance", "Marketing", "Sales", "Design", "Development", "Customer Service"};
 			for (String d : departments) {
@@ -53,7 +53,7 @@ public class TmaApplication {
 			employeeAdmin.setProject(projectRepository.findById(1));
 			Employee employeeAdminSaved = employeeRepository.saveAndFlush(employeeAdmin);
 
-			AppUser admin = new AppUser("employee", passwordEncoder.encode("employee"), Role.ADMIN);
+			AppUser admin = new AppUser("admin", passwordEncoder.encode("admin"), Role.ADMIN);
 			admin.setEmployee(employeeRepository.findEmployeeById(employeeAdminSaved.getId()));
 			appUserRepository.save(admin);
 
