@@ -2,6 +2,7 @@ package com.sparta.tma.controllers;
 
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
+import com.sparta.tma.entities.Role;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import org.slf4j.Logger;
@@ -30,17 +31,6 @@ public class EmployeeController {
         return "Successful";
     }
 
-    @GetMapping("/employees")
-    public List<Employee> viewAllEmployees() {
-
-        List<Employee> employeeList = employeeRepository.findAll();
-
-        if (employeeList.size() < 1) {
-            logger.error("Employee list is empty, should be a minimum of one", employeeList);
-        }
-
-        return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
-    }
 
     @GetMapping("/colleagues")
     public List<Employee> viewAllColleaguesWithinDepartment(Authentication authentication) {
@@ -49,7 +39,7 @@ public class EmployeeController {
 
         Optional<AppUser> user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername());
 
-        List<Employee> employeeList = employeeRepository.findAllByDepartment(user.get().getEmployee().getDepartment());
+        List<Employee> employeeList = employeeRepository.findAllByDepartmentAndRole(user.get().getEmployee().getDepartment(), Role.EMPLOYEE);
 
         if (!employeeList.isEmpty()) {
             employeeList.remove(user.get().getEmployee());
@@ -71,7 +61,7 @@ public class EmployeeController {
 
         Optional<AppUser> user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername());
 
-        List<Employee> employeeList = employeeRepository.findAllByProject(user.get().getEmployee().getProject());
+        List<Employee> employeeList = employeeRepository.findAllByDepartmentAndProjectWithRoleEmployee(user.get().getEmployee().getDepartment(), user.get().getEmployee().getProject());
 
         if (!employeeList.isEmpty()) {
             employeeList.remove(user.get().getEmployee());
