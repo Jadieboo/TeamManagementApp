@@ -135,51 +135,51 @@ public class SecurityConfiguration {
 
 
     // ------ JWT config ------
-//
-//    // Key Pair
-//    @Bean
-//    public KeyPair keyPair() {
-//        try {
-//            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-//            keyPairGenerator.initialize(2048);
-//
-//            return keyPairGenerator.generateKeyPair();
-//        } catch (NoSuchAlgorithmException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    // RSA Key object
-//    @Bean
-//    public RSAKey rsaKey(KeyPair keyPair) {
-//        return new RSAKey
-//                .Builder((RSAPublicKey) keyPair.getPublic())
-//                .privateKey(keyPair.getPrivate())
-//                .keyID(UUID.randomUUID().toString())
-//                .build();
-//    }
-//
-//    // JWKSource
-//    @Bean
-//    public JWKSource<SecurityContext> jwkSource(RSAKey rsaKey) {
-//        JWKSet jwkSet = new JWKSet(rsaKey);
-//
-//        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
-//    }
-//
-//    // JWT Decoder
-//    @Bean
-//    public JwtDecoder jwtDecoder(RSAKey rsaKey) throws JOSEException {
-//        return NimbusJwtDecoder
-//                .withPublicKey(rsaKey.toRSAPublicKey())
-//                .build();
-//    }
-//
-//    // JWT Encoder
-//    @Bean
-//    public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
-//        return new NimbusJwtEncoder(jwkSource);
-//    }
+
+    // Key Pair
+    @Bean
+    public KeyPair keyPair() {
+        try {
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            keyPairGenerator.initialize(2048);
+
+            return keyPairGenerator.generateKeyPair();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // RSA Key object
+    @Bean
+    public RSAKey rsaKey(KeyPair keyPair) {
+        return new RSAKey
+                .Builder((RSAPublicKey) keyPair.getPublic())
+                .privateKey(keyPair.getPrivate())
+                .keyID(UUID.randomUUID().toString())
+                .build();
+    }
+
+    // JWKSource
+    @Bean
+    public JWKSource<SecurityContext> jwkSource(RSAKey rsaKey) {
+        JWKSet jwkSet = new JWKSet(rsaKey);
+
+        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
+    }
+
+    // JWT Decoder
+    @Bean
+    public JwtDecoder jwtDecoder(RSAKey rsaKey) throws JOSEException {
+        return NimbusJwtDecoder
+                .withPublicKey(rsaKey.toRSAPublicKey())
+                .build();
+    }
+
+    // JWT Encoder
+    @Bean
+    public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
+        return new NimbusJwtEncoder(jwkSource);
+    }
 
 
 

@@ -25,8 +25,8 @@ public class JwtAuthenticateResource {
     record JwtResponse(String token) {}
 
 
-    public JwtAuthenticateResource(JwtEncoder encoder) {
-        this.jwtEncoder = encoder;
+    public JwtAuthenticateResource(JwtEncoder jwtEncoder) {
+        this.jwtEncoder = jwtEncoder;
     }
 
     @PostMapping("/authenticate")

@@ -77,6 +77,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    //TODO: try calling keypair bean by custom name instead
     public static KeyPair keyPair() {
         try {
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
