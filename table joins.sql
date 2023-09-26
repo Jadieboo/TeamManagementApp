@@ -1,8 +1,10 @@
 
 -- joins roles, dept and projects onto employee
-SELECT employees.id 'Employee ID', CONCAT(employees.first_name, " ", employees.last_name) 'Name', employees.role 'Role',
-departments.department 'Department',
-projects.project 'Project'
+SELECT employees.id AS 'Employee ID',
+       CONCAT(employees.first_name, ' ', employees.last_name) AS 'Name',
+       employees.role AS 'Role',
+       departments.department AS 'Department',
+       projects.project AS 'Project'
 FROM employees
 JOIN departments
 ON employees.department_id = departments.id
@@ -13,7 +15,7 @@ ON employees.project_id = projects.id;
 SELECT * FROM accounts;
 
 -- joins accounts onto employee details (not showing password)
-SELECT employees.id 'Employee ID', CONCAT(employees.first_name, " ", employees.last_name) 'Name', employees.role 'Role',
+SELECT employees.id 'Employee ID', CONCAT(employees.first_name, ' ', employees.last_name) 'Name', employees.role 'Role',
 departments.department 'Department',
 projects.project 'Project',
 accounts.username 'Account Username'
