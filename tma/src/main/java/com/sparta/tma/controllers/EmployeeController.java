@@ -32,14 +32,20 @@ public class EmployeeController {
     }
 
 
+    // all colleagues with any role
     @GetMapping("/colleagues")
     public List<Employee> viewAllColleaguesWithinDepartment(Authentication authentication) {
 
         logger.info("inside view all colleagues within department GET method");
 
-        Optional<AppUser> user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername());
+        String username = authentication.getName();
 
-        List<Employee> employeeList = employeeRepository.findAllByDepartmentAndRole(user.get().getEmployee().getDepartment(), Role.EMPLOYEE);
+        logger.info("authentication: {}, " +
+                "Username: {}", authentication, username);
+
+        Optional<AppUser> user = appUserRepository.findByUsername(username);
+
+        List<Employee> employeeList = employeeRepository.findAllByDepartment(user.get().getEmployee().getDepartment());
 
         if (!employeeList.isEmpty()) {
             employeeList.remove(user.get().getEmployee());
@@ -54,12 +60,18 @@ public class EmployeeController {
         return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
     }
 
+    // all colleagues with role employee, no manager or admins
     @GetMapping("/colleagues/project")
     public List<Employee> viewAllColleaguesWithinProject(Authentication authentication) {
-        
-        logger.info("inside view all colleagues within project GET method");
 
-        Optional<AppUser> user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername());
+        logger.info("inside view all colleagues within project GET method");
+        
+        String username = authentication.getName();
+
+        logger.info("authentication: {}, " +
+                "Username: {}", authentication, username);
+
+        Optional<AppUser> user = appUserRepository.findByUsername(username);
 
         List<Employee> employeeList = employeeRepository.findAllByDepartmentAndProjectWithRoleEmployee(user.get().getEmployee().getDepartment(), user.get().getEmployee().getProject());
 
