@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -145,9 +146,21 @@ public class EmployeeTests {
         Project project = projectRepository.findById(1);
         List<Employee> employeeList = employeeRepository.findAllByDepartmentAndProjectWithRoleEmployee(department, project);
 
+        List<Employee> checkedList = new ArrayList<>();
+
+        for (Employee e : employeeList) {
+            if (
+                    e.getRole().name().equals("EMPLOYEE") &&
+                    e.getDepartment().toString().equals("HR") &&
+                    e.getProject().toString().equals("Unassigned")
+            ) {
+                checkedList.add(e);
+            }
+        }
+
         employeeList.forEach(System.out::println);
 
-        assertFalse(employeeList.isEmpty());
+        assertEquals(employeeList.size(), checkedList.size());
     }
 
 }

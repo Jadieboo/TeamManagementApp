@@ -15,8 +15,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     List<Employee> findAllByDepartment(Department department);
 
-    List<Employee> findAllByDepartmentAndRole(Department department, Role role);
-
     @Query("SELECT e FROM Employee e WHERE e.department = :department AND e.project = :project AND e.role = 'EMPLOYEE'")
     List<Employee> findAllByDepartmentAndProjectWithRoleEmployee(@Param("department") Department department, @Param("project") Project project);
 
