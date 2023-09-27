@@ -59,5 +59,5 @@ PATCH request for updating existing employee does not require project to be prov
 The API exposes two endpoints
 |#|Description|Request Type|Endpoint|
 |---|---|---|---|
-|1|View all colleagues in the same team (including managers)|GET|http://localhost:8080/employee/colleagues|
-|2|View all colleagues in the same team and project (not including managers or admins)|GET|http://localhost:8080/employee/colleagues/project|
+|1|View all colleagues in the same team (including admins & managers)|GET|http://localhost:8080/employee/colleagues|
+|2|View all colleagues in the same team and project (not including admins & managers)|GET|http://localhost:8080/employee/colleagues/project|
