@@ -43,18 +43,44 @@ public class TmaApplication {
 				projectRepository.saveAndFlush(project);
 			}
 
-			Employee employee = new Employee();
-			employee.setId(0);
-			employee.setFirstName("Admin");
-			employee.setLastName("Test");
-			employee.setRole(Role.ADMIN);
-			employee.setDepartment(departmentRepository.findByDepartmentIgnoreCase("hr"));
-			employee.setProject(projectRepository.findById(1));
-			Employee savedEmployee = employeeRepository.saveAndFlush(employee);
+			Employee employeeAdmin = new Employee();
+			employeeAdmin.setId(0);
+			employeeAdmin.setFirstName("Admin");
+			employeeAdmin.setLastName("Test");
+			employeeAdmin.setRole(Role.ADMIN);
+			employeeAdmin.setDepartment(departmentRepository.findByDepartmentIgnoreCase("hr"));
+			employeeAdmin.setProject(projectRepository.findById(1));
+			Employee employeeAdminSaved = employeeRepository.saveAndFlush(employeeAdmin);
 
 			AppUser admin = new AppUser("admin", passwordEncoder.encode("admin"), Role.ADMIN);
-			admin.setEmployee(employeeRepository.findEmployeeById(savedEmployee.getId()));
+			admin.setEmployee(employeeRepository.findEmployeeById(employeeAdminSaved.getId()));
 			appUserRepository.save(admin);
+
+			Employee employeeManager = new Employee();
+			employeeManager.setId(0);
+			employeeManager.setFirstName("Manager");
+			employeeManager.setLastName("Test");
+			employeeManager.setRole(Role.MANAGER);
+			employeeManager.setDepartment(departmentRepository.findByDepartmentIgnoreCase("hr"));
+			employeeManager.setProject(projectRepository.findById(1));
+			Employee employeeManagerSaved = employeeRepository.saveAndFlush(employeeManager);
+
+			AppUser manager = new AppUser("manager", passwordEncoder.encode("manager"), Role.MANAGER);
+			manager.setEmployee(employeeRepository.findEmployeeById(employeeManagerSaved.getId()));
+			appUserRepository.save(manager);
+
+			Employee employeeEmployee = new Employee();
+			employeeEmployee.setId(0);
+			employeeEmployee.setFirstName("Employee");
+			employeeEmployee.setLastName("Test");
+			employeeEmployee.setRole(Role.EMPLOYEE);
+			employeeEmployee.setDepartment(departmentRepository.findByDepartmentIgnoreCase("hr"));
+			employeeEmployee.setProject(projectRepository.findById(1));
+			Employee savedEmployee = employeeRepository.saveAndFlush(employeeEmployee);
+
+			AppUser employee = new AppUser("employee", passwordEncoder.encode("employee"), Role.EMPLOYEE);
+			employee.setEmployee(employeeRepository.findEmployeeById(savedEmployee.getId()));
+			appUserRepository.save(employee);
 		};
 	}
 

@@ -2,8 +2,11 @@ package com.sparta.tma;
 
 import com.sparta.tma.DAOs.EmployeeDAO;
 import com.sparta.tma.DTOs.EmployeeDTO;
+import com.sparta.tma.entities.Department;
 import com.sparta.tma.entities.Employee;
+import com.sparta.tma.entities.Project;
 import com.sparta.tma.repositories.DepartmentRepository;
+import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +16,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class EmployeeTests {
@@ -24,6 +30,8 @@ public class EmployeeTests {
     private DepartmentRepository departmentRepository;
     @Autowired
     private ProjectRepository projectRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Test
     @DisplayName("Creates a new employee using createNewEmployee() DAO method to set id, first name, last name, role, department and project")
@@ -129,6 +137,30 @@ public class EmployeeTests {
         Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
 
         assertEquals(employee.getLastName(), formattedLastName);
+    }
+
+    @Test
+    @DisplayName("Return all employees where department = HR, project = Unassigned and role = Employee")
+    public void employeeFindByCustomQuery() {
+        Department department = departmentRepository.findById(1);
+        Project project = projectRepository.findById(1);
+        List<Employee> employeeList = employeeRepository.findAllByDepartmentAndProjectWithRoleEmployee(department, project);
+
+        List<Employee> checkedList = new ArrayList<>();
+
+        for (Employee e : employeeList) {
+            if (
+                    e.getRole().name().equals("EMPLOYEE") &&
+                    e.getDepartment().toString().equals("HR") &&
+                    e.getProject().toString().equals("Unassigned")
+            ) {
+                checkedList.add(e);
+            }
+        }
+
+        employeeList.forEach(System.out::println);
+
+        assertEquals(employeeList.size(), checkedList.size());
     }
 
 }
