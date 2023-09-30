@@ -20,6 +20,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -56,6 +57,8 @@ public class SecurityConfiguration {
 //                        .anyRequest().authenticated());
 
         http.authorizeHttpRequests(auth -> {
+//            auth.requestMatchers("/static/**")
+//                    .permitAll();
             auth.requestMatchers("/admin/**")
                     .hasAuthority("ADMIN");
             auth.requestMatchers("/manager/**")
@@ -70,13 +73,12 @@ public class SecurityConfiguration {
         // this was creating issues with not allowing me to access endpoints
 //        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.httpBasic(Customizer.withDefaults());
+//        http.httpBasic(Customizer.withDefaults());
 
         http.formLogin()
 //                .loginPage("/login") // custom login does not work with /loginHandler
                 .loginProcessingUrl("/login")
-                .successHandler(loginSuccessHandler) // loginSuccessHandler does not redirect
-//                .successForwardUrl("/loginHandler") // /loginHandler takes to correct homepage, but I can't access anything else
+                .successHandler(loginSuccessHandler)
                 .permitAll()
                 .and()
                 .logout()
@@ -85,7 +87,7 @@ public class SecurityConfiguration {
         http.csrf((AbstractHttpConfigurer::disable));
 
         // OAuth2 Resource Server
-        http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+//        http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 
         return http.build();
     }
@@ -103,54 +105,54 @@ public class SecurityConfiguration {
 
         return new ProviderManager(provider);
     }
-
-    // ------ JWT config ------
-
-    // Key Pair
-    @Bean
-    public KeyPair keyPair() {
-        try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-
-            return keyPairGenerator.generateKeyPair();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // RSA Key object
-    @Bean
-    public RSAKey rsaKey(KeyPair keyPair) {
-        return new RSAKey
-                .Builder((RSAPublicKey) keyPair.getPublic())
-                .privateKey(keyPair.getPrivate())
-                .keyID(UUID.randomUUID().toString())
-                .build();
-    }
-
-    // JWKSource
-    @Bean
-    public JWKSource<SecurityContext> jwkSource(RSAKey rsaKey) {
-        JWKSet jwkSet = new JWKSet(rsaKey);
-
-        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
-    }
-
-    // JWT Decoder
-    @Bean
-    public JwtDecoder jwtDecoder(RSAKey rsaKey) throws JOSEException {
-        return NimbusJwtDecoder
-                .withPublicKey(rsaKey.toRSAPublicKey())
-                .build();
-    }
-
-    // JWT Encoder
-    @Bean
-    public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
-        return new NimbusJwtEncoder(jwkSource);
-    }
-
+//
+//    // ------ JWT config ------
+//
+//    // Key Pair
+//    @Bean
+//    public KeyPair keyPair() {
+//        try {
+//            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+//            keyPairGenerator.initialize(2048);
+//
+//            return keyPairGenerator.generateKeyPair();
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    // RSA Key object
+//    @Bean
+//    public RSAKey rsaKey(KeyPair keyPair) {
+//        return new RSAKey
+//                .Builder((RSAPublicKey) keyPair.getPublic())
+//                .privateKey(keyPair.getPrivate())
+//                .keyID(UUID.randomUUID().toString())
+//                .build();
+//    }
+//
+//    // JWKSource
+//    @Bean
+//    public JWKSource<SecurityContext> jwkSource(RSAKey rsaKey) {
+//        JWKSet jwkSet = new JWKSet(rsaKey);
+//
+//        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
+//    }
+//
+//    // JWT Decoder
+//    @Bean
+//    public JwtDecoder jwtDecoder(RSAKey rsaKey) throws JOSEException {
+//        return NimbusJwtDecoder
+//                .withPublicKey(rsaKey.toRSAPublicKey())
+//                .build();
+//    }
+//
+//    // JWT Encoder
+//    @Bean
+//    public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
+//        return new NimbusJwtEncoder(jwkSource);
+//    }
+//
 
 
 }
