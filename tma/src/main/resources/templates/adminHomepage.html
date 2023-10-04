@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
 </head>
 <body class="custom-bg">
 
@@ -16,7 +16,7 @@
         </li>
         <li>
             <a th:href="@{/welcome}">
-                Page 1
+                Welcome
             </a>
         </li>
         <li>
@@ -35,7 +35,7 @@
 <h1>Admin homepage</h1>
 <h2>Welcome,</h2>
 <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-<img th:src="@{/images/hello.png}"/>
+<img th:src="@{/static/images/hello.png}"/>
 
 </body>
 </html>
