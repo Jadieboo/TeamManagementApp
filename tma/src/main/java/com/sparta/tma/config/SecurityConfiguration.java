@@ -44,8 +44,7 @@ import java.util.UUID;
 
 @Configuration
 @AllArgsConstructor
-@EnableWebSecurity
-@EnableWebMvc
+//@EnableWebSecurity
 public class SecurityConfiguration {
 
     @Autowired

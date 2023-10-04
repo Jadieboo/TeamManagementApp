@@ -1,0 +1,18 @@
+
+
+* {
+    color: aqua;
+}
+
+.custom-bg {
+    background-color: deeppink;
+}
+
+body {
+    background-color: deeppink;
+}
+
+img {
+    width: 25%;
+    height: 50%;
+}
