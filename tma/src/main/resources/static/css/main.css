@@ -4,6 +4,11 @@
     color: aqua;
 }
 
+nav ul li, nav ul li form {
+    display: inline;
+    padding: 10px 10px;
+}
+
 .custom-bg {
     background-color: deeppink;
 }

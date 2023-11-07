@@ -10,11 +10,9 @@ import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 import com.sparta.tma.services.UserAccountService;
-import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +36,7 @@ public class AdminController {
     UserAccountService userAccountService;
 
 
-    @GetMapping("admin/employees")
+    @GetMapping("/admin/employees")
     public List<Employee> viewAllEmployees() {
 
         List<Employee> employeeList = employeeRepository.findAll();
@@ -51,8 +49,8 @@ public class AdminController {
     }
 
     @Transactional
-    @PostMapping("admin/register/employees")
-    public Employee createEmployee(@RequestBody EmployeeDTO employeeDetails) {
+    @PostMapping("/admin/register/employees")
+    public Employee createEmployeeAPI(@RequestBody EmployeeDTO employeeDetails) {
 
         Employee newEmployee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
 
@@ -69,7 +67,7 @@ public class AdminController {
     }
 
     @Transactional
-    @PatchMapping("admin/employees/{id}")
+    @PatchMapping("/admin/employees/{id}")
     public Employee updateEmployee(@PathVariable int id, @RequestBody EmployeeDTO employeeDetails) {
         Employee updateEmployee = employeeRepository.findEmployeeById(id);
         logger.info("Changes being made to " + updateEmployee);

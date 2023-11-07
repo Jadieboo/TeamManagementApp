@@ -5,16 +5,19 @@ import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 
+//@Service
 public class EmployeeDAO {
 
-    private final DepartmentRepository departmentRepository;
-    private final ProjectRepository projectRepository;
-
+//    @Autowired
+    private DepartmentRepository departmentRepository;
+//    @Autowired
+    private ProjectRepository projectRepository;
 
     public EmployeeDAO(DepartmentRepository departmentRepository, ProjectRepository projectRepository) {
         this.departmentRepository = departmentRepository;
         this.projectRepository = projectRepository;
     }
+
     public Employee createNewEmployee(EmployeeDTO employeeDetails) {
 
         Employee newEmployee = new Employee();
