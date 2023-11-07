@@ -1,6 +1,6 @@
 package com.sparta.tma;
 
-import com.sparta.tma.DTOs.EmployeeDTO;
+import com.sparta.tma.dtos.EmployeeDTO;
 
 public class TestUtils {
 

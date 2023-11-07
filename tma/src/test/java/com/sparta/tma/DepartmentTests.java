@@ -1,8 +1,8 @@
 package com.sparta.tma;
 
-import com.sparta.tma.DAOs.DepartmentDAO;
-import com.sparta.tma.DAOs.EmployeeDAO;
-import com.sparta.tma.DTOs.EmployeeDTO;
+import com.sparta.tma.daos.DepartmentDAO;
+import com.sparta.tma.daos.EmployeeDAO;
+import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.ProjectRepository;

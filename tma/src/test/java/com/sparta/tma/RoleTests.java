@@ -1,13 +1,12 @@
 package com.sparta.tma;
 
-import com.sparta.tma.DAOs.EmployeeDAO;
-import com.sparta.tma.DAOs.RoleDAO;
-import com.sparta.tma.DTOs.EmployeeDTO;
+import com.sparta.tma.daos.EmployeeDAO;
+import com.sparta.tma.daos.RoleDAO;
+import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.DepartmentRepository;
-import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

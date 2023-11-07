@@ -72,8 +72,10 @@ public class SecurityConfiguration {
         // this was creating issues with not allowing me to access endpoints
 //        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-//        http.httpBasic(Customizer.withDefaults());
+        // API Authentication
+        http.httpBasic(Customizer.withDefaults());
 
+        // Form-Based Authentication
         http.formLogin()
 //                .loginPage("/login") // custom login does not work with /loginHandler
                 .loginProcessingUrl("/login")

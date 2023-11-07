@@ -1,4 +1,4 @@
-package com.sparta.tma.DTOs;
+package com.sparta.tma.dtos;
 
 public class AppUserDTO {
     private String username;

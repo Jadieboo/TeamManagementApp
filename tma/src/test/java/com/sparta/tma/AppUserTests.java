@@ -1,8 +1,8 @@
 package com.sparta.tma;
 
 import com.sparta.tma.services.UserAccountService;
-import com.sparta.tma.DAOs.EmployeeDAO;
-import com.sparta.tma.DTOs.EmployeeDTO;
+import com.sparta.tma.daos.EmployeeDAO;
+import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.entities.Role;

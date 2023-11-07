@@ -1,7 +1,7 @@
 package com.sparta.tma.api.controllers;
 
-import com.sparta.tma.DAOs.*;
-import com.sparta.tma.DTOs.EmployeeDTO;
+import com.sparta.tma.daos.*;
+import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.exceptions.EmployeeNotFoundException;
@@ -10,6 +10,7 @@ import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 import com.sparta.tma.services.UserAccountService;
+import com.sparta.tma.services.ViewEmployeesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +36,15 @@ public class AdminController {
     @Autowired
     UserAccountService userAccountService;
 
+    @Autowired
+    ViewEmployeesService viewEmployeesService;
+
 
     @GetMapping("/admin/employees")
     public List<Employee> viewAllEmployees() {
+        logger.info("view all employees method active");
 
-        List<Employee> employeeList = employeeRepository.findAll();
-
-        if (employeeList.size() < 1) {
-            logger.error("Employee list is empty, should be a minimum of one", employeeList);
-        }
-
-        return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
+        return viewEmployeesService.getAllEmployees();
     }
 
     @Transactional
