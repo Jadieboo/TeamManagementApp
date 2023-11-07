@@ -1,48 +1,96 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>New Employee</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>New Employee</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}" />
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}" />
 
-<nav>
-    <ul>
-        <li>
-            <a th:href="@{/admin/homepage}">
-                Home
-            </a>
-        </li>
-        <li>
-            <a th:href="@{/welcome}">
-                Page 1
-            </a>
-        </li>
-        <li>
-            <form th:action="@{/logout}" method="post" >
-                <button type="submit">Logout</button>
+    <!--    <link rel="stylesheet" type="text/css"  href="/tma/src/main/resources/static/css/output.css" />-->
+    <!--    <link rel="stylesheet" type="text/css"  href="/tma/src/main/resources/static/css/register.css" />-->
+
+
+    </head>
+
+    <body>
+
+        <nav>
+            <ul>
+                <li>
+                    <a th:href="@{/admin/homepage}">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/welcome}">
+                        Page 1
+                    </a>
+                </li>
+                <li>
+                    <form th:action="@{/logout}" method="post" >
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            <h1 class="lg:text-3xl lg:mt-8 text-2xl font-bold text-gray-900 mb-8">Create a new employee</h1>
+
+            <form th:action="@{/admin/web/register/employees}" th:object="${employeeDetails}" method="POST" class="w-full mb-3 max-w-screen-sm p-2">
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="firstName">
+                            First Name
+                        </label>
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="firstName" name="firstName" type="text" th:field="*{firstName}" placeholder="Jane" required>
+                    </div>
+
+                    <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="lastName">
+                            Last Name
+                        </label>
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="lastName" name="lastName" type="text" th:field="*{lastName}" placeholder="Doe" required>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap -mx-3 md:mb-8 mb-5 ">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="role">
+                            Role
+                        </label>
+
+                        <div class="relative">
+                            <select id="role" name="role" class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer">
+                                <option th:each="r : ${roleList}" th:value="${r}" th:text="${r}" th:field="*{role}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="department">
+                            Department
+                        </label>
+
+                        <div class="relative">
+                            <select id="department" name="department" class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer">
+                                <option th:each="dept : ${departmentList}" th:value="${dept}" th:text="${dept}" th:field="*{department}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="submit" value="Create" class="btn">
             </form>
-        </li>
-    </ul>
-</nav>
 
-<h1>Create a new employee</h1>
-<form>
-    <label for="firstName">First Name:</label>
-    <input type="text" name="firstName" id="firstName">
-    <br>
-    <label for="lastName">Last Name:</label>
-    <input type="text" name="lastName" id="lastName">
-    <br>
-    <label for="role">Employee's Role:</label>
-    <input type="text" name="role" id="role">
-    <br>
-    <label for="department">Department</label>
-    <input type="text" name="department" id="department">
-    <input type="submit" value="Create">
-</form>
+            <div th:if="${showConfirmation}">
+                <p>Form submission successful!</p>
+                <p>New employee added to the database: <span th:text="${formEmployee}"></span> </p>
+            </div>
 
-<!--TODO: create a branch to submit and work on this, need to add functionality to the form-->
+        </main>
 
-</body>
+        <!--TODO: need to add functionality to the form-->
+
+    </body>
 </html>

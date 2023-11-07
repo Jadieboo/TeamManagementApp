@@ -1,0 +1,58 @@
+:root {
+    --text-white: rgba(255 255 255);
+    --bg-blue-400: rgb(52, 116, 255);
+    --bg-blue-600: rgb(37 99 235);
+    --bg-blue-700: rgb(33, 84, 194);
+
+}
+
+nav ul li, nav ul li form {
+    display: inline;
+    padding: 10px 10px;
+}
+
+
+main {
+    width: 100%;
+    margin: auto;
+    display: block;
+    text-align: center;
+}
+
+form {
+    width: 100%;
+    max-width: 32rem;
+    margin-bottom: 12px;
+    display: inline-block;
+    text-align: left;
+    overflow: hidden;
+}
+
+h1 {
+    text-transform: capitalize;
+}
+
+input.btn {
+    width: 100%;
+    padding: 0.25rem;
+    background-color: var(--bg-blue-600);
+    color: var(--text-white);
+    font-size: 1.25em;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+input.btn:hover {
+    background-color: var(--bg-blue-400);
+}
+
+input.btn:focus {
+    background-color: green;
+    outline: 2px solid rgba(41, 40, 40, 0.877);
+}
+
+
+
+
+
+
