@@ -1,11 +1,10 @@
-package com.sparta.tma.web;
+package com.sparta.tma.web.controllers;
 
-import com.sparta.tma.DAOs.EmployeeDAO;
-import com.sparta.tma.DTOs.EmployeeDTO;
+import com.sparta.tma.daos.EmployeeDAO;
+import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Department;
 import com.sparta.tma.entities.Employee;
-import com.sparta.tma.entities.Role;
 import com.sparta.tma.exceptions.EmployeeNotFoundException;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.DepartmentRepository;
@@ -15,18 +14,15 @@ import com.sparta.tma.services.UserAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 @Controller
 public class CreateNewEmployee {

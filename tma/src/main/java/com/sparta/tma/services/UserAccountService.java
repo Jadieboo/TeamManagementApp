@@ -1,7 +1,7 @@
 package com.sparta.tma.services;
 
-import com.sparta.tma.DAOs.RoleDAO;
-import com.sparta.tma.DTOs.EmployeeDTO;
+import com.sparta.tma.daos.RoleDAO;
+import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

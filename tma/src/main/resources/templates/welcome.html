@@ -8,20 +8,7 @@
 </head>
 <body>
 
-<nav>
-    <ul>
-        <li>
-            <a th:href="@{'/' + ${role} + '/homepage'}">
-                Home
-            </a>
-        </li>
-        <li>
-            <form th:action="@{/logout}" method="post" >
-                <button type="submit">Logout</button>
-            </form>
-        </li>
-    </ul>
-</nav>
+<nav th:replace="fragments/navbar-fragment :: navbar"></nav>
 
 <h1>Testing! Hiiiii</h1>
 </body>

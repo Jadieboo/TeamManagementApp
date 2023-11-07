@@ -7,30 +7,7 @@
 </head>
 <body class="custom-bg">
 
-<nav>
-    <ul>
-        <li>
-            <a th:href="@{/admin/homepage}">
-                Home
-            </a>
-        </li>
-        <li>
-            <a th:href="@{/welcome}">
-                Welcome
-            </a>
-        </li>
-        <li>
-            <a th:href="@{/admin/new/employees}">
-                Create New Employee
-            </a>
-        </li>
-        <li>
-            <form th:action="@{/logout}" method="post" >
-                <button type="submit">Logout</button>
-            </form>
-        </li>
-    </ul>
-</nav>
+<nav th:replace="fragments/navbar-fragment :: navbar"></nav>
 
 <h1>Admin homepage</h1>
 <h2>Welcome,</h2>

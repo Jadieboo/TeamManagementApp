@@ -1,7 +1,7 @@
 package com.sparta.tma;
 
-import com.sparta.tma.DAOs.EmployeeDAO;
-import com.sparta.tma.DTOs.EmployeeDTO;
+import com.sparta.tma.daos.EmployeeDAO;
+import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Department;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.entities.Project;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

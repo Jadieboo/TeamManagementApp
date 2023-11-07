@@ -8,25 +8,7 @@
 </head>
 <body>
 
-<nav>
-    <ul>
-        <li>
-            <a th:href="@{/manager/homepage}">
-                Home
-            </a>
-        </li>
-        <li>
-            <a th:href="@{/welcome}">
-                Page 1
-            </a>
-        </li>
-        <li>
-            <form th:action="@{/logout}" method="post" >
-                <button type="submit">Logout</button>
-            </form>
-        </li>
-    </ul>
-</nav>
+<nav th:replace="fragments/navbar-fragment :: navbar"></nav>
 
 <h1>Manager homepage</h1>
 <h2>Welcome,</h2>

@@ -14,25 +14,7 @@
 
     <body>
 
-        <nav>
-            <ul>
-                <li>
-                    <a th:href="@{/admin/homepage}">
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a th:href="@{/welcome}">
-                        Page 1
-                    </a>
-                </li>
-                <li>
-                    <form th:action="@{/logout}" method="post" >
-                        <button type="submit">Logout</button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
+    <nav th:replace="fragments/navbar-fragment :: navbar"></nav>
 
         <main>
             <h1 class="lg:text-3xl lg:mt-8 text-2xl font-bold text-gray-900 mb-8">Create a new employee</h1>
@@ -90,7 +72,6 @@
 
         </main>
 
-        <!--TODO: need to add functionality to the form-->
 
     </body>
 </html>
