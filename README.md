@@ -1,9 +1,9 @@
 # TeamManagementApp
 
-This is a demo of a team management app, that allows managers to see what projects their employees/teams are currently assigned to. 
+Team Management App (TMA) is a management system that allows management to view their teams and manage what projects they're assigned to. Employees are also able to view their own teams and see which colleagues are working on the same project as them and administrators are able to view all employees as well as add new employees to the system.
 
 There are 3 different access levels depending on the persons role within the company.
-- Admin - Has access to view all employees, create new employees and update employee information. When a new employee is registered, a user account will automatically be created.
+- Admin - Has access to view all employees, create new employees and update employee information. When a new employee is registered, a company user account will automatically be created.
 - Manager - Has access to view all employees within their department/team, can update which project an employee is working on. 
 - Employee - Has access to view themselves and what project they are on and can view team members of the same project/team.
 
