@@ -60,6 +60,8 @@ public class AppUserTests {
 
         String expected = "AppUser{id: 0, username: Atest1@company.com, password: " + user.getPassword() + ", role: ADMIN, employee: " + employee + "}";
 
+        System.out.println(user.toString());
+        System.out.println(expected);
         assertEquals(expected, user.toString());
     }
 
