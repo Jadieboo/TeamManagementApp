@@ -14,6 +14,7 @@ import com.sparta.tma.services.ViewEmployeesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,16 +36,17 @@ public class AdminController {
     private ProjectRepository projectRepository;
     @Autowired
     UserAccountService userAccountService;
-
     @Autowired
     ViewEmployeesService viewEmployeesService;
 
 
     @GetMapping("/admin/employees")
-    public List<Employee> viewAllEmployees() {
+    public List<Employee> viewAllEmployees(Authentication authentication) {
         logger.info("view all employees method active");
 
-        return viewEmployeesService.getAllEmployees();
+        AppUser user = appUserRepository.findByUsername(authentication.getName()).get();
+
+        return viewEmployeesService.getAllEmployees(user);
     }
 
     @Transactional

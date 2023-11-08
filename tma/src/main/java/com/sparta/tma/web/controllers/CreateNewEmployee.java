@@ -49,14 +49,12 @@ public class CreateNewEmployee {
     }
 
 
+    //TODO: create a registration service and turn employee dao into a service or component
 
     @Transactional
     @PostMapping("/admin/web/register/employees")
     public String processingNewEmployeeForm(@ModelAttribute("employeeDetails") EmployeeDTO employeeDetails, Model model) {
-        logger.info("employeeDetails = first name: {}", employeeDetails.getFirstName());
-        logger.info("employeeDetails = last name: {}", employeeDetails.getLastName());
-        logger.info("employeeDetails = role: {}", employeeDetails.getRole());
-        logger.info("employeeDetails = dept: {}", employeeDetails.getDepartment());
+        logger.info("employeeDetails: {}", employeeDetails);
 
         Employee newEmployee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
 
@@ -82,6 +80,8 @@ public class CreateNewEmployee {
 
         return "adminCreateNewEmployee";
     }
+
+    // TODO: extract methods into its own class
 
     private List<String> populateDepartmentOptions() {
         List<String> departments = new ArrayList<>();

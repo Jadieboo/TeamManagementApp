@@ -15,6 +15,18 @@ public class UserAccountService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    /**
+     * Creates a new user account when a new employee is created
+     *
+     * The username will be a generated company email based upon the employee's name and employee ID
+     *
+     * A standard password is generated based on users first and last name initials, followed by 123
+     *
+     * USERNAME EG) janedoe1387@company.com
+     * PASSWORD EG) jd123
+     *
+     */
+
     public AppUser createNewAppUser(EmployeeDTO employeeDetails, Integer id) throws NullPointerException, IllegalArgumentException {
 
         if (id == null) {
