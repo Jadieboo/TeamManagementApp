@@ -1,6 +1,7 @@
 package com.sparta.tma.web.controllers;
 
 import com.sparta.tma.entities.AppUser;
+import com.sparta.tma.entities.Department;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.services.ViewEmployeesService;
@@ -28,9 +29,12 @@ public class ViewEmployees {
     @Autowired
     private AppUserRepository appUserRepository;
 
+    /**
+     * ADMIN ACCESS
+     */
     @GetMapping("/admin/view/employees")
     public String getAllEmployeesForAdmin(Model model, Authentication authentication) {
-        logger.info("view employees admin access active");
+        logger.info("view employees for admin GET method active");
 
         Optional<AppUser> user = appUserRepository.findByUsername(authentication.getName());
 
@@ -41,12 +45,38 @@ public class ViewEmployees {
         return "adminViewAllEmployees";
     }
 
+
+    /**
+     * MANAGER ACCESS
+     */
     @GetMapping("/manager/view/employees")
-    public String getEmployeesForManager() {
-        List<Employee> list = viewEmployeesService.getEmployeesForManager();
+    public String getEmployeesForManager(Model model, Authentication authentication) {
+        logger.info("view employees for manager GET method");
+
+        AppUser user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername()).get();
+
+        Department department = user.getEmployee().getDepartment();
+
+        List<Employee> employeeList = viewEmployeesService.getEmployeesByDepartment(department);
+
+        if (!employeeList.isEmpty()) {
+            employeeList.remove(user.getEmployee());
+        }
+
+        if (employeeList.size() < 1) {
+            logger.warn("No employees found");
+        } else {
+            logger.info("list size of all employees: {}", employeeList.size());
+            model.addAttribute("employeeList", employeeList);
+        }
+
         return "welcome";
     }
 
+
+    /**
+     * EMPLOYEE ACCESS
+     */
     @GetMapping("/employee/view/colleagues")
     public String getEmployeesForEmployee() {
         List<Employee> list = viewEmployeesService.getEmployeesForEmployee();

@@ -1,6 +1,7 @@
 package com.sparta.tma.services;
 
 import com.sparta.tma.entities.AppUser;
+import com.sparta.tma.entities.Department;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
@@ -37,9 +38,12 @@ public class ViewEmployeesService {
         return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
     }
 
-    public List<Employee> getEmployeesForManager() {
+    public List<Employee> getEmployeesByDepartment(Department department) {
+        logger.info("In the view employees service > get employees by department method active");
 
-        return null;
+        List<Employee> employeeList = employeeRepository.findAllByDepartment(department);
+
+        return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
     }
 
     public List<Employee> getEmployeesForEmployee() {
