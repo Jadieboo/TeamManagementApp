@@ -12,7 +12,18 @@ There are 3 different access levels depending on the persons role within the com
 ### Web App
 With a registered account, in your browser, use endpoint -> http://localhost:8080/login to navigate to the login page and enter your credentials to gain access. You will then be directed to your own homepage. Endpoints listed below will also be accessible through the web application using navigational links.
 
-### Admin Access
+<!-- CHECK ALL IMPORTANT WEB ENDPOINTS ARE COVERED -->
+
+|Access|Description|Request Type|Endpoint|
+|---|---|---|---|
+|Admin|Create new employee page|GET|http://localhost:8080/admin/new/employees|
+|Admin|View all employees|GET|http://localhost:8080/admin/view/employees|
+|Manager|View employees within team|GET|http://localhost:8080/manager/view/employees|
+|Employee|View colleagues within team|GET|http://localhost:8080/employee/view/colleagues|
+
+
+### API
+#### Admin Access
 
 The API exposes three endpoints
 |#|Description|Request Type|Endpoint|
@@ -51,11 +62,10 @@ PATCH request for updating existing employee does not require project to be prov
     "department": "HR"
 }
 ```
----
 
-### Manager Access
+<!-- MIGHT NEED TO TAKE THE EMPLOYEE ACCESS OUT -->
 
-### Employee Access
+#### Employee Access
 The API exposes two endpoints
 |#|Description|Request Type|Endpoint|
 |---|---|---|---|
