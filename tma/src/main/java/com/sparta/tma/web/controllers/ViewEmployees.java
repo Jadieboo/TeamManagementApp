@@ -79,7 +79,7 @@ public class ViewEmployees {
             model.addAttribute("employeeList", employeeList);
         }
 
-        return "welcome";
+        return "managerViewEmployees";
     }
 
 
