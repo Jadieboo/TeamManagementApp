@@ -46,7 +46,13 @@ public class AdminController {
 
         AppUser user = appUserRepository.findByUsername(authentication.getName()).get();
 
-        return viewEmployeesService.getAllEmployees(user);
+        List<Employee> employeeList = viewEmployeesService.getAllEmployees();
+
+        if (!employeeList.isEmpty()) {
+            employeeList.remove(user.getEmployee());
+        }
+
+        return employeeList;
     }
 
     @Transactional
