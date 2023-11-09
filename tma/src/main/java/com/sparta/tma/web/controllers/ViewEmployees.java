@@ -38,9 +38,18 @@ public class ViewEmployees {
 
         Optional<AppUser> user = appUserRepository.findByUsername(authentication.getName());
 
-        List<Employee> allEmployeesList = viewEmployeesService.getAllEmployees(user.get());
+        List<Employee> allEmployeesList = viewEmployeesService.getAllEmployees();
 
-        model.addAttribute("employeeList", allEmployeesList);
+        if (!allEmployeesList.isEmpty()) {
+            allEmployeesList.remove(user.get().getEmployee());
+        }
+
+        if (allEmployeesList.size() < 1) {
+            logger.warn("No employees found");
+        } else {
+            logger.info("list size of all employees: {}", allEmployeesList.size());
+            model.addAttribute("employeeList", allEmployeesList);
+        }
 
         return "adminViewAllEmployees";
     }

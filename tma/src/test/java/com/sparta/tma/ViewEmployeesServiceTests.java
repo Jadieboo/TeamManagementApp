@@ -32,9 +32,9 @@ public class ViewEmployeesServiceTests {
         AppUser user = appUserRepository.findByUsername("admin").get();
 
         List<Employee> expected = employeeRepository.findAll();
-        List<Employee> results = viewEmployeesService.getAllEmployees(user);
+        List<Employee> results = viewEmployeesService.getAllEmployees();
 
-        assertEquals(expected.size()-1, results.size());
+        assertEquals(expected.size(), results.size());
     }
 
     @Test

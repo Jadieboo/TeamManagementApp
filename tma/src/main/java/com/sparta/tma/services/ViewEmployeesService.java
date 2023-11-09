@@ -20,20 +20,10 @@ public class ViewEmployeesService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public List<Employee> getAllEmployees(AppUser user) {
+    public List<Employee> getAllEmployees() {
         logger.info("In the view employees service > get all employees method active");
-        logger.info("User is present: {}", user);
+
         List<Employee> employeeList = employeeRepository.findAll();
-
-        if (!employeeList.isEmpty()) {
-            employeeList.remove(user.getEmployee());
-        }
-
-        if (employeeList.size() < 1) {
-            logger.warn("No employees found");
-        } else {
-            logger.info("list size of all employees: {}", employeeList.size());
-        }
 
         return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
     }
