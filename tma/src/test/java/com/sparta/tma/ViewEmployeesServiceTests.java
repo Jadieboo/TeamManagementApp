@@ -53,6 +53,27 @@ public class ViewEmployeesServiceTests {
             }
         }
 
+        assertEquals(expected.size(), results.size());
+    }
+
+    @Test
+    @DisplayName("Given a user, returns all employees within the same department of the user, excluding the user from the list")
+    public void getEmployeesByDepartmentExcludingUser() {
+        AppUser user = appUserRepository.findByUsername("manager").get();
+        Department department = user.getEmployee().getDepartment();
+
+        List<Employee> employees = employeeRepository.findAll();
+        List<Employee> results = viewEmployeesService.getEmployeesByDepartment(department);
+        List<Employee> expected = new ArrayList<>();
+
+        for (Employee e : employees) {
+            if (e.getDepartment().equals(department)) {
+                expected.add(e);
+            }
+        }
+
+        expected.remove(user.getEmployee());
+        results.remove(user.getEmployee());
 
         assertEquals(expected.size(), results.size());
     }
