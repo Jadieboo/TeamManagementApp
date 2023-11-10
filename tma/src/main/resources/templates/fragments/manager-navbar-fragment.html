@@ -8,10 +8,10 @@
 </head>
 <body>
 
-<nav th:fragment="navbar">
+<nav th:fragment="manager-navbar">
   <ul>
     <li>
-      <a th:href="@{/admin/homepage}">
+      <a th:href="@{/manager/homepage}">
         Home
       </a>
     </li>
@@ -21,12 +21,7 @@
       </a>
     </li>
     <li>
-      <a th:href="@{/admin/new/employees}">
-        Create New Employee
-      </a>
-    </li>
-    <li>
-      <a th:href="@{/view/employees}">
+      <a th:href="@{/manager/view/employees}">
         View Employees
       </a>
     </li>

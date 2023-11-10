@@ -14,9 +14,10 @@
 
     <body>
 
-    <nav th:replace="fragments/navbar-fragment :: navbar"></nav>
+    <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
 
-        <main>
+
+    <main>
             <h1 class="lg:text-3xl lg:mt-8 text-2xl font-bold text-gray-900 mb-8">Create a new employee</h1>
 
             <form th:action="@{/admin/web/register/employees}" th:object="${employeeDetails}" method="POST" class="w-full mb-3 max-w-screen-sm p-2">

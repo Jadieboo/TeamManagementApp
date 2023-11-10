@@ -1,5 +1,7 @@
 package com.sparta.tma.services;
 
+import com.sparta.tma.entities.AppUser;
+import com.sparta.tma.entities.Department;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
@@ -20,21 +22,18 @@ public class ViewEmployeesService {
 
     public List<Employee> getAllEmployees() {
         logger.info("In the view employees service > get all employees method active");
-        logger.atTrace();
-        List<Employee> employeeList = employeeRepository.findAll();
 
-        if (employeeList.size() < 1) {
-            logger.error("Employee list is empty, should be a minimum of one. {}", employeeList);
-        } else {
-            logger.info("list size of all employees: {}", employeeList.size());
-        }
+        List<Employee> employeeList = employeeRepository.findAll();
 
         return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
     }
 
-    public List<Employee> getEmployeesForManager() {
+    public List<Employee> getEmployeesByDepartment(Department department) {
+        logger.info("In the view employees service > get employees by department method active");
 
-        return null;
+        List<Employee> employeeList = employeeRepository.findAllByDepartment(department);
+
+        return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
     }
 
     public List<Employee> getEmployeesForEmployee() {
