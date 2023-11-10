@@ -32,61 +32,9 @@ public class EmployeeController {
     }
 
 
-    // all colleagues with any role
-    @GetMapping("/colleagues")
-    public List<Employee> viewAllColleaguesWithinDepartment(Authentication authentication) {
 
-        logger.info("inside view all colleagues within department GET method");
 
-        String username = authentication.getName();
 
-        logger.info("authentication: {}, " +
-                "Username: {}", authentication, username);
-
-        Optional<AppUser> user = appUserRepository.findByUsername(username);
-
-        List<Employee> employeeList = employeeRepository.findAllByDepartment(user.get().getEmployee().getDepartment());
-
-        if (!employeeList.isEmpty()) {
-            employeeList.remove(user.get().getEmployee());
-        }
-
-        if (employeeList.size() < 1) {
-            logger.warn("No employees found");
-        } else {
-            logger.info("employee list size: {}", employeeList.size());
-        }
-
-        return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
-    }
-
-    // all colleagues with role employee, no manager or admins
-    @GetMapping("/colleagues/project")
-    public List<Employee> viewAllColleaguesWithinProject(Authentication authentication) {
-
-        logger.info("inside view all colleagues within project GET method");
-        
-        String username = authentication.getName();
-
-        logger.info("authentication: {}, " +
-                "Username: {}", authentication, username);
-
-        Optional<AppUser> user = appUserRepository.findByUsername(username);
-
-        List<Employee> employeeList = employeeRepository.findAllByDepartmentAndProjectWithRoleEmployee(user.get().getEmployee().getDepartment(), user.get().getEmployee().getProject());
-
-        if (!employeeList.isEmpty()) {
-            employeeList.remove(user.get().getEmployee());
-        }
-
-        if (employeeList.size() < 1) {
-            logger.warn("No employees found");
-        } else {
-            logger.info("employee list size: {}", employeeList.size());
-        }
-
-        return (!employeeList.isEmpty() ? employeeList : Collections.emptyList());
-    }
 
 
 
