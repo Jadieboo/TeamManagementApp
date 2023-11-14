@@ -114,6 +114,4 @@ public class CreateNewEmployee {
         model.addAttribute("roleList", populateRoleOptions());
         model.addAttribute("employeeDetails", employeeDetails);
     }
-
-
 }
