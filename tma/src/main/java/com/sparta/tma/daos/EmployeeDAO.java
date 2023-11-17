@@ -3,18 +3,21 @@ package com.sparta.tma.daos;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.DepartmentRepository;
+import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 
 //@Service
 public class EmployeeDAO {
-
-//    @Autowired
     private DepartmentRepository departmentRepository;
-//    @Autowired
     private ProjectRepository projectRepository;
-
+    private EmployeeRepository employeeRepository;
     public EmployeeDAO(DepartmentRepository departmentRepository, ProjectRepository projectRepository) {
         this.departmentRepository = departmentRepository;
+        this.projectRepository = projectRepository;
+    }
+
+    public EmployeeDAO(EmployeeRepository employeeRepository, ProjectRepository projectRepository) {
+        this.employeeRepository = employeeRepository;
         this.projectRepository = projectRepository;
     }
 
@@ -29,6 +32,14 @@ public class EmployeeDAO {
         newEmployee.setProject(new ProjectDAO(projectRepository).getProject(employeeDetails));
 
         return newEmployee;
+    }
+
+    public Employee updateAssignedProjectToEmployee(int employeeId, EmployeeDTO employeeDetails) {
+        Employee updateEmployee = employeeRepository.findEmployeeById(employeeId);
+
+        updateEmployee.setProject(new ProjectDAO(projectRepository).getProject(employeeDetails));
+
+        return updateEmployee;
     }
 
     private String getFormattedFirstName(EmployeeDTO employeeDetails) throws NullPointerException {
