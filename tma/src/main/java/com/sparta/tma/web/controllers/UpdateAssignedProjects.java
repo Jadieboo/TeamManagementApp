@@ -6,6 +6,7 @@ import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
+import com.sparta.tma.utils.PopulateEmployeeAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class UpdateAssignedProjects {
     Logger logger = LoggerFactory.getLogger(getClass());
 
+    // TODO: find out why this is null
+    //  also for create new employee web controller
+
+    @Autowired
+    private PopulateEmployeeAttributes populateUtil;
     @Autowired
     private DepartmentRepository departmentRepository;
     @Autowired
     private ProjectRepository projectRepository;
-
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -34,15 +39,26 @@ public class UpdateAssignedProjects {
         Employee employee = employeeRepository.findEmployeeById(id);
         model.addAttribute("employee", employee);
 
+        EmployeeDTO employeeDetails = new EmployeeDTO();
+        model.addAttribute("employeeDetails", employeeDetails);
+        model.addAttribute("projectList", populateUtil.populateDepartmentOptions());
+
+
         return "manager-update-employee";
     }
 
+    //TODO implement form on front end
     @Transactional
     @PatchMapping("/manager/update/employees/{id}")
     public String updateEmployeeAssignedProject(@PathVariable int id, @ModelAttribute("employeeDetails") EmployeeDTO employeeDetails, Model model) {
         Employee employee = new EmployeeDAO(employeeRepository, projectRepository).updateAssignedProjectToEmployee(id, employeeDetails);
 
-        return "";
+        Employee savedEmployee = employeeRepository.save(employee);
+
+        model.addAttribute("employee", savedEmployee);
+        model.addAttribute("projectList", populateUtil.populateProjectOptions());
+
+        return "view-employee-details";
     }
 
 

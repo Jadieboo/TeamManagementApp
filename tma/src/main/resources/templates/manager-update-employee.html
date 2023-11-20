@@ -16,5 +16,19 @@
         <h1 th:text="*{employee.lastName}"></h1>
         <p> This is the page for updating details</p>
 
+        <form>
+            <div>
+                <label> Project </label>
+
+                <div>
+                    <select id="project" name="project">
+                        <option th:each="project : ${projectList}" th:value="${project}" th:text="${project}" th:field="*{project}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <input type="submit" value="Create" class="btn">
+        </form>
+
     </body>
 </html>

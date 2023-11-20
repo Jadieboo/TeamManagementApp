@@ -3,7 +3,6 @@ package com.sparta.tma.web.controllers;
 import com.sparta.tma.daos.EmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
-import com.sparta.tma.entities.Department;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.exceptions.EmployeeNotFoundException;
 import com.sparta.tma.repositories.AppUserRepository;
@@ -11,6 +10,7 @@ import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 import com.sparta.tma.services.UserAccountService;
+import com.sparta.tma.utils.PopulateEmployeeAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 public class CreateNewEmployee {
     private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    // TODO: find out why this is null
+    private PopulateEmployeeAttributes populateUtil = new PopulateEmployeeAttributes();
 
     @Autowired
     private DepartmentRepository departmentRepository;
@@ -81,37 +81,10 @@ public class CreateNewEmployee {
         return "adminCreateNewEmployee";
     }
 
-    // TODO: extract methods into its own class
-
-    private List<String> populateDepartmentOptions() {
-        List<String> departments = new ArrayList<>();
-
-        List<Department> departmentList = departmentRepository.findAll();
-
-        for (Department d : departmentList) {
-            departments.add(d.getDepartment());
-        }
-
-        logger.info("department list: {}", departments);
-
-        return departments;
-    }
-
-    private List<String> populateRoleOptions() {
-        List<String> roles = new ArrayList<>();
-        roles.add("Admin");
-        roles.add("Manager");
-        roles.add("Employee");
-
-        logger.info("roles list: {}", roles);
-
-        return roles;
-    }
-
     private void initializePageModel(Model model) {
         EmployeeDTO employeeDetails = new EmployeeDTO();
-        model.addAttribute("departmentList", populateDepartmentOptions());
-        model.addAttribute("roleList", populateRoleOptions());
+        model.addAttribute("departmentList", populateUtil.populateDepartmentOptions());
+        model.addAttribute("roleList", populateUtil.populateRoleOptions());
         model.addAttribute("employeeDetails", employeeDetails);
     }
 }
