@@ -57,7 +57,7 @@ public class UtilTests {
         List<String> expected = new ArrayList<>(List.of(roles));
 
         List<String> results = popUtil.populateRoleOptions();
-        
+
         assertEquals(expected, results);
     }
 }
