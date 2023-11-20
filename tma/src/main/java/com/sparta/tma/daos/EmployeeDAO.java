@@ -5,9 +5,12 @@ import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //@Service
 public class EmployeeDAO {
+    Logger logger = LoggerFactory.getLogger(getClass());
     private DepartmentRepository departmentRepository;
     private ProjectRepository projectRepository;
     private EmployeeRepository employeeRepository;
@@ -22,6 +25,7 @@ public class EmployeeDAO {
     }
 
     public Employee createNewEmployee(EmployeeDTO employeeDetails) {
+        logger.info("create new employee method active inside EmployeeDAO");
 
         Employee newEmployee = new Employee();
         newEmployee.setId(0);
@@ -35,6 +39,8 @@ public class EmployeeDAO {
     }
 
     public Employee updateAssignedProjectToEmployee(int employeeId, EmployeeDTO employeeDetails) {
+        logger.info("update employee's assigned project method active inside EmployeeDAO");
+
         Employee updateEmployee = employeeRepository.findEmployeeById(employeeId);
 
         updateEmployee.setProject(new ProjectDAO(projectRepository).getProject(employeeDetails));
