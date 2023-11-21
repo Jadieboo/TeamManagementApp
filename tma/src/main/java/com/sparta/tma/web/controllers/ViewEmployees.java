@@ -4,6 +4,7 @@ import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Department;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.AppUserRepository;
+import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.services.ViewEmployeesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collection;
@@ -29,6 +31,9 @@ public class ViewEmployees {
     private ViewEmployeesService viewEmployeesService;
     @Autowired
     private AppUserRepository appUserRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     /**
      * ADMIN ACCESS
@@ -79,6 +84,14 @@ public class ViewEmployees {
         getPopulatedResultsModelAttribute(model, employeeList);
 
         return "viewEmployees";
+    }
+
+    @GetMapping("/manager/view/employees/{id}")
+    public String viewEmployeeById(@PathVariable int id, Model model) {
+        Employee employee = employeeRepository.findEmployeeById(id);
+        model.addAttribute("employee", employee);
+
+        return "view-employee-details";
     }
 
 

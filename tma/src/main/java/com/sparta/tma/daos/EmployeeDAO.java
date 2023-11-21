@@ -3,22 +3,29 @@ package com.sparta.tma.daos;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.DepartmentRepository;
+import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //@Service
 public class EmployeeDAO {
-
-//    @Autowired
+    Logger logger = LoggerFactory.getLogger(getClass());
     private DepartmentRepository departmentRepository;
-//    @Autowired
     private ProjectRepository projectRepository;
-
+    private EmployeeRepository employeeRepository;
     public EmployeeDAO(DepartmentRepository departmentRepository, ProjectRepository projectRepository) {
         this.departmentRepository = departmentRepository;
         this.projectRepository = projectRepository;
     }
 
+    public EmployeeDAO(EmployeeRepository employeeRepository, ProjectRepository projectRepository) {
+        this.employeeRepository = employeeRepository;
+        this.projectRepository = projectRepository;
+    }
+
     public Employee createNewEmployee(EmployeeDTO employeeDetails) {
+        logger.info("create new employee method active inside EmployeeDAO");
 
         Employee newEmployee = new Employee();
         newEmployee.setId(0);
@@ -29,6 +36,16 @@ public class EmployeeDAO {
         newEmployee.setProject(new ProjectDAO(projectRepository).getProject(employeeDetails));
 
         return newEmployee;
+    }
+
+    public Employee updateAssignedProjectToEmployee(int employeeId, EmployeeDTO employeeDetails) {
+        logger.info("update employee's assigned project method active inside EmployeeDAO");
+
+        Employee updateEmployee = employeeRepository.findEmployeeById(employeeId);
+
+        updateEmployee.setProject(new ProjectDAO(projectRepository).getProject(employeeDetails));
+
+        return updateEmployee;
     }
 
     private String getFormattedFirstName(EmployeeDTO employeeDetails) throws NullPointerException {
