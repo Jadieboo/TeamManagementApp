@@ -19,6 +19,8 @@ With a registered account, in your browser, use endpoint -> http://localhost:808
 |Admin|Create new employee page|GET|http://localhost:8080/admin/new/employees|
 |Admin|View all employees|GET|http://localhost:8080/admin/view/employees|
 |Manager|View employees within team|GET|http://localhost:8080/manager/view/employees|
+|Manager|View employee by id (provide id number as a replacement for {id} in the url)|GET|http://localhost:8080/manager/view/employees/{id}|
+|Manager|Update an employee's assigned project (provide id number as a replacement for {id} in the url)|PATCH|http://localhost:8080/manager/view/employees/update/{id}|
 |Employee|View colleagues within team|GET|http://localhost:8080/employee/view/colleagues|
 
 
