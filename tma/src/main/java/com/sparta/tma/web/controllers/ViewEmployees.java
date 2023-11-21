@@ -6,6 +6,7 @@ import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.services.ViewEmployeesService;
+import com.sparta.tma.utils.PopulateModelAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -31,9 +33,10 @@ public class ViewEmployees {
     private ViewEmployeesService viewEmployeesService;
     @Autowired
     private AppUserRepository appUserRepository;
-
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private PopulateModelAttributes modelUtil;
 
     /**
      * ADMIN ACCESS
@@ -45,7 +48,7 @@ public class ViewEmployees {
         AppUser user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername()).get();
 
         if (user != null && user.getRole() != null) {
-            getRoleModelAttribute(model, user);
+            modelUtil.getRoleModelAttribute(model, user);
         }
 
         List<Employee> allEmployeesList = viewEmployeesService.getAllEmployees();
@@ -70,7 +73,7 @@ public class ViewEmployees {
         AppUser user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername()).get();
 
         if (user != null && user.getRole() != null) {
-            getRoleModelAttribute(model, user);
+            modelUtil.getRoleModelAttribute(model, user);
         }
 
         Department department = user.getEmployee().getDepartment();
@@ -87,8 +90,27 @@ public class ViewEmployees {
     }
 
     @GetMapping("/manager/view/employees/{id}")
-    public String viewEmployeeById(@PathVariable int id, Model model) {
-        Employee employee = employeeRepository.findEmployeeById(id);
+    public String viewEmployeeById(@PathVariable int id, Model model, Principal principal) {
+        AppUser user = appUserRepository.findByUsername(principal.getName()).get();
+
+        Optional<Employee> employeeOptional = Optional.ofNullable(employeeRepository.findEmployeeById(id));
+
+        if (employeeOptional.isEmpty()) {
+            logger.info("employee is not present");
+            model.addAttribute("not_found", true);
+            modelUtil.getRoleModelAttribute(model, user);
+            return "status-code";
+        }
+
+        Employee employee = employeeOptional.get();
+
+        if (!employee.getDepartment().getId().equals(user.getEmployee().getDepartment().getId())) {
+            logger.info("user department: {}, does not match employee department: {}", user.getEmployee().getDepartment().getDepartment(), employee.getDepartment().getDepartment());
+            model.addAttribute("not_authorised", true);
+            modelUtil.getRoleModelAttribute(model, user);
+            return "status-code";
+
+        }
         model.addAttribute("employee", employee);
 
         return "view-employee-details";
@@ -107,7 +129,7 @@ public class ViewEmployees {
         AppUser user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername()).get();
 
         if (user != null && user.getRole() != null) {
-            getRoleModelAttribute(model, user);
+            modelUtil.getRoleModelAttribute(model, user);
         }
 
         Department department = user.getEmployee().getDepartment();
@@ -136,25 +158,7 @@ public class ViewEmployees {
         }
     }
 
-    private void getRoleModelAttribute(Model model, AppUser user) {
-        model.addAttribute("isAdmin", false);
-        model.addAttribute("isManager", false);
-        model.addAttribute("isEmployee", false);
 
-        String role = user.getRole().name().toLowerCase();
-        logger.info("user role: {}", role);
-
-        if (role.equals("admin")) {
-            model.addAttribute("isAdmin", true);
-            logger.info("Setting isAdmin model attribute to true");
-        } else if (role.equals("manager")) {
-            model.addAttribute("isManager", true);
-            logger.info("Setting isManager model attribute to true");
-        } else if (role.equals("employee")) {
-            model.addAttribute("isEmployee", true);
-            logger.info("Setting isEmployee model attribute to true");
-        }
-    }
 
 //    @GetMapping("/colleagues/project")
 //    public String viewAllColleaguesWithinProject(Model model, Authentication authentication) {
