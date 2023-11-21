@@ -1,42 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>New Employee</title>
-  <link rel="stylesheet" th:href="../register.css">
-  <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
-  <!--    <script src="https://cdn.tailwindcss.com"></script>-->
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Time</title>
+    <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}" />
+    <!--    <script src="https://cdn.tailwindcss.com"></script>-->
+  </head>
 
-<nav th:fragment="navbar">
-  <ul>
-    <li>
-      <a th:href="@{/admin/homepage}">
-        Home
-      </a>
-    </li>
-    <li>
-      <a th:href="@{/welcome}">
-        Welcome
-      </a>
-    </li>
-    <li>
-      <a th:href="@{/admin/new/employees}">
-        Create New Employee
-      </a>
-    </li>
-    <li>
-      <a th:href="@{/view/employees}">
-        View Employees
-      </a>
-    </li>
-    <li>
-      <form th:action="@{/logout}" method="post" >
-        <button type="submit">Logout</button>
-      </form>
-    </li>
-  </ul>
-</nav>
-</body>
+  <body>
+    <nav th:replace="${isAdmin} ? ~{fragments/admin-navbar-fragment :: admin-navbar} : ~{}" ></nav>
+    <nav th:replace="${isManager} ? ~{fragments/manager-navbar-fragment :: manager-navbar} : ~{}" ></nav>
+    <nav th:replace="${isEmployee} ? ~{fragments/employee-navbar-fragment :: employee-navbar} : ~{}" ></nav>
+
+
+  </body>
 </html>
