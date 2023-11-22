@@ -9,7 +9,9 @@
     </head>
 
     <body>
-        <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}"></nav>
+        <nav th:replace="${isAdmin} ? ~{fragments/admin-navbar-fragment :: admin-navbar} : ~{}"></nav>
+        <nav th:replace="${isManager} ? ~{fragments/manager-navbar-fragment :: manager-navbar} : ~{}"></nav>
+        <nav th:replace="${isEmployee} ? ~{fragments/employee-navbar-fragment :: employee-navbar} : ~{}"></nav>
 
         <h1 th:text="*{employee.firstName} + ' ' + *{employee.lastName}"></h1>
         <h1 th:text="${employee.project}"></h1>

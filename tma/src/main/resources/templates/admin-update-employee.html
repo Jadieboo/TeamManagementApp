@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Update Employee</title>
+    </head>
+    <body>
+
+        <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
+
+        <h1 th:text="*{employee.id}" id="employeeId"></h1>
+        <h1 th:text="*{employee.firstName}"></h1>
+        <h1 th:text="*{employee.lastName}"></h1>
+        <h1 th:text="${employee.project}"></h1>
+        <p> This is the page for updating details</p>
+
+        <form th:action="" th:object="${employeeDetails}"
+              method="post">
+            <!-- Include a hidden input field to override the HTTP method to PATCH -->
+            <input type="hidden" name="_method" value="PATCH"/>
+
+            <div>
+                <label> Project </label>
+
+                <div>
+                    <select id="project" name="project">
+                        <option th:each="proj : ${projectList}"
+                                th:value="${proj}"
+                                th:text="${proj}"
+                                th:selected="${#strings.toLowerCase(proj) == #strings.toLowerCase(employee.project)}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <input type="submit" value="Update" class="btn">
+            <!--cancel form button-->
+            <a type="button" th:href="@{/admin/view/employees/{id}(id = ${employee.id})}" class="btn">Cancel</a>
+        </form>
+
+    </body>
+</html>
