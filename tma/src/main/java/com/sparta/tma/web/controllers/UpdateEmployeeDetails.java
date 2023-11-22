@@ -62,7 +62,7 @@ public class UpdateEmployeeDetails {
         modelUtil.getRoleModelAttribute(model, user);
 
         //TODO: check what details have changed and update employee details and save employee
-        
+
         return "view-employee-details";
     }
 }
