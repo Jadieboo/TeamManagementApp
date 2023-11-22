@@ -45,12 +45,6 @@ public class UpdateEmployeeDetails {
 
         model.addAttribute("employee", employee);
 
-//        might not need
-//        logger.info("employee project {}", employee.getProject());
-//
-//        EmployeeDTO employeeDetails = new EmployeeDTO();
-//        model.addAttribute("employeeDetails", employeeDetails);
-//        model.addAttribute("projectList", employeeUtil.populateProjectOptions());
         return "admin-update-employee";
     }
 }

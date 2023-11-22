@@ -37,9 +37,6 @@ public class CreateNewEmployee {
     private EmployeeRepository employeeRepository;
     @Autowired
     private UserAccountService userAccountService;
-//    @Autowired
-//    private EmployeeDAO employeeDAO;
-
 
     @GetMapping("/admin/new/employees")
     public String newEmployees(Model model) {

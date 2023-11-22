@@ -62,6 +62,7 @@ public class ViewEmployees {
 
     @GetMapping("/admin/view/employees/{id}")
     public String adminViewEmployeeById(@PathVariable int id, Model model, Principal principal) {
+        logger.info("view employee by id GET method active");
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
 
         Optional<Employee> employeeOptional = Optional.ofNullable(employeeRepository.findEmployeeById(id));
