@@ -47,9 +47,7 @@ public class ViewEmployees {
 
         AppUser user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername()).get();
 
-        if (user != null && user.getRole() != null) {
-            modelUtil.getRoleModelAttribute(model, user);
-        }
+        modelUtil.getRoleModelAttribute(model, user);
 
         List<Employee> allEmployeesList = viewEmployeesService.getAllEmployees();
 
@@ -57,9 +55,31 @@ public class ViewEmployees {
             allEmployeesList.remove(user.getEmployee());
         }
 
-        getPopulatedResultsModelAttribute(model, allEmployeesList);
+        modelUtil.getPopulatedResultsModelAttribute(model, allEmployeesList);
 
         return "viewEmployees";
+    }
+
+    @GetMapping("/admin/view/employees/{id}")
+    public String adminViewEmployeeById(@PathVariable int id, Model model, Principal principal) {
+        logger.info("view employee by id GET method active");
+        AppUser user = appUserRepository.findByUsername(principal.getName()).get();
+
+        Optional<Employee> employeeOptional = Optional.ofNullable(employeeRepository.findEmployeeById(id));
+
+        modelUtil.getRoleModelAttribute(model, user);
+
+        if (employeeOptional.isEmpty()) {
+            logger.info("employee is not present");
+            model.addAttribute("not_found", true);
+            return "status-code";
+        }
+
+        Employee employee = employeeOptional.get();
+
+        model.addAttribute("employee", employee);
+
+        return "view-employee-details";
     }
 
 
@@ -84,21 +104,23 @@ public class ViewEmployees {
             employeeList.remove(user.getEmployee());
         }
 
-        getPopulatedResultsModelAttribute(model, employeeList);
+        modelUtil.getPopulatedResultsModelAttribute(model, employeeList);
 
         return "viewEmployees";
     }
 
     @GetMapping("/manager/view/employees/{id}")
     public String viewEmployeeById(@PathVariable int id, Model model, Principal principal) {
+        logger.info("manager view employee details by id GET request active");
+
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
+        modelUtil.getRoleModelAttribute(model, user);
 
         Optional<Employee> employeeOptional = Optional.ofNullable(employeeRepository.findEmployeeById(id));
 
         if (employeeOptional.isEmpty()) {
             logger.info("employee is not present");
             model.addAttribute("not_found", true);
-            modelUtil.getRoleModelAttribute(model, user);
             return "status-code";
         }
 
@@ -107,10 +129,10 @@ public class ViewEmployees {
         if (!employee.getDepartment().getId().equals(user.getEmployee().getDepartment().getId())) {
             logger.info("user department: {}, does not match employee department: {}", user.getEmployee().getDepartment().getDepartment(), employee.getDepartment().getDepartment());
             model.addAttribute("not_authorised", true);
-            modelUtil.getRoleModelAttribute(model, user);
             return "status-code";
 
         }
+
         model.addAttribute("employee", employee);
 
         return "view-employee-details";
@@ -121,7 +143,7 @@ public class ViewEmployees {
      * EMPLOYEE ACCESS
      */
 
-    // all colleagues with role employee, no manager or admins
+    // all colleagues with role employee, incl manager and admins
     @GetMapping("/employee/view/colleagues")
     public String getColleaguesForEmployee(Model model, Authentication authentication) {
         logger.info("view colleagues for employee GET method");
@@ -140,23 +162,12 @@ public class ViewEmployees {
             employeeList.remove(user.getEmployee());
         }
 
-        getPopulatedResultsModelAttribute(model, employeeList);
+        modelUtil.getPopulatedResultsModelAttribute(model, employeeList);
 
         return "viewEmployees";
     }
 
-    private void getPopulatedResultsModelAttribute(Model model, List<Employee> employeeList) {
-        if (employeeList.size() < 1) {
-            logger.warn("No employees found");
-            model.addAttribute("results_not_found", true);
-            model.addAttribute("results_populated", false);
-        } else {
-            logger.info("list size of all employees: {}", employeeList.size());
-            model.addAttribute("employeeList", employeeList);
-            model.addAttribute("results_populated", true);
-            model.addAttribute("results_not_found", false);
-        }
-    }
+
 
 
 

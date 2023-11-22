@@ -46,20 +46,21 @@ public class UpdateAssignedProjects {
     @GetMapping("/manager/view/employees/update/{id}")
     public String updateEmployeeDetailsPage(@PathVariable int id, Model model, Principal principal) {
         logger.info("GET request for manager update employee by id active");
-        Employee employee = employeeRepository.findEmployeeById(id);
+
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
+        modelUtil.getRoleModelAttribute(model, user);
+
+        Employee employee = employeeRepository.findEmployeeById(id);
 
         if (employee == null) {
             logger.info("employee is not present");
             model.addAttribute("not_found", true);
-            modelUtil.getRoleModelAttribute(model, user);
             return "status-code";
         }
 
         if (!employee.getDepartment().getId().equals(user.getEmployee().getDepartment().getId())) {
             logger.info("user department: {}, does not match employee department: {}", user.getEmployee().getDepartment().getDepartment(), employee.getDepartment().getDepartment());
             model.addAttribute("not_authorised", true);
-            modelUtil.getRoleModelAttribute(model, user);
             return "status-code";
         }
 
@@ -73,11 +74,13 @@ public class UpdateAssignedProjects {
         return "manager-update-employee";
     }
 
-    //TODO implement form on front end
     @Transactional
     @PatchMapping("/manager/update/employees/{id}")
-    public String updateEmployeeAssignedProject(@PathVariable int id, @ModelAttribute("employeeDetails") EmployeeDTO employeeDetails, Model model) {
+    public String updateEmployeeAssignedProject(@PathVariable int id, @ModelAttribute("employeeDetails") EmployeeDTO employeeDetails, Model model, Principal principal) {
         logger.info("PATCH request for manager update employee project by id active");
+
+        AppUser user = appUserRepository.findByUsername(principal.getName()).get();
+        modelUtil.getRoleModelAttribute(model, user);
 
         Employee savedEmployee = employeeRepository.save(new EmployeeDAO(employeeRepository, projectRepository).updateAssignedProjectToEmployee(id, employeeDetails));
         logger.info("saved employee with new assigned project {}", savedEmployee.getProject());

@@ -17,14 +17,11 @@
                  style="display: flex; flex-wrap: wrap; gap: 20px 20px; max-width: 100%">
             <section th:each="employee : ${employeeList}"
                      style="background-color: #FFD1DC; border: 1px solid black; height: 150px; width: 150px;">
-                <a th:href="@{/manager/view/employees/{id}(id = *{employee.id})}">
-                    <div>
-                        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-                        <p th:text="${employee.getRole()}"></p>
-                        <p th:text="${employee.getDepartment()}"></p>
-                        <p th:text="${employee.getProject()}"></p>
-                    </div>
-                </a>
+
+                <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: admin-populate} : ~{}"></a>
+                <a th:replace="${isManager} ? ~{fragments/view-employees-populate :: manager-populate} : ~{}"></a>
+                <a th:replace="${isEmployee} ? ~{fragments/view-employees-populate :: employee-populate} : ~{}"></a>
+
 
             </section>
         </section>

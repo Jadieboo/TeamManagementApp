@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="../register.css">
+    <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+    <!--    <script src="https://cdn.tailwindcss.com"></script>-->
+  </head>
+
+  <body>
+
+    <a th:fragment="admin-populate" th:href="@{/admin/view/employees/{id}(id = ${employee.id})}">
+      <div>
+        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+        <p th:text="${employee.getRole()}"></p>
+        <p th:text="${employee.getDepartment()}"></p>
+        <p th:text="${employee.getProject()}"></p>
+      </div>
+    </a>
+
+    <a th:fragment="manager-populate" th:href="@{/manager/view/employees/{id}(id = ${employee.id})}">
+      <div>
+        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+        <p th:text="${employee.getRole()}"></p>
+        <p th:text="${employee.getDepartment()}"></p>
+        <p th:text="${employee.getProject()}"></p>
+      </div>
+    </a>
+
+    <a th:fragment="employee-populate">
+      <div>
+        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+        <p th:text="${employee.getRole()}"></p>
+        <p th:text="${employee.getDepartment()}"></p>
+        <p th:text="${employee.getProject()}"></p>
+      </div>
+    </a>
+
+    <!--  edit icon link  -->
+    <a th:fragment="edit-icon-a" th:href="@{/admin/view/employees/update/{id}(id = *{employee.id})}">
+      <i class="fa-solid fa-pen" style="color: #5606ea;" onmouseover="addBounceClass(this)"
+         onmouseout="removeBounceClass(this)"></i>
+    </a>
+
+    <a th:fragment="edit-icon-m" th:href="@{/manager/view/employees/update/{id}(id = *{employee.id})}">
+      <i class="fa-solid fa-pen" style="color: #5606ea;" onmouseover="addBounceClass(this)"
+         onmouseout="removeBounceClass(this)"></i>
+    </a>
+
+  </body>
+</html>
