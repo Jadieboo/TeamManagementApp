@@ -3,37 +3,44 @@
     <head>
         <meta charset="UTF-8">
         <title>New Employee</title>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}" />
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}" />
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}"/>
 
-    <!--    <link rel="stylesheet" type="text/css"  href="/tma/src/main/resources/static/css/output.css" />-->
-    <!--    <link rel="stylesheet" type="text/css"  href="/tma/src/main/resources/static/css/register.css" />-->
+        <!--    <link rel="stylesheet" type="text/css"  href="/tma/src/main/resources/static/css/output.css" />-->
+        <!--    <link rel="stylesheet" type="text/css"  href="/tma/src/main/resources/static/css/register.css" />-->
 
 
     </head>
 
     <body>
 
-    <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
+        <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
 
 
-    <main>
+        <main>
             <h1 class="lg:text-3xl lg:mt-8 text-2xl font-bold text-gray-900 mb-8">Create a new employee</h1>
 
-            <form th:action="@{/admin/web/register/employees}" th:object="${employeeDetails}" method="POST" class="w-full mb-3 max-w-screen-sm p-2">
+            <form th:action="@{/admin/web/register/employees}" th:object="${employeeDetails}" method="POST"
+                  class="w-full mb-3 max-w-screen-sm p-2">
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="firstName">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="firstName">
                             First Name
                         </label>
-                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="firstName" name="firstName" type="text" th:field="*{firstName}" placeholder="Jane" required>
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                               id="firstName" name="firstName" type="text" th:field="*{firstName}" placeholder="Jane"
+                               required>
                     </div>
 
                     <div class="w-full md:w-1/2 px-3">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="lastName">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="lastName">
                             Last Name
                         </label>
-                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="lastName" name="lastName" type="text" th:field="*{lastName}" placeholder="Doe" required>
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                               id="lastName" name="lastName" type="text" th:field="*{lastName}" placeholder="Doe"
+                               required>
                     </div>
                 </div>
 
@@ -44,20 +51,25 @@
                         </label>
 
                         <div class="relative">
-                            <select id="role" name="role" class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer">
-                                <option th:each="r : ${roleList}" th:value="${r}" th:text="${r}" th:field="*{role}"></option>
+                            <select id="role" name="role"
+                                    class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer">
+                                <option th:each="r : ${roleList}" th:value="${r}" th:text="${r}"
+                                        th:field="*{role}"></option>
                             </select>
                         </div>
                     </div>
 
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="department">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="department">
                             Department
                         </label>
 
                         <div class="relative">
-                            <select id="department" name="department" class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer">
-                                <option th:each="dept : ${departmentList}" th:value="${dept}" th:text="${dept}" th:field="*{department}"></option>
+                            <select id="department" name="department"
+                                    class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer">
+                                <option th:each="dept : ${departmentList}" th:value="${dept}" th:text="${dept}"
+                                        th:field="*{department}"></option>
                             </select>
                         </div>
                     </div>
@@ -68,7 +80,7 @@
 
             <div th:if="${showConfirmation}">
                 <p>Form submission successful!</p>
-                <p>New employee added to the database: <span th:text="${formEmployee}"></span> </p>
+                <p>New employee added to the database: <span th:text="${formEmployee}"></span></p>
             </div>
 
         </main>

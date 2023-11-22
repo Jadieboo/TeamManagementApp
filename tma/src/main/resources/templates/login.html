@@ -1,69 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  </head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+              crossorigin="anonymous">
+    </head>
 
-  <body>
-  <style>
-    body {
-      padding-top: 40px;
-      padding-bottom: 40px;
-      background-color: #eee;
-    }
+    <body>
+        <style>
+            body {
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #eee;
+            }
 
-    .form-signin {
-      max-width: 330px;
-      padding: 15px;
-      margin: 0 auto;
-    }
-    .form-signin .form-signin-heading,
-    .form-signin .checkbox {
-      margin-bottom: 10px;
-    }
-    .form-signin .checkbox {
-      font-weight: 400;
-    }
-    .form-signin .form-control {
-      position: relative;
-      box-sizing: border-box;
-      height: auto;
-      padding: 10px;
-      font-size: 16px;
-    }
-    .form-signin .form-control:focus {
-      z-index: 2;
-    }
-    .form-signin input[type="email"] {
-      margin-bottom: -1px;
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-    .form-signin input[type="password"] {
-      margin-bottom: 10px;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
-  </style>
-    <h1>Login</h1>
+            .form-signin {
+                max-width: 330px;
+                padding: 15px;
+                margin: 0 auto;
+            }
 
-    <!-- Display error message if authentication fails -->
-    <div th:if="${param.error}" class="alert alert-danger">
-      Invalid username or password.
-    </div>
+            .form-signin .form-signin-heading,
+            .form-signin .checkbox {
+                margin-bottom: 10px;
+            }
 
-    <section id="login-form">
-      <!--  th:action maps to the endpoint of a method    -->
-      <form th:action="@{/loginHandler}" method="post">
-        <label for="username" hidden="hidden"></label>
-        <input class="" type="text" id="username" name="username" placeholder="Enter email" required/>
-        <br/>
-        <label for="password" hidden="hidden"></label>
-        <input class="" type="text" id="password" name="password" placeholder="Enter password" required/>
-        <input type="submit" value="Login"/>
-      </form>
-    </section>
-  </body>
+            .form-signin .checkbox {
+                font-weight: 400;
+            }
+
+            .form-signin .form-control {
+                position: relative;
+                box-sizing: border-box;
+                height: auto;
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            .form-signin .form-control:focus {
+                z-index: 2;
+            }
+
+            .form-signin input[type="email"] {
+                margin-bottom: -1px;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            .form-signin input[type="password"] {
+                margin-bottom: 10px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+        </style>
+        <h1>Login</h1>
+
+        <!-- Display error message if authentication fails -->
+        <div th:if="${param.error}" class="alert alert-danger">
+            Invalid username or password.
+        </div>
+
+        <section id="login-form">
+            <!--  th:action maps to the endpoint of a method    -->
+            <form th:action="@{/loginHandler}" method="post">
+                <label for="username" hidden="hidden"></label>
+                <input class="" type="text" id="username" name="username" placeholder="Enter email" required/>
+                <br/>
+                <label for="password" hidden="hidden"></label>
+                <input class="" type="text" id="password" name="password" placeholder="Enter password" required/>
+                <input type="submit" value="Login"/>
+            </form>
+        </section>
+    </body>
 </html>

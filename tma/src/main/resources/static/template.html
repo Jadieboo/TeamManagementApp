@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8">
-    <title>Time</title>
-    <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}" />
-    <!--    <script src="https://cdn.tailwindcss.com"></script>-->
-  </head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Time</title>
+        <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}"/>
+        <!--    <script src="https://cdn.tailwindcss.com"></script>-->
+    </head>
 
-  <body>
-    <nav th:replace="${isAdmin} ? ~{fragments/admin-navbar-fragment :: admin-navbar} : ~{}" ></nav>
-    <nav th:replace="${isManager} ? ~{fragments/manager-navbar-fragment :: manager-navbar} : ~{}" ></nav>
-    <nav th:replace="${isEmployee} ? ~{fragments/employee-navbar-fragment :: employee-navbar} : ~{}" ></nav>
+    <body>
+        <nav th:replace="${isAdmin} ? ~{fragments/admin-navbar-fragment :: admin-navbar} : ~{}"></nav>
+        <nav th:replace="${isManager} ? ~{fragments/manager-navbar-fragment :: manager-navbar} : ~{}"></nav>
+        <nav th:replace="${isEmployee} ? ~{fragments/employee-navbar-fragment :: employee-navbar} : ~{}"></nav>
 
 
-  </body>
+    </body>
 </html>

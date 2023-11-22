@@ -4,28 +4,29 @@
         <meta charset="UTF-8">
         <title th:text="*{employee.firstName} + ' ' + *{employee.lastName} + '\'s details'">Employee details</title>
         <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}" />
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}"/>
         <!--    <script src="https://cdn.tailwindcss.com"></script>-->
     </head>
 
     <body>
-        <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}" ></nav>
+        <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}"></nav>
 
-        <h1 th:text="*{employee.firstName} + ' ' + *{employee.lastName}" ></h1>
+        <h1 th:text="*{employee.firstName} + ' ' + *{employee.lastName}"></h1>
         <h1 th:text="${employee.project}"></h1>
 
         <a th:href="@{/manager/view/employees/update/{id}(id = *{employee.id})}">
-            <i class="fa-solid fa-pen" style="color: #5606ea;" onmouseover="addBounceClass(this)" onmouseout="removeBounceClass(this)"></i>
+            <i class="fa-solid fa-pen" style="color: #5606ea;" onmouseover="addBounceClass(this)"
+               onmouseout="removeBounceClass(this)"></i>
         </a>
 
         <script>
-          function addBounceClass(element) {
-            element.classList.add('fa-bounce');
-          }
+            function addBounceClass(element) {
+                element.classList.add('fa-bounce');
+            }
 
-          function removeBounceClass(element) {
-            element.classList.remove('fa-bounce');
-          }
+            function removeBounceClass(element) {
+                element.classList.remove('fa-bounce');
+            }
         </script>
 
     </body>
