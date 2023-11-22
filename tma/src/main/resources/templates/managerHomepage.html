@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Homepage</title>
-    <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+    <head>
+        <meta charset="UTF-8">
+        <title>Homepage</title>
+        <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
 
-</head>
-<body>
+    </head>
+    <body>
 
-<nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}"></nav>
-
-
-<h1>Manager homepage</h1>
-<h2>Welcome,</h2>
-<h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-<br/>
+        <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}"></nav>
 
 
+        <h1>Manager homepage</h1>
+        <h2>Welcome,</h2>
+        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+        <br/>
 
 
-</body>
+    </body>
 </html>

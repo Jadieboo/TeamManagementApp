@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Homepage</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Homepage</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}"/>
+    </head>
+    <body>
 
-<nav th:replace="~{fragments/employee-navbar-fragment :: employee-navbar}"></nav>
-
-
-<h1>Employee homepage</h1>
-<h2>Welcome,</h2>
-<h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+        <nav th:replace="~{fragments/employee-navbar-fragment :: employee-navbar}"></nav>
 
 
-</body>
+        <h1>Employee homepage</h1>
+        <h2>Welcome,</h2>
+        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+
+
+    </body>
 </html>

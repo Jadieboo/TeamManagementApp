@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" th:href="../register.css">
-  <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
-  <!--    <script src="https://cdn.tailwindcss.com"></script>-->
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" th:href="../register.css">
+        <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+        <!--    <script src="https://cdn.tailwindcss.com"></script>-->
+    </head>
+    <body>
 
-<nav th:fragment="admin-navbar">
-  <ul>
-    <li>
-      <a th:href="@{/admin/homepage}">
-        Home
-      </a>
-    </li>
-    <li>
-      <a th:href="@{/welcome}">
-        Welcome
-      </a>
-    </li>
-    <li>
-      <a th:href="@{/admin/new/employees}">
-        Create New Employee
-      </a>
-    </li>
-    <li>
-      <a th:href="@{/admin/view/employees}">
-        View Employees
-      </a>
-    </li>
-      <form th:action="@{/logout}" method="post" >
-        <button type="submit">Logout</button>
-      </form>
-    </li>
-  </ul>
-</nav>
-</body>
+        <nav th:fragment="admin-navbar">
+            <ul>
+                <li>
+                    <a th:href="@{/admin/homepage}">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/welcome}">
+                        Welcome
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/new/employees}">
+                        Create New Employee
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/view/employees}">
+                        View Employees
+                    </a>
+                </li>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+                </li>
+            </ul>
+        </nav>
+    </body>
 </html>

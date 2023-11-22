@@ -4,12 +4,12 @@
         <meta charset="UTF-8">
         <title>Update Employee</title>
         <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}" />
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}"/>
         <!--    <script src="https://cdn.tailwindcss.com"></script>-->
     </head>
 
     <body>
-        <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}" ></nav>
+        <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}"></nav>
 
         <h1 th:text="*{employee.id}" id="employeeId"></h1>
         <h1 th:text="*{employee.firstName}"></h1>
@@ -17,9 +17,10 @@
         <h1 th:text="${employee.project}"></h1>
         <p> This is the page for updating details</p>
 
-        <form th:action="@{/manager/update/employees/{id}(id = ${employee.id})}" th:object="${employeeDetails}" method="post">
+        <form th:action="@{/manager/update/employees/{id}(id = ${employee.id})}" th:object="${employeeDetails}"
+              method="post">
             <!-- Include a hidden input field to override the HTTP method to PATCH -->
-            <input type="hidden" name="_method" value="PATCH" />
+            <input type="hidden" name="_method" value="PATCH"/>
 
             <div>
                 <label> Project </label>
