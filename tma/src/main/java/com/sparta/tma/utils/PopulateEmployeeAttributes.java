@@ -52,16 +52,18 @@ public class PopulateEmployeeAttributes {
     public List<String> populateRoleOptions() {
         // TODO: refactor this method so its not hard coded
         //  something like this but need format the results
-        //  for (Role r : Role.values()) {
-        //			System.out.println(r);
-        //		}
-        //
-
 
         List<String> roles = new ArrayList<>();
-        roles.add("Admin");
-        roles.add("Manager");
-        roles.add("Employee");
+
+          for (Role role : Role.values()) {
+              roles.add(role.name());
+          }
+
+
+
+//        roles.add("Admin");
+//        roles.add("Manager");
+//        roles.add("Employee");
 
         logger.info("roles list: {}", roles);
 

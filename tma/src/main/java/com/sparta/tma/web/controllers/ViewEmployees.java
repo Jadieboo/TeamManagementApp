@@ -10,19 +10,13 @@ import com.sparta.tma.utils.PopulateModelAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +41,7 @@ public class ViewEmployees {
 
         AppUser user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername()).get();
 
-        modelUtil.getRoleModelAttribute(model, user);
+        modelUtil.getAuthorityRoleModelAttribute(model, user);
 
         List<Employee> allEmployeesList = viewEmployeesService.getAllEmployees();
 
@@ -67,7 +61,7 @@ public class ViewEmployees {
 
         Optional<Employee> employeeOptional = Optional.ofNullable(employeeRepository.findEmployeeById(id));
 
-        modelUtil.getRoleModelAttribute(model, user);
+        modelUtil.getAuthorityRoleModelAttribute(model, user);
 
         if (employeeOptional.isEmpty()) {
             logger.info("employee is not present");
@@ -93,7 +87,7 @@ public class ViewEmployees {
         AppUser user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername()).get();
 
         if (user != null && user.getRole() != null) {
-            modelUtil.getRoleModelAttribute(model, user);
+            modelUtil.getAuthorityRoleModelAttribute(model, user);
         }
 
         Department department = user.getEmployee().getDepartment();
@@ -114,7 +108,7 @@ public class ViewEmployees {
         logger.info("manager view employee details by id GET request active");
 
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
-        modelUtil.getRoleModelAttribute(model, user);
+        modelUtil.getAuthorityRoleModelAttribute(model, user);
 
         Optional<Employee> employeeOptional = Optional.ofNullable(employeeRepository.findEmployeeById(id));
 
@@ -151,7 +145,7 @@ public class ViewEmployees {
         AppUser user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername()).get();
 
         if (user != null && user.getRole() != null) {
-            modelUtil.getRoleModelAttribute(model, user);
+            modelUtil.getAuthorityRoleModelAttribute(model, user);
         }
 
         Department department = user.getEmployee().getDepartment();

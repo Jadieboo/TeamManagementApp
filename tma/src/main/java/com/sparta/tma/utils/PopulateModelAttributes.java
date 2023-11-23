@@ -17,7 +17,7 @@ public class PopulateModelAttributes {
     @Autowired
     private PopulateEmployeeAttributes employeeUtil;
 
-    public void getRoleModelAttribute(Model model, AppUser user) {
+    public void getAuthorityRoleModelAttribute(Model model, AppUser user) {
         model.addAttribute("isAdmin", false);
         model.addAttribute("isManager", false);
         model.addAttribute("isEmployee", false);
@@ -37,9 +37,10 @@ public class PopulateModelAttributes {
         }
     }
 
-    public void initializeCreateNewEmployeePageModel(Model model) {
+    public void initializeEmployeeDetailsFormModel(Model model) {
         EmployeeDTO employeeDetails = new EmployeeDTO();
         model.addAttribute("departmentList", employeeUtil.populateDepartmentOptions());
+        model.addAttribute("projectList", employeeUtil.populateProjectOptions());
         model.addAttribute("roleList", employeeUtil.populateRoleOptions());
         model.addAttribute("employeeDetails", employeeDetails);
     }

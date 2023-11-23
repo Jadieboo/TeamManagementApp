@@ -10,7 +10,6 @@ import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 import com.sparta.tma.services.UserAccountService;
-import com.sparta.tma.utils.PopulateEmployeeAttributes;
 import com.sparta.tma.utils.PopulateModelAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +39,7 @@ public class CreateNewEmployee {
 
     @GetMapping("/admin/new/employees")
     public String newEmployees(Model model) {
-        modelUtil.initializeCreateNewEmployeePageModel(model);
+        modelUtil.initializeEmployeeDetailsFormModel(model);
         return "adminCreateNewEmployee";
     }
 
@@ -72,7 +71,7 @@ public class CreateNewEmployee {
             model.addAttribute("formEmployee", employeeExists.getFirstName() + " " + employeeExists.getLastName());
         }
 
-        modelUtil.initializeCreateNewEmployeePageModel(model);
+        modelUtil.initializeEmployeeDetailsFormModel(model);
 
         return "adminCreateNewEmployee";
     }

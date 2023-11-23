@@ -55,4 +55,16 @@ public class EmployeeDTO {
     public void setProject(String project) {
         this.project = project;
     }
+
+    @Override
+    public String toString() {
+        return "EmployeeDTO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role='" + role + '\'' +
+                ", department='" + department + '\'' +
+                ", project='" + project + '\'' +
+                '}';
+    }
 }

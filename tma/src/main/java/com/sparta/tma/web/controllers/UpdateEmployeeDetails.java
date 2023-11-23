@@ -1,6 +1,5 @@
 package com.sparta.tma.web.controllers;
 
-import com.sparta.tma.daos.EmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
@@ -38,7 +37,7 @@ public class UpdateEmployeeDetails {
         logger.info("GET request for admin update employee details is active");
 
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
-        modelUtil.getRoleModelAttribute(model, user); // might not need
+        modelUtil.getAuthorityRoleModelAttribute(model, user); // might not need
 
         Employee employee = employeeRepository.findEmployeeById(id);
         if (employee == null) {
@@ -47,6 +46,7 @@ public class UpdateEmployeeDetails {
             return "status-code";
         }
 
+        modelUtil.initializeEmployeeDetailsFormModel(model);
         model.addAttribute("employee", employee);
 
         return "admin-update-employee";
@@ -57,11 +57,15 @@ public class UpdateEmployeeDetails {
     @PatchMapping("/admin/update/employees/{id}")
     public String updateEmployeeDetailsFormData(@PathVariable int id, @ModelAttribute("employeeDetails") EmployeeDTO employeeDetails, Model model, Principal principal) {
         logger.info("PATCH request active for admin update employee details by id form data");
+        logger.info("employeeDetails: {}", employeeDetails.toString());
+
 
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
-        modelUtil.getRoleModelAttribute(model, user);
+        modelUtil.getAuthorityRoleModelAttribute(model, user);
 
         //TODO: check what details have changed and update employee details and save employee
+
+        //TODO: create model attribute to feed new saved employee to view-employee-details page
 
         return "view-employee-details";
     }

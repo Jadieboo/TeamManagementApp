@@ -14,40 +14,50 @@
         <h1 th:text="${employee.project}"></h1>
         <p> This is the page for updating details</p>
 
-        <form>
+        <form th:action="@{/admin/update/employees/{id}(id = ${employee.id})}" th:object="${employeeDetails}" method="POST">
             <!-- Include a hidden input field to override the HTTP method to PATCH -->
             <input type="hidden" name="_method" value="PATCH"/>
 
             <div>
                 <label for="firstName">First Name</label>
-                <input id="firstName" name="firstName" type="text" th:value="*{employee.firstName}" required>
+                <input id="firstName" name="firstName" type="text" th:value="${employee.firstName}" required>
             </div>
 
             <div>
                 <label for="lastName">Last Name</label>
-                <input id="lastName" name="lastName" type="text" th:value="*{employee.lastName}" required>
+                <input id="lastName" name="lastName" type="text" th:value="${employee.lastName}" required>
             </div>
 
             <div>
-                <label for="role">Role</label>
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="role">
+                    Role
+                </label>
                 <select id="role" name="role">
-                    <option th:value="${employee.role}" th:text="${employee.role}"></option>
+                    <option th:each="r : ${roleList}" th:value="${r}" th:text="${r}"
+                            th:field="*{role}"></option>
                 </select>
             </div>
 
             <div>
                 <label for="department">Department</label>
                 <select id="department" name="department">
-                    <option th:value="HR" th:text="HR" th:selected="${'hr' == #strings.toLowerCase(employee.department)}"></option>
-                    <option th:value="Finance" th:text="Finance" th:selected="${'finance' == #strings.toLowerCase(employee.department)}"></option>
+                    <option th:each="dept : ${departmentList}" th:value="${dept}" th:text="${dept}"
+                            th:field="*{department}"></option>
+                    <!--TODO - add selected attribute to all drop down options-->
+<!--                    <option th:value="Finance" th:text="Finance" th:selected="${'finance' == #strings.toLowerCase(employee.department)}"></option>-->
                 </select>
             </div>
 
             <div>
                 <label for="project">Project</label>
                 <select id="project" name="project">
-                    <option th:value="Unassigned" th:text="Unassigned" th:selected="${'unassigned' == #strings.toLowerCase(employee.project)}"></option>
-                    <option th:value="Attendance" th:text="Attendance" th:selected="${'attendance' == #strings.toLowerCase(employee.project)}"></option>
+                    <option th:each="proj : ${projectList}"
+                            th:value="${proj}"
+                            th:text="${proj}"
+                            th:selected="${#strings.toLowerCase(proj) == #strings.toLowerCase(employee.project)}">
+                    </option>
+<!--                    <option th:value="Unassigned" th:text="Unassigned" th:selected="${'unassigned' == #strings.toLowerCase(employee.project)}"></option>-->
+<!--                    <option th:value="Attendance" th:text="Attendance" th:selected="${'attendance' == #strings.toLowerCase(employee.project)}"></option>-->
                 </select>
             </div>
 
