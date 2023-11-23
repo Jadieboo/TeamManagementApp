@@ -48,7 +48,7 @@ public class UpdateAssignedProjects {
         logger.info("GET request for manager update employee by id active");
 
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
-        modelUtil.getRoleModelAttribute(model, user);
+        modelUtil.getAuthorityRoleModelAttribute(model, user);
 
         Employee employee = employeeRepository.findEmployeeById(id);
 
@@ -80,7 +80,7 @@ public class UpdateAssignedProjects {
         logger.info("PATCH request for manager update employee project by id active");
 
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
-        modelUtil.getRoleModelAttribute(model, user);
+        modelUtil.getAuthorityRoleModelAttribute(model, user);
 
         Employee savedEmployee = employeeRepository.save(new EmployeeDAO(employeeRepository, projectRepository).updateAssignedProjectToEmployee(id, employeeDetails));
         logger.info("saved employee with new assigned project {}", savedEmployee.getProject());
