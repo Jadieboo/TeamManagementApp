@@ -15,12 +15,12 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ManagerUpdateProjectWebTest {
+public class AdminUpdateEmployeeDetailsWebTest {
     private  static final String DRIVER_PATH = "src/test/resources/chromedriver.exe";
     private  static ChromeDriverService service;
     private WebDriver driver;
-    private Map<String, Object> vars;
-    JavascriptExecutor js;
+//    private Map<String, Object> vars;
+//    JavascriptExecutor js;
 
     public static ChromeOptions getChromeOptions() {
         List<String> args = new ArrayList<>();
@@ -48,28 +48,20 @@ public class ManagerUpdateProjectWebTest {
     }
 
     @Test
-    public void managerupdateproject() {
+    public void adminUpdateEmployeeDetails() {
         driver.get("http://localhost:8080/login");
         driver.manage().window().setSize(new Dimension(1192, 725));
         driver.findElement(By.id("username")).click();
-        driver.findElement(By.id("username")).sendKeys("manager");
+        driver.findElement(By.id("username")).sendKeys("admin");
         driver.findElement(By.id("password")).click();
-        driver.findElement(By.id("password")).sendKeys("manager");
+        driver.findElement(By.id("password")).sendKeys("admin");
         driver.findElement(By.cssSelector(".btn")).click();
         driver.findElement(By.linkText("View Employees")).click();
-        driver.findElement(By.cssSelector("section:nth-child(3) p:nth-child(2)")).click();
-        driver.findElement(By.cssSelector(".fa-solid")).click();
-        driver.findElement(By.id("project")).click();
-        driver.findElement(By.id("project")).click();
+        driver.findElement(By.cssSelector("section:nth-child(19)")).click();
+        driver.findElement(By.cssSelector("a")).click();
+        driver.findElement(By.cssSelector("h1:nth-child(5)")).click();
+        assertThat(driver.findElement(By.cssSelector("h1:nth-child(5)")).getText(), is("Unassigned"));
 
-        WebElement dropdown = driver.findElement(By.id("project"));
-        String value = dropdown.findElement(By.xpath("//option[. = 'New Starters']")).getText();
-        dropdown.findElement(By.xpath("//option[. = 'New Starters']")).click();
-
-        System.out.println(value);
-
-        driver.findElement(By.cssSelector(".btn:nth-child(3)")).click();
-        assertThat(driver.findElement(By.cssSelector("h1:nth-child(3)")).getText(), is("New Starters"));
     }
 
     @AfterEach
