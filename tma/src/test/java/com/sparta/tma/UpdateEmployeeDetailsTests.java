@@ -8,10 +8,13 @@ import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class UpdateEmployeeDetailsTests {
@@ -33,18 +36,27 @@ public class UpdateEmployeeDetailsTests {
 
         String expected = "Logo";
 
+        if (currentProject.equals(expected)) {
+            expected = "Web App";
+        }
+
         EmployeeDTO employeeDetails = utils.setEmployeeDetails(
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getRole().name(),
                 employee.getDepartment().toString(),
-                "logo");
+                expected);
 
         Employee updatedEmployee = new EmployeeDAO(employeeRepository, projectRepository).updateAssignedProjectToEmployee(5, employeeDetails);
 
         String result = updatedEmployee.getProject().toString();
 
-        assertTrue(result.equals(expected) && !result.equals(currentProject));
+        assertThat(result, is(expected));
+    }
+
+    @Test
+    @DisplayName("As a admin - Update employee's first name")
+    public void updateEmployeeFirstName() {
 
     }
 }
