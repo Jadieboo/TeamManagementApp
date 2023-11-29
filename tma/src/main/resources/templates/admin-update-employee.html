@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
     <head>
         <meta charset="UTF-8">
         <title>Update Employee</title>
@@ -32,17 +33,19 @@
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="role">
                     Role
                 </label>
-                <select id="role" name="role">
-                    <option th:each="r : ${roleList}" th:value="${r}" th:text="${r}"
-                            th:field="*{role}"></option>
+                <select id="role" name="role" >
+                    <option th:each="r : ${roleList}" th:value="${r}" th:text="${r}"></option>
                 </select>
             </div>
 
             <div>
                 <label for="department">Department</label>
-                <select id="department" name="department">
-                    <option th:each="dept : ${departmentList}" th:value="${dept}" th:text="${dept}"
-                            th:field="*{department}"></option>
+                <select id="department" name="department" th:field="*{department}">
+                    <option th:each="dept : ${departmentList}"
+                            th:value="${dept}"
+                            th:text="${dept}"
+                            th:selected="${#strings.toLowerCase(dept) == #strings.toLowerCase(employee.department)}"
+                    ></option>
                     <!--TODO - add selected attribute to all drop down options-->
 <!--                    <option th:value="Finance" th:text="Finance" th:selected="${'finance' == #strings.toLowerCase(employee.department)}"></option>-->
                 </select>
