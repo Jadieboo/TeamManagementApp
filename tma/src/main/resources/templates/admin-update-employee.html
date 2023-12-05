@@ -4,12 +4,15 @@
     <head>
         <meta charset="UTF-8">
         <title>Update Employee</title>
+        <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+<!--        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}"/>-->
+<!--            <script src="https://cdn.tailwindcss.com"></script>-->
     </head>
     <body>
 
         <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
 
-        <h1 th:text="*{employee.id}" id="employeeId"></h1>
+        <h1 th:text="*{employee.id}"></h1>
         <h1 th:text="*{employee.firstName}"></h1>
         <h1 th:text="*{employee.lastName}"></h1>
         <h1 th:text="${employee.project}"></h1>
@@ -50,8 +53,6 @@
                             th:text="${dept}"
                             th:selected="${#strings.toLowerCase(dept) == #strings.toLowerCase(employee.department)}">
                     </option>
-                    <!--TODO - add selected attribute to all drop down options-->
-<!--                    <option th:value="Finance" th:text="Finance" th:selected="${'finance' == #strings.toLowerCase(employee.department)}"></option>-->
                 </select>
             </div>
 
@@ -63,8 +64,6 @@
                             th:text="${proj}"
                             th:selected="${#strings.toLowerCase(proj) == #strings.toLowerCase(employee.project)}">
                     </option>
-<!--                    <option th:value="Unassigned" th:text="Unassigned" th:selected="${'unassigned' == #strings.toLowerCase(employee.project)}"></option>-->
-<!--                    <option th:value="Attendance" th:text="Attendance" th:selected="${'attendance' == #strings.toLowerCase(employee.project)}"></option>-->
                 </select>
             </div>
 

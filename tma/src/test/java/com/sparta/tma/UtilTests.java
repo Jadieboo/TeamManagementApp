@@ -54,10 +54,10 @@ public class UtilTests {
     @Test
     public void populateListOfRoles() {
         String[] roles = {"Admin", "Manager", "Employee"};
+
         List<String> expected = new ArrayList<>(List.of(roles));
-
         List<String> results = popUtil.populateRoleOptions();
-
+        
         assertEquals(expected, results);
     }
 }

@@ -56,14 +56,9 @@ public class PopulateEmployeeAttributes {
         List<String> roles = new ArrayList<>();
 
           for (Role role : Role.values()) {
-              roles.add(role.name());
+              String formatRole = role.name().toUpperCase().charAt(0) + role.name().toLowerCase().substring(1);
+              roles.add(formatRole);
           }
-
-
-
-//        roles.add("Admin");
-//        roles.add("Manager");
-//        roles.add("Employee");
 
         logger.info("roles list: {}", roles);
 
