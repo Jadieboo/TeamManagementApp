@@ -1,6 +1,7 @@
 package com.sparta.tma.web.controllers;
 
 import com.sparta.tma.daos.EmployeeDAO;
+import com.sparta.tma.daos.UpdateEmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
@@ -82,7 +83,7 @@ public class UpdateAssignedProjects {
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
         modelUtil.getAuthorityRoleModelAttribute(model, user);
 
-        Employee savedEmployee = employeeRepository.save(new EmployeeDAO(employeeRepository, projectRepository).updateAssignedProjectToEmployee(id, employeeDetails));
+        Employee savedEmployee = employeeRepository.save(new UpdateEmployeeDAO(employeeRepository, projectRepository).updateAssignedProjectToEmployee(id, employeeDetails));
         logger.info("saved employee with new assigned project {}", savedEmployee.getProject());
 
         model.addAttribute("employee", savedEmployee);

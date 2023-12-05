@@ -11,16 +11,13 @@ import org.slf4j.LoggerFactory;
 //@Service
 public class EmployeeDAO {
     Logger logger = LoggerFactory.getLogger(getClass());
-    private DepartmentRepository departmentRepository;
-    private ProjectRepository projectRepository;
-    private EmployeeRepository employeeRepository;
+    protected DepartmentRepository departmentRepository;
+    protected ProjectRepository projectRepository;
     public EmployeeDAO(DepartmentRepository departmentRepository, ProjectRepository projectRepository) {
         this.departmentRepository = departmentRepository;
         this.projectRepository = projectRepository;
     }
-
-    public EmployeeDAO(EmployeeRepository employeeRepository, ProjectRepository projectRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeDAO(ProjectRepository projectRepository){
         this.projectRepository = projectRepository;
     }
 
@@ -38,17 +35,9 @@ public class EmployeeDAO {
         return newEmployee;
     }
 
-    public Employee updateAssignedProjectToEmployee(int employeeId, EmployeeDTO employeeDetails) {
-        logger.info("update employee's assigned project method active inside EmployeeDAO");
 
-        Employee updateEmployee = employeeRepository.findEmployeeById(employeeId);
 
-        updateEmployee.setProject(new ProjectDAO(projectRepository).getProject(employeeDetails));
-
-        return updateEmployee;
-    }
-
-    private String getFormattedFirstName(EmployeeDTO employeeDetails) throws NullPointerException {
+    protected String getFormattedFirstName(EmployeeDTO employeeDetails) throws NullPointerException {
 
         if (employeeDetails.getFirstName() == null || employeeDetails.getFirstName().isBlank()) throw new NullPointerException("Error: First name field is null or blank");
 
@@ -57,7 +46,7 @@ public class EmployeeDAO {
         return name.toUpperCase().charAt(0) + name.substring(1);
     }
 
-    private String getFormattedLastName(EmployeeDTO employeeDetails) throws NullPointerException {
+    protected String getFormattedLastName(EmployeeDTO employeeDetails) throws NullPointerException {
 
         if (employeeDetails.getLastName() == null || employeeDetails.getLastName().isBlank()) throw new NullPointerException("Error: Last name field is null or blank");
 
