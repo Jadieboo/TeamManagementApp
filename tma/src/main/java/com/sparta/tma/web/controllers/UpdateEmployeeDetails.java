@@ -1,10 +1,13 @@
 package com.sparta.tma.web.controllers;
 
+import com.sparta.tma.daos.UpdateEmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.AppUserRepository;
+import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
+import com.sparta.tma.repositories.ProjectRepository;
 import com.sparta.tma.utils.PopulateEmployeeAttributes;
 import com.sparta.tma.utils.PopulateModelAttributes;
 import org.slf4j.Logger;
@@ -31,6 +34,10 @@ public class UpdateEmployeeDetails {
     private EmployeeRepository employeeRepository;
     @Autowired
     private AppUserRepository appUserRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
+    @Autowired
+    private ProjectRepository projectRepository;
 
     @GetMapping("/admin/view/employees/update/{id}")
     public String updateEmployeeDetails(@PathVariable int id, Model model, Principal principal) {
@@ -59,13 +66,15 @@ public class UpdateEmployeeDetails {
         logger.info("PATCH request active for admin update employee details by id form data");
         logger.info("employeeDetails: {}", employeeDetails.toString());
 
-
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
         modelUtil.getAuthorityRoleModelAttribute(model, user);
 
-        //TODO: check what details have changed and update employee details and save employee
+        Employee updatedEmployee = new UpdateEmployeeDAO(employeeRepository, departmentRepository, projectRepository).updateEmployeeDetails(employeeDetails);
 
-        //TODO: create model attribute to feed new saved employee to view-employee-details page
+        logger.info("saving updated employee to database: {}", updatedEmployee);
+        employeeRepository.saveAndFlush(updatedEmployee);
+
+        model.addAttribute("employee", updatedEmployee);
 
         return "view-employee-details";
     }
