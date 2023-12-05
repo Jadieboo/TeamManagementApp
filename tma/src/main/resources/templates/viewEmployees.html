@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8">
-    <title>View Employees</title>
-    <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}" />
-    <!--    <script src="https://cdn.tailwindcss.com"></script>-->
-  </head>
+    <head>
+        <meta charset="UTF-8">
+        <title>View Employees</title>
+        <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}"/>
+        <!--    <script src="https://cdn.tailwindcss.com"></script>-->
+    </head>
 
-  <body>
-    <nav th:replace="${isAdmin} ? ~{fragments/admin-navbar-fragment :: admin-navbar} : ~{}" ></nav>
-    <nav th:replace="${isManager} ? ~{fragments/manager-navbar-fragment :: manager-navbar} : ~{}" ></nav>
-    <nav th:replace="${isEmployee} ? ~{fragments/employee-navbar-fragment :: employee-navbar} : ~{}" ></nav>
+    <body>
+        <nav th:replace="${isAdmin} ? ~{fragments/admin-navbar-fragment :: admin-navbar} : ~{}"></nav>
+        <nav th:replace="${isManager} ? ~{fragments/manager-navbar-fragment :: manager-navbar} : ~{}"></nav>
+        <nav th:replace="${isEmployee} ? ~{fragments/employee-navbar-fragment :: employee-navbar} : ~{}"></nav>
 
-    <section th:if="${results_populated}" class="container" style="display: flex; flex-wrap: wrap; gap: 20px 20px; max-width: 100%">
-      <section th:each="employee : ${employeeList}" style="background-color: #FFD1DC; border: 1px solid black; height: 150px; width: 150px;">
-        <div>
-          <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-          <p th:text="${employee.getRole()}"></p>
-          <p th:text="${employee.getDepartment()}"></p>
-          <p th:text="${employee.getProject()}"></p>
-        </div>
-      </section>
-    </section>
+        <section th:if="${results_populated}" class="container"
+                 style="display: flex; flex-wrap: wrap; gap: 20px 20px; max-width: 100%">
+            <section th:each="employee : ${employeeList}"
+                     style="background-color: #FFD1DC; border: 1px solid black; height: 150px; width: 150px;">
 
-    <section th:if="${results_not_found}">
-      <h2>No employees found</h2>
-    </section>
+                <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: admin-populate} : ~{}"></a>
+                <a th:replace="${isManager} ? ~{fragments/view-employees-populate :: manager-populate} : ~{}"></a>
+                <a th:replace="${isEmployee} ? ~{fragments/view-employees-populate :: employee-populate} : ~{}"></a>
 
-  </body>
+
+            </section>
+        </section>
+
+        <section th:if="${results_not_found}">
+            <h2>No employees found</h2>
+        </section>
+
+    </body>
 </html>

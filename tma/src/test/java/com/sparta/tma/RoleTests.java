@@ -14,6 +14,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -83,13 +86,24 @@ public class RoleTests {
     public void rolesAndAuthoritiesMatch() {
         AppUser user = appUserRepository.findById(1);
 
-        String auth = user.getAuthorities().toString();
-        System.out.println("User authority: " + auth);
+        String expected = "";
+
+        for (GrantedAuthority grantedAuthority : user.getAuthorities()) {
+            System.out.println("auth: " + grantedAuthority);
+            System.out.println("auth to string: " + grantedAuthority.toString());
+            if (grantedAuthority.toString().equals("ADMIN")) {
+                expected = grantedAuthority.toString();
+            } else if (grantedAuthority.toString().equals("MANAGER")) {
+                expected = grantedAuthority.toString();
+            } else if (grantedAuthority.toString().equals("EMPLOYEE")) {
+                expected = grantedAuthority.toString();
+            }
+        }
 
         String role = user.getRole().toString();
         System.out.println("User role: " + role);
 
-        assertSame(auth, role);
+        assertEquals(expected, role);
 
     }
 }
