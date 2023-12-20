@@ -4,34 +4,34 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" th:href="../register.css">
         <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
-        <!--    <script src="https://cdn.tailwindcss.com"></script>-->
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
 
-        <nav th:fragment="admin-navbar">
-            <ul>
+        <nav th:fragment="admin-navbar" class="h-screen w-48 p-5 fixed border-0 border-r-2 border-r-black bg-violet-300">
+            <ul class="space-y-20 2xl:space-y-28">
                 <li>
-                    <a th:href="@{/admin/homepage}">
-                        Home
+                    <a th:href="@{/admin/homepage}" class="cursor-pointer">
+                        My Team
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/welcome}">
+                    <a th:href="@{/welcome}" class="cursor-pointer">
                         Welcome
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/admin/new/employees}">
+                    <a th:href="@{/admin/new/employees}" class="cursor-pointer">
                         Create New Employee
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/admin/view/employees}">
+                    <a th:href="@{/admin/view/employees}" class="cursor-pointer">
                         View Employees
                     </a>
                 </li>
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit">Logout</button>
+                <form th:action="@{/logout}" method="post" class="absolute bottom-4">
+                    <button type="submit" class="px-8 py-2 rounded-full bg-black text-white text-sm">Logout</button>
                 </form>
                 </li>
             </ul>

@@ -5,14 +5,27 @@
         <title>Homepage</title>
 <!--        <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}"/>-->
         <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}"/>
+        <script src="https://cdn.tailwindcss.com"></script>
 
     </head>
-    <body class="custom-bg">
+    <body>
         <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
-        <h1>Admin homepage</h1>
-        <h2>Welcome,</h2>
-        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-        <img th:src="@{/static/images/hello.png}"/>
+
+        <main class="bg-red-400  container mx-auto text-center">
+            <h1>Admin homepage</h1>
+            <h2>Welcome,</h2>
+            <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+            <img th:src="@{/static/images/hello.png}" alt="Hello displayed as a neon light speech bubble"/>
+        </main>
+
+        <section class="container mx-auto bg-gray-200">
+            <p>This is where the team will go</p>
+            <p>Need to fix margin on both the center sections as they go under the nav when the screen gets smaller</p>
+            <img th:src="@{/static/images/hello.png}" alt="Hello displayed as a neon light speech bubble"/>
+        </section>
+
+
+
 
     </body>
 </html>
