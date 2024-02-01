@@ -8,8 +8,8 @@
     </head>
     <body>
 
-        <nav th:fragment="admin-navbar" class="h-screen w-48 p-5 fixed border-0 border-r-2 border-r-black bg-violet-300">
-            <ul class="space-y-20 2xl:space-y-28">
+        <nav th:fragment="admin-navbar" class="flex flex-col h-screen w-48 p-5 fixed border-0 border-r-2 border-r-black bg-violet-300">
+            <ul class="flex flex-col justify-between">
                 <li>
                     <a th:href="@{/admin/homepage}" class="cursor-pointer">
                         My Team

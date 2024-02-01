@@ -8,24 +8,30 @@
         <script src="https://cdn.tailwindcss.com"></script>
 
     </head>
-    <body>
+    <body class="flex">
         <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
 
-        <main class="bg-red-400  container mx-auto text-center">
-            <h1>Admin homepage</h1>
-            <h2>Welcome,</h2>
-            <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-            <img th:src="@{/static/images/hello.png}" alt="Hello displayed as a neon light speech bubble"/>
+        <main class="bg-red-400  container mx-auto">
+
+            <section class="flex flex-row justify-evenly mx-auto w-1/2 bg-blue-500" >
+                <div>
+                    <img th:src="@{/static/images/hello.png}" alt="Hello displayed as a neon light speech bubble" class="rounded-3xl"/>
+                </div>
+
+                <div>
+                    <h1>Admin homepage</h1>
+                    <h2>Welcome,</h2>
+                    <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+                </div>
+            </section>
+
+
+            <section class="bg-pink-500">
+                <p>This is where the team will go</p>
+                <p>Need to fix margin on both the center sections as they go under the nav when the screen gets smaller</p>
+                <img th:src="@{/static/images/hello.png}" alt="Hello displayed as a neon light speech bubble"/>
+            </section>
         </main>
-
-        <section class="container mx-auto bg-gray-200">
-            <p>This is where the team will go</p>
-            <p>Need to fix margin on both the center sections as they go under the nav when the screen gets smaller</p>
-            <img th:src="@{/static/images/hello.png}" alt="Hello displayed as a neon light speech bubble"/>
-        </section>
-
-
-
 
     </body>
 </html>
