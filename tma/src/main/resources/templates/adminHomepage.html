@@ -3,19 +3,22 @@
     <head>
         <meta charset="UTF-8">
         <title>Homepage</title>
-<!--        <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}"/>-->
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}"/>
+<!--        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>-->
         <script src="https://cdn.tailwindcss.com"></script>
-
     </head>
-    <body class="flex">
+    <body>
+
         <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
 
-        <main class="bg-red-400  container mx-auto">
+        <main class="flex flex-col w-3/4 h-screen ml-[190px] pl-4 justify-evenly bg-red-400">
 
-            <section class="flex flex-row justify-evenly mx-auto w-1/2 bg-blue-500" >
-                <div>
-                    <img th:src="@{/static/images/hello.png}" alt="Hello displayed as a neon light speech bubble" class="rounded-3xl"/>
+            <section class="flex flex-col md:flex-row bg-blue-500 w-1/2" >
+                <div class="rounded-3xl w-1/4">
+                    <img
+                            th:src="@{/static/images/hello.png}"
+                            alt="Hello displayed as a neon light speech bubble"
+                            class=""
+                    />
                 </div>
 
                 <div>
@@ -26,10 +29,13 @@
             </section>
 
 
-            <section class="bg-pink-500">
+            <section class="bg-pink-500 w-1/2">
                 <p>This is where the team will go</p>
-                <p>Need to fix margin on both the center sections as they go under the nav when the screen gets smaller</p>
-                <img th:src="@{/static/images/hello.png}" alt="Hello displayed as a neon light speech bubble"/>
+                <img
+                        th:src="@{/static/images/hello.png}"
+                        alt="Hello displayed as a neon light speech bubble"
+                        class="w-1/4"
+                />
             </section>
         </main>
 
