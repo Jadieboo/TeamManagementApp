@@ -5,12 +5,51 @@
         <title>Homepage</title>
 <!--        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>-->
         <script src="https://cdn.tailwindcss.com"></script>
+
+        <style>
+
+            /*
+            todo: need to add this animation via tailwind
+             */
+
+            /* user content */
+            .sidebar .content {
+                left: -50%;   /* will be animated to left: 0, by animation */
+                animation: slide 0.5s forwards;
+            }
+            @keyframes slide {
+                100% { left: 0; }
+            }
+        </style>
+
     </head>
     <body>
 
-        <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
+            <!--    I decided to wrap the buttons in a div so that I can hide them on larger screens because I still want the fixed open nav on larger screens
+                - To do this I have javascript functions to toggle css styles on the sidebar div,
+                - the blocker div is acting as the buffer layer between the nav and the screen and enables the user to click on the screen to hide the nav
+                - the content div displays the nav fragment
+                -->
 
-        <main class="flex flex-col w-3/4 h-screen ml-[190px] pl-4 justify-evenly bg-red-400">
+        <div class="relative w-48 p-1 flex justify-between z-50">
+            <button onclick="toggle()" class="show-nav-btn z-50 w-max h-max lg:hidden">
+                >>
+            </button>
+
+            <button onclick="toggle()" class="hide-nav-btn z-50 w-max h-max hidden lg:block">
+                <<
+            </button>
+        </div>
+
+        <div class="sidebar fixed top-0 left-0 z-40 h-screen w-screen p-0 bg-black/50 hidden lg:flex lg:bg-transparent lg:w-48">
+            <div class="blocker absolute w-full h-full"></div>
+            <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"
+                 class="content absolute top-0 left-0 bg-gray-200"></nav>
+        </div>
+
+
+        <main class="flex flex-col w-3/4 h-screen pl-4 m-auto justify-evenly bg-red-400
+                    lg:ml-[190px]">
 
             <section class="flex flex-col md:flex-row bg-blue-500 w-1/2" >
                 <div class="rounded-3xl w-1/4">
@@ -38,6 +77,8 @@
                 />
             </section>
         </main>
+
+        <script type="text/javascript" src="../static/js/nav.js" th:src="@{/static/js/nav.js}"></script>
 
     </body>
 </html>

@@ -6,7 +6,12 @@
     </head>
     <body>
 
-        <nav th:fragment="admin-navbar" class="fixed z-1 flex flex-col h-screen w-48 border-0 border-r-2 border-r-black bg-violet-300">
+        <nav th:fragment="admin-navbar"
+             class="w-48 border-0 border-r-2 border-r-black bg-violet-300
+                    lg:-z-0 lg:flex lg:flex-col
+                    "
+        >
+
             <ul class="flex flex-col h-3/4 justify-evenly">
                 <li>
                     <a th:href="@{/admin/homepage}" class="block pl-5 hover:cursor-pointer hover:bg-violet-200">
@@ -28,11 +33,12 @@
                         View Employees
                     </a>
                 </li>
-                <form th:action="@{/logout}" method="post" class="absolute bottom-4 w-full flex justify-center justify-items-center">
+                <form th:action="@{/logout}" method="post" class="relative -bottom-44 w-full flex justify-center justify-items-center">
                     <button type="submit" class="px-8 py-2 rounded-full bg-black text-white text-sm
                     hover:text-black hover:bg-violet-300 hover:border hover:border-black">Logout</button>
                 </form>
             </ul>
         </nav>
+
     </body>
 </html>
