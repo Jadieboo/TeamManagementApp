@@ -9,7 +9,21 @@
 
     <body>
 
-        <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
+        <div class="relative w-48 p-1 flex justify-between z-50">
+            <button onclick="toggle()" class="show-nav-btn z-50 w-max h-max lg:hidden">
+                >>
+            </button>
+
+            <button onclick="toggle()" class="hide-nav-btn z-50 w-max h-max hidden lg:block">
+                <<
+            </button>
+        </div>
+
+        <div class="sidebar fixed top-0 left-0 z-40 h-screen w-screen p-0 bg-black/50 hidden lg:flex lg:bg-transparent lg:w-48">
+            <div class="blocker absolute w-full h-full -z-10"></div>
+            <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"
+                 class="content absolute top-0 left-0 bg-gray-200"></nav>
+        </div>
 
         <main class="flex flex-col w-3/4 h-max ml-[190px] pl-4 justify-evenly">
 
@@ -87,6 +101,8 @@
             </div>
 
         </main>
+
+        <script type="text/javascript" src="../static/js/nav.js" th:src="@{/static/js/nav.js}"></script>
 
     </body>
 </html>

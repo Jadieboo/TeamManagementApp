@@ -31,7 +31,10 @@
                 - the content div displays the nav fragment
                 -->
 
-        <div class="relative w-48 p-1 flex justify-between z-50">
+<!--        todo: need to add the side bar section to all pages with navigation
+-->
+
+        <div class="fixed w-48 p-1 flex justify-between z-50">
             <button onclick="toggle()" class="show-nav-btn z-50 w-max h-max lg:hidden">
                 >>
             </button>
@@ -42,7 +45,7 @@
         </div>
 
         <div class="sidebar fixed top-0 left-0 z-40 h-screen w-screen p-0 bg-black/50 hidden lg:flex lg:bg-transparent lg:w-48">
-            <div class="blocker absolute w-full h-full"></div>
+            <div class="blocker absolute w-full h-full -z-10"></div>
             <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"
                  class="content absolute top-0 left-0 bg-gray-200"></nav>
         </div>

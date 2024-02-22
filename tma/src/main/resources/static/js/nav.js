@@ -15,7 +15,7 @@ function show() { // swipe right
     open.classList.remove('lg:hidden');
 
 
-    document.body.style.overflow = 'hidden';
+    // document.body.style.overflow = 'hidden';
     console.log("SHOW");
 
 }
@@ -34,5 +34,5 @@ function hide() { // by blocker click, swipe left, or url change
     console.log("HIDE");
 }
 function toggle() {
-    sidebar.classList.contains('flex') || sidebar.classList.contains('lg:flex') ? hide() : show();
+    sidebar.classList.contains('flex') ? hide() : show();
 }

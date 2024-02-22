@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* user content */
+.sidebar .content {
+    left: -50%;   /* will be animated to left: 0, by animation */
+    animation: slide 0.5s forwards;
+}
+
+@keyframes slide {
+    100% { left: 0; }
+}
