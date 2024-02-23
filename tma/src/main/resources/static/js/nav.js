@@ -5,8 +5,8 @@ const open = document.querySelector('.show-nav-btn');
 const close = document.querySelector('.hide-nav-btn');
 
 function show() { // swipe right
-    sidebar.classList.remove('hidden');
-    sidebar.classList.add('flex');
+    sidebar.classList.remove('sidebar-hidden');
+    sidebar.classList.add('sidebar-flex');
     sidebar.classList.add('lg:flex');
 
     close.classList.remove('hidden');
@@ -20,9 +20,9 @@ function show() { // swipe right
 
 }
 function hide() { // by blocker click, swipe left, or url change
-    sidebar.classList.remove('flex');
+    sidebar.classList.add('sidebar-hidden');
+    sidebar.classList.remove('sidebar-flex');
     sidebar.classList.remove('lg:flex');
-    sidebar.classList.add('hidden');
 
     open.classList.remove('hidden');
     open.classList.remove('lg:hidden');
@@ -30,9 +30,10 @@ function hide() { // by blocker click, swipe left, or url change
     close.classList.add('lg:hidden');
 
 
+
     document.body.style.overflow = '';
     console.log("HIDE");
 }
 function toggle() {
-    sidebar.classList.contains('flex') ? hide() : show();
+    sidebar.classList.contains('sidebar-flex') ? hide() : show();
 }

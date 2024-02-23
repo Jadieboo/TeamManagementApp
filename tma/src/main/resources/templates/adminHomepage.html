@@ -3,24 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Homepage</title>
-<!--        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>-->
-        <script src="https://cdn.tailwindcss.com"></script>
-
-        <style>
-
-            /*
-            todo: need to add this animation via tailwind
-             */
-
-            /* user content */
-            .sidebar .content {
-                left: -50%;   /* will be animated to left: 0, by animation */
-                animation: slide 0.5s forwards;
-            }
-            @keyframes slide {
-                100% { left: 0; }
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
+<!--        <script src="https://cdn.tailwindcss.com"></script>-->
 
     </head>
     <body>
@@ -32,6 +16,7 @@
                 -->
 
 <!--        todo: need to add the side bar section to all pages with navigation
+            todo: fix small screen navbar not hiding initially
 -->
 
         <div class="fixed w-48 p-1 flex justify-between z-50">
@@ -44,17 +29,17 @@
             </button>
         </div>
 
-        <div class="sidebar fixed top-0 left-0 z-40 h-screen w-screen p-0 bg-black/50 hidden lg:flex lg:bg-transparent lg:w-48">
-            <div class="blocker absolute w-full h-full -z-10"></div>
+        <div class="sidebar sidebar-flex fixed top-0 left-0 z-40 h-screen w-screen p-0 hidden lg:flex lg:bg-transparent lg:w-48">
+            <div class="blocker absolute bg-black/50 -z-10"></div>
             <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"
-                 class="content absolute top-0 left-0 bg-gray-200"></nav>
+                 class=" absolute top-0 left-0 bg-gray-200"></nav>
         </div>
 
 
         <main class="flex flex-col w-3/4 h-screen pl-4 m-auto justify-evenly bg-red-400
                     lg:ml-[190px]">
 
-            <section class="flex flex-col md:flex-row bg-blue-500 w-1/2" >
+            <section class="flex flex-col md:flex-row bg-green-500 w-1/2" >
                 <div class="rounded-3xl w-1/4">
                     <img
                             th:src="@{/static/images/hello.png}"

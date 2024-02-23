@@ -4,11 +4,36 @@
 
 
 /* user content */
-.sidebar .content {
-    left: -50%;   /* will be animated to left: 0, by animation */
-    animation: slide 0.5s forwards;
+/*.sidebar .content {*/
+/*    left: -50%;   !* will be animated to left: 0, by animation *!*/
+/*    animation: slide 5s forwards;*/
+/*    animation-duration: 20s;*/
+/*}*/
+
+.sidebar-flex {
+    display: flex;
+    left: -50%;
+    animation: slide-in 0.5s forwards
 }
 
-@keyframes slide {
+.sidebar-hidden {
+    display: flex;
+    left: 0;
+    animation: slide-out 0.5s forwards
+}
+
+.blocker {
+    width: 150%;
+    height: 100%;
+}
+
+@keyframes slide-in {
     100% { left: 0; }
+}
+
+@keyframes slide-out {
+    100% {
+        left: -50%;
+        display: none;
+    }
 }
