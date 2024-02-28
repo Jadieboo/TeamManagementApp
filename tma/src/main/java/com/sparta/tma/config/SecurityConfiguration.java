@@ -1,17 +1,6 @@
 package com.sparta.tma.config;
 
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.KeySourceException;
-import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.JWKSelector;
-import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jose.jwk.RSAKey;
-import com.nimbusds.jose.jwk.source.JWKSource;
-import com.nimbusds.jose.proc.SecurityContext;
-import com.sparta.tma.entities.Role;
-import com.sparta.tma.services.LoginSuccessHandler;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,26 +9,12 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.RSAPublicKey;
-import java.util.List;
-import java.util.UUID;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 
 @Configuration
@@ -47,17 +22,11 @@ import java.util.UUID;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Autowired
-    private LoginSuccessHandler loginSuccessHandler;
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.authorizeHttpRequests(auth -> auth
-//                        .anyRequest().authenticated());
-
-        http.authorizeHttpRequests(auth -> {
-//            auth.requestMatchers("/static/**")
-//                    .permitAll();
+        return http.authorizeHttpRequests(auth -> {
+            auth.requestMatchers("/login")
+                            .permitAll();
             auth.requestMatchers("/admin/**")
                     .hasAuthority("ADMIN");
             auth.requestMatchers("/manager/**")
@@ -67,30 +36,28 @@ public class SecurityConfiguration {
             auth.requestMatchers("employees")
                     .hasAnyAuthority("MANAGER", "EMPLOYEE");
             auth.anyRequest().authenticated();
-        });
-
-        // this was creating issues with not allowing me to access endpoints
-//        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        // API Authentication
-        http.httpBasic(Customizer.withDefaults());
-
+        })
         // Form-Based Authentication
-        http.formLogin()
-//                .loginPage("/login") // custom login does not work with /loginHandler
-                .loginProcessingUrl("/login")
-                .successHandler(loginSuccessHandler)
-                .permitAll()
-                .and()
-                .logout()
-                .deleteCookies("JSESSIONID");
+        .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .loginProcessingUrl("/perform_login")
+                        .successHandler(loginSuccessHandler()))
+        .logout(logout -> logout
+                .logoutUrl("/logout")
+                        .deleteCookies("JSESSIONID"))
+        // API Authentication
+        .httpBasic(Customizer.withDefaults())
+        .build();
 
-        http.csrf((AbstractHttpConfigurer::disable));
+
+//        http.csrf((AbstractHttpConfigurer::disable));
 
         // OAuth2 Resource Server
 //        http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 
-        return http.build();
+        // this was creating issues with not allowing me to access endpoints
+//        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
     }
 
     @Bean
@@ -105,6 +72,11 @@ public class SecurityConfiguration {
         provider.setUserDetailsService(detailsService);
 
         return new ProviderManager(provider);
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler loginSuccessHandler() {
+        return new LoginSuccessHandler();
     }
 //
 //    // ------ JWT config ------

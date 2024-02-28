@@ -27,6 +27,21 @@ public class LoginController {
     @Autowired
     private PasswordEncoder encoder;
 
+    @GetMapping("/login")
+    public String loginPage(@RequestParam(name="error", required = false) String loginError,
+                            @RequestParam(name="logout", required = false) String loggedOut,
+                            Model model
+    ) {
+        if (loginError != null) {
+            model.addAttribute("loginError", true);
+        }
+
+        if (loggedOut != null){
+            model.addAttribute("logoutMessage", true);
+        }
+
+        return "login";
+    }
 
     @GetMapping("/admin/homepage")
     public String adminHomepage(Model model, Authentication authentication) {

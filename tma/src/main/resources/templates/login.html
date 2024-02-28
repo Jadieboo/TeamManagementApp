@@ -33,7 +33,7 @@
             </form>
     
             <div class="logoutMessage notifications" th:if="${logoutMessage}">You have been logged out!</div>
-            <div class="loginFailed notifications" th:if="${paramError}">Login failed, incorrect email and password!</div>
+            <div class="loginFailed notifications" th:if="${loginError}">Login failed, incorrect email and password!</div>
         </section>
         
     </body>

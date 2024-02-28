@@ -1,4 +1,4 @@
-package com.sparta.tma.services;
+package com.sparta.tma.config;
 
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Role;
@@ -14,8 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
-public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
 
