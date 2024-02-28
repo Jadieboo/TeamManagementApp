@@ -16,51 +16,35 @@ import java.io.IOException;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
-
+    
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
 
         logger.info("in redirection");
 
-        AppUser user = (AppUser) authentication.getPrincipal();
-
-        logger.info("user: {}", user);
-
-        logger.info("Authentication: {}", authentication);
-
         String userAuth = ((AppUser) authentication.getPrincipal()).getRole().toString();
-
         logger.info("Principal name: " + authentication.getName());
-
-
         logger.info("User role: " + userAuth);
 
         String redirectURL = request.getContextPath();
         logger.info("Context Path: " + redirectURL);
 
-
         if (userAuth.equals(Role.ADMIN.name())) {
-            logger.info("user authority is role " + userAuth + " > redirection");
             redirectURL = "/admin/homepage";
-            logger.info("redirection: " + redirectURL);
+            logger.info("user authority is role " + userAuth + " > redirection:" + redirectURL);
 
         } else if (userAuth.equals(Role.MANAGER.name())) {
-            logger.info("user authority is role " + userAuth + " > redirection");
             redirectURL = "/manager/homepage";
-            logger.info("redirection: " + redirectURL);
+            logger.info("user authority is role " + userAuth + " > redirection:" + redirectURL);
 
         } else if (userAuth.equals(Role.EMPLOYEE.name())) {
-            logger.info("user authority is role " + userAuth + " > redirection");
             redirectURL = "/employee/homepage";
-            logger.info("redirection: " + redirectURL);
+            logger.info("user authority is role " + userAuth + " > redirection:" + redirectURL);
 
         } else {
             logger.info("Redirection failed");
         }
-
-        logger.info("Context Path: " + redirectURL);
 
         response.sendRedirect(redirectURL);
 
