@@ -82,16 +82,45 @@ input[type=submit]:hover, input[type=submit]:focus {
     padding: 5px;
     margin-top: 8px;
     border-radius: 5px;
+    animation-name: fade-out;
+    animation-iteration-count: 1;
+    animation-duration: 10s;
+    animation-timing-function: ease-out;
+
 }
 
 .loginFailed {
     border: 1px solid #ff6c6c;
     background-color: #ffc2c2;
+    animation-name: fade-out;
+    animation-iteration-count: 1;
+    animation-duration: 10s;
+    animation-timing-function: ease-out;
 }
 
 .logoutMessage {
     border: 1px solid #00ff00;
     background-color: #c7fdc7;
+    animation-name: fade-out;
+    animation-iteration-count: 1;
+    animation-duration: 10s;
+    animation-timing-function: ease-out;
+}
+
+div > .notification {
+    animation-name: fade-out;
+    animation-iteration-count: 1;
+    animation-duration: 10s;
+    animation-timing-function: ease-out;
+    }
+
+@keyframes fade-out {
+    50% {
+        background-color: #333;
+    }
+    100% {
+        display: none;
+    }
 }
 
 

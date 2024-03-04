@@ -25,29 +25,31 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/login")
+                    auth.requestMatchers("/", "/login")
                             .permitAll();
-            auth.requestMatchers("/admin/**")
-                    .hasAuthority("ADMIN");
-            auth.requestMatchers("/manager/**")
-                    .hasAuthority("MANAGER");
-            auth.requestMatchers("/employee/**")
-                    .hasAuthority("EMPLOYEE");
-            auth.requestMatchers("employees")
-                    .hasAnyAuthority("MANAGER", "EMPLOYEE");
-            auth.anyRequest().authenticated();
-        })
-        // Form-Based Authentication
-        .formLogin(formLogin -> formLogin
+                    auth.requestMatchers("/admin/**")
+                            .hasAuthority("ADMIN");
+                    auth.requestMatchers("/manager/**")
+                            .hasAuthority("MANAGER");
+                    auth.requestMatchers("/employee/**")
+                            .hasAuthority("EMPLOYEE");
+                    auth.requestMatchers("employees")
+                            .hasAnyAuthority("MANAGER", "EMPLOYEE");
+                    auth.anyRequest().authenticated();
+                })
+                // Form-Based Authentication
+                .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .loginProcessingUrl("/perform_login")
                         .successHandler(loginSuccessHandler()))
-        .logout(logout -> logout
-                .logoutUrl("/logout")
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
                         .deleteCookies("JSESSIONID"))
-        // API Authentication
-        .httpBasic(Customizer.withDefaults())
-        .build();
+                // API Authentication
+                .httpBasic(Customizer.withDefaults())
+                // disable csrf for postman api
+                .csrf(AbstractHttpConfigurer::disable)
+                .build();
 
 
 //        http.csrf((AbstractHttpConfigurer::disable));
