@@ -20,11 +20,19 @@
 -->
 
         <div class="fixed w-48 p-1 flex justify-between z-50">
-            <button onclick="toggle()" class="show-nav-btn z-50 w-max h-max lg:hidden">
+            <button
+                    onclick="toggle()"
+                    class="show-nav-btn z-50 w-max h-max text-3xl hover:font-medium
+                    md:text-2xl lg:text-xl lg:hidden"
+            >
                 >>
             </button>
 
-            <button onclick="toggle()" class="hide-nav-btn z-50 w-max h-max hidden lg:block">
+            <button
+                    onclick="toggle()"
+                    class="hide-nav-btn z-50 w-max h-max text-3xl hidden hover:font-medium
+                    md:text-2xl lg:text-xl lg:block"
+            >
                 <<
             </button>
         </div>

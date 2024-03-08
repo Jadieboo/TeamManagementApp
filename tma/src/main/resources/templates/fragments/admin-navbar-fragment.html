@@ -8,37 +8,38 @@
     <body>
 
         <nav th:fragment="admin-navbar"
-             class="w-48 border-0 border-r-2 border-r-black bg-violet-300
-                    lg:-z-0 lg:flex lg:flex-col
-                    "
+             class="flex flex-col w-full border-0 border-r-2 border-r-black bg-violet-300 justify-between pb-4
+             lg:-z-0"
         >
 
-            <ul class="flex flex-col h-3/4 justify-evenly">
+            <ul class="relative flex flex-col h-screen justify-evenly text-center">
                 <li>
-                    <a th:href="@{/admin/homepage}" class="block pl-5 hover:cursor-pointer hover:bg-violet-200">
+                    <a th:href="@{/admin/homepage}" class="block p-6 text-3xl hover:cursor-pointer hover:bg-violet-200 hover:text-left hover:duration-300 md:text-2xl lg:text-lg">
                         My Team
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/welcome}" class="block pl-5 hover:cursor-pointer hover:bg-violet-200">
+                    <a th:href="@{/welcome}" class="block p-6 text-3xl hover:cursor-pointer hover:bg-violet-200 hover:text-left hover:duration-300 md:text-2xl lg:text-lg">
                         Welcome
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/admin/new/employees}" class="block pl-5 hover:cursor-pointer hover:bg-violet-200">
+                    <a th:href="@{/admin/new/employees}" class="block p-6 text-3xl w-full hover:cursor-pointer hover:bg-violet-200 hover:text-left hover:duration-300 md:text-2xl lg:text-lg">
                         Create New Employee
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/admin/view/employees}" class="block pl-5 hover:cursor-pointer hover:bg-violet-200">
+                    <a th:href="@{/admin/view/employees}" class="block p-6 text-3xl hover:cursor-pointer hover:bg-violet-200 hover:text-left hover:duration-300 md:text-2xl lg:text-lg">
                         View Employees
                     </a>
                 </li>
-                <form th:action="@{/logout}" method="post" class="relative -bottom-44 w-full flex justify-center justify-items-center">
-                    <button type="submit" class="px-8 py-2 rounded-full bg-black text-white text-sm
+                <form th:action="@{/logout}" method="post" class="absolute bottom-0 w-full flex justify-center justify-items-center">
+                    <button type="submit" class="px-8 py-2 rounded-full bg-black text-white text-2xl
+                    lg:text-sm
                     hover:text-black hover:bg-violet-300 hover:border hover:border-black">Logout</button>
                 </form>
             </ul>
+
         </nav>
 
     </body>
