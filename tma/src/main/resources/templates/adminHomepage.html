@@ -3,16 +3,78 @@
     <head>
         <meta charset="UTF-8">
         <title>Homepage</title>
-<!--        <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}"/>-->
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
+<!--        <script src="https://cdn.tailwindcss.com"></script>-->
 
     </head>
-    <body class="custom-bg">
-        <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
-        <h1>Admin homepage</h1>
-        <h2>Welcome,</h2>
-        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-        <img th:src="@{/static/images/hello.png}"/>
+    <body>
+
+            <!--    I decided to wrap the buttons in a div so that I can hide them on larger screens because I still want the fixed open nav on larger screens
+                - To do this I have javascript functions to toggle css styles on the sidebar div,
+                - the blocker div is acting as the buffer layer between the nav and the screen and enables the user to click on the screen to hide the nav
+                - the content div displays the nav fragment
+                -->
+
+<!--        todo: need to add the side bar section to all pages with navigation
+            todo: fix small screen navbar not hiding initially
+-->
+
+        <div class="fixed w-48 p-1 flex justify-between z-50">
+            <button
+                    onclick="toggle()"
+                    class="show-nav-btn z-50 w-max h-max text-3xl hover:font-medium
+                    md:text-2xl lg:text-xl lg:hidden"
+            >
+                >>
+            </button>
+
+            <button
+                    onclick="toggle()"
+                    class="hide-nav-btn z-50 w-max h-max text-3xl hidden hover:font-medium
+                    md:text-2xl lg:text-xl lg:block"
+            >
+                <<
+            </button>
+        </div>
+
+        <div class="sidebar sidebar-flex fixed top-0 left-0 z-40 h-screen w-screen p-0 hidden lg:flex lg:bg-transparent lg:w-48">
+            <div class="blocker absolute bg-black/50 -z-10"></div>
+            <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"
+                 class=" absolute top-0 left-0 bg-gray-200"></nav>
+        </div>
+
+
+        <main class="flex flex-col w-3/4 h-screen pl-4 m-auto justify-evenly bg-red-400
+                    lg:ml-[190px]">
+
+            <section class="flex flex-col md:flex-row bg-green-500 w-1/2" >
+                <div class="rounded-3xl w-1/4">
+                    <img
+                            th:src="@{/static/images/hello.png}"
+                            alt="Hello displayed as a neon light speech bubble"
+                            class=""
+                    />
+                </div>
+
+                <div>
+                    <h1>Admin homepage</h1>
+                    <h2>Welcome,</h2>
+                    <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+                </div>
+            </section>
+
+
+            <section class="bg-pink-500 w-1/2">
+                <p>This is where the team will go</p>
+                <img
+                        th:src="@{/static/images/hello.png}"
+                        alt="Hello displayed as a neon light speech bubble"
+                        class="w-1/4"
+                />
+            </section>
+        </main>
+
+        <script type="text/javascript" src="../static/js/nav.js" th:src="@{/static/js/nav.js}"></script>
 
     </body>
 </html>
