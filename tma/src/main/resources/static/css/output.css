@@ -949,16 +949,23 @@ video {
   }
 }
 
-@media screen and (min-width: 1024px) {
-  .sidebar-hidden {
-    animation-duration: 1s;
-  }
+/*@media screen and (min-width: 1024px) {*/
 
-  .sidebar-flex {
-    animation-duration: 1s;
-    animation-timing-function: linear;
-  }
-}
+/*    .sidebar-hidden {*/
+
+/*        animation-duration: 1s;*/
+
+/*    }*/
+
+/*    .sidebar-flex {*/
+
+/*        animation-duration: 1s;*/
+
+/*        animation-timing-function: linear;*/
+
+/*    }*/
+
+/*}*/
 
 .hover\:cursor-pointer:hover {
   cursor: pointer;
@@ -985,6 +992,11 @@ video {
 
 .hover\:text-left:hover {
   text-align: left;
+}
+
+.hover\:text-4xl:hover {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .hover\:font-medium:hover {
@@ -1092,6 +1104,15 @@ video {
 
   .lg\:text-xl {
     font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .lg\:hover\:text-left:hover {
+    text-align: left;
+  }
+
+  .lg\:hover\:text-lg:hover {
+    font-size: 1.125rem;
     line-height: 1.75rem;
   }
 }

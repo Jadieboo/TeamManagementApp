@@ -19,25 +19,28 @@
             todo: fix small screen navbar not hiding initially
 -->
 
-        <div class="fixed w-48 p-1 flex justify-between z-50">
+        <div class="fixed w-48 p-1 flex justify-between z-50 lg:hidden">
             <button
                     onclick="toggle()"
-                    class="show-nav-btn z-50 w-max h-max text-3xl hover:font-medium
-                    md:text-2xl lg:text-xl lg:hidden"
+                    class="show-nav-btn z-50 w-max h-max text-3xl
+                    hover:font-medium
+                    md:text-2xl"
             >
                 >>
             </button>
 
             <button
                     onclick="toggle()"
-                    class="hide-nav-btn z-50 w-max h-max text-3xl hidden hover:font-medium
-                    md:text-2xl lg:text-xl lg:block"
+                    class="hide-nav-btn z-50 w-max h-max text-3xl hidden
+                    hover:font-medium
+                    md:text-2xl"
             >
                 <<
             </button>
         </div>
 
-        <div class="sidebar sidebar-flex fixed top-0 left-0 z-40 h-screen w-screen p-0 hidden lg:flex lg:bg-transparent lg:w-48">
+        <div class="hidden sidebar fixed top-0 left-0 z-40 h-screen w-screen p-0
+        lg:flex lg:bg-transparent lg:w-48">
             <div class="blocker absolute bg-black/50 -z-10"></div>
             <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"
                  class=" absolute top-0 left-0 bg-gray-200"></nav>
