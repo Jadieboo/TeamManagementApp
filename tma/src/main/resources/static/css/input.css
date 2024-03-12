@@ -38,15 +38,15 @@
     }
 }
 
-@media screen and (min-width: 1024px) {
-    .sidebar-hidden {
-        animation-duration: 1s;
-    }
+/*@media screen and (min-width: 1024px) {*/
+/*    .sidebar-hidden {*/
+/*        animation-duration: 1s;*/
+/*    }*/
 
-    .sidebar-flex {
-        animation-duration: 1s;
-        animation-timing-function: linear;
-    }
+/*    .sidebar-flex {*/
+/*        animation-duration: 1s;*/
+/*        animation-timing-function: linear;*/
+/*    }*/
 
-}
+/*}*/
 
