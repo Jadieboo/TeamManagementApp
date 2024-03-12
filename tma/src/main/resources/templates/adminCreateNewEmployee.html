@@ -4,24 +4,39 @@
         <meta charset="UTF-8">
         <title>New Employee</title>
         <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}"/>
-
-        <!--    <link rel="stylesheet" type="text/css"  href="/tma/src/main/resources/static/css/output.css" />-->
-        <!--    <link rel="stylesheet" type="text/css"  href="/tma/src/main/resources/static/css/register.css" />-->
-
-
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
 
     <body>
 
-        <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
+        <div class="relative w-48 p-1 flex justify-between z-50">
+            <button onclick="toggle()" class="show-nav-btn z-50 w-max h-max lg:hidden">
+                >>
+            </button>
 
+            <button onclick="toggle()" class="hide-nav-btn z-50 w-max h-max hidden lg:block">
+                <<
+            </button>
+        </div>
 
-        <main>
-            <h1 class="lg:text-3xl lg:mt-8 text-2xl font-bold text-gray-900 mb-8">Create a new employee</h1>
+        <div class="sidebar fixed top-0 left-0 z-40 h-screen w-screen p-0 bg-black/50 hidden lg:flex lg:bg-transparent lg:w-48">
+            <div class="blocker absolute w-full h-full -z-10"></div>
+            <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"
+                 class="content absolute top-0 left-0 bg-gray-200"></nav>
+        </div>
+
+        <main class="flex flex-col w-3/4 h-max ml-[190px] pl-4 justify-evenly">
+
+            <div class="w-full m-auto bg-red-400">
+
+            <h1 class="text-2xl font-bold text-gray-900 mb-8 uppercase
+            lg:text-3xl lg:mt-8 lg:text-center">
+                Create a new employee
+            </h1>
 
             <form th:action="@{/admin/web/register/employees}" th:object="${employeeDetails}" method="POST"
-                  class="w-full mb-3 max-w-screen-sm p-2">
+                  class="w-full mb-3 max-w-screen-sm p-2 bg-blue-500">
+
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -83,8 +98,11 @@
                 <p>New employee added to the database: <span th:text="${formEmployee}"></span></p>
             </div>
 
+            </div>
+
         </main>
 
+        <script type="text/javascript" src="../static/js/nav.js" th:src="@{/static/js/nav.js}"></script>
 
     </body>
 </html>

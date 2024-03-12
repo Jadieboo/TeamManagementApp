@@ -1,0 +1,13 @@
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: Jam120408
+      MYSQL_DATABASE: tma
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tma
+      SPRING_DATABASE_USERNAME: root
+      SPRING_DATABASE_PASSWORD: Jam120408
+    ports:
+      - 3307:3306

@@ -7,6 +7,7 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 @Configuration
 public class WebConfig {
 
+    // hidden input fields
     @Bean
     public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
         return new HiddenHttpMethodFilter();
