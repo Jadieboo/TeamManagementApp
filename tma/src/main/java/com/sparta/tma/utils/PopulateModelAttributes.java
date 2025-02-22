@@ -25,15 +25,19 @@ public class PopulateModelAttributes {
         String role = user.getRole().name().toLowerCase();
         logger.info("user role: {}", role);
 
-        if (role.equals("admin")) {
-            model.addAttribute("isAdmin", true);
-            logger.info("Setting isAdmin model attribute to true");
-        } else if (role.equals("manager")) {
-            model.addAttribute("isManager", true);
-            logger.info("Setting isManager model attribute to true");
-        } else if (role.equals("employee")) {
-            model.addAttribute("isEmployee", true);
-            logger.info("Setting isEmployee model attribute to true");
+        switch (role) {
+            case "admin" -> {
+                model.addAttribute("isAdmin", true);
+                logger.info("Setting isAdmin model attribute to true");
+            }
+            case "manager" -> {
+                model.addAttribute("isManager", true);
+                logger.info("Setting isManager model attribute to true");
+            }
+            case "employee" -> {
+                model.addAttribute("isEmployee", true);
+                logger.info("Setting isEmployee model attribute to true");
+            }
         }
     }
 

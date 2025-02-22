@@ -5,6 +5,8 @@ import com.sparta.tma.daos.UpdateEmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
+import com.sparta.tma.exceptions.EmployeeNotFoundException;
+import com.sparta.tma.exceptions.UnauthorizedAccessException;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
@@ -56,13 +58,13 @@ public class UpdateAssignedProjects {
         if (employee == null) {
             logger.info("employee is not present");
             model.addAttribute("not_found", true);
-            return "status-code";
+            throw new EmployeeNotFoundException("Employee not found");
         }
 
         if (!employee.getDepartment().getId().equals(user.getEmployee().getDepartment().getId())) {
             logger.info("user department: {}, does not match employee department: {}", user.getEmployee().getDepartment().getDepartment(), employee.getDepartment().getDepartment());
             model.addAttribute("not_authorised", true);
-            return "status-code";
+            throw new UnauthorizedAccessException("Sorry, you are not authorised to view this page. Please contact your administrator");
         }
 
         model.addAttribute("employee", employee);

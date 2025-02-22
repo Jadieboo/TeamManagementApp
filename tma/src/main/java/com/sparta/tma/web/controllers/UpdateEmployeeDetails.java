@@ -4,6 +4,7 @@ import com.sparta.tma.daos.UpdateEmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
+import com.sparta.tma.exceptions.EmployeeNotFoundException;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
@@ -50,7 +51,7 @@ public class UpdateEmployeeDetails {
         if (employee == null) {
             logger.info("employee is not present");
             model.addAttribute("not_found", true);
-            return "status-code";
+            throw new EmployeeNotFoundException("Employee not found");
         }
 
         modelUtil.initializeEmployeeDetailsFormModel(model);
@@ -68,6 +69,13 @@ public class UpdateEmployeeDetails {
 
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
         modelUtil.getAuthorityRoleModelAttribute(model, user);
+
+        //TODO find out where the employee id is being passed and throw new EmployeeNotFoundException
+        // like so - Employee employee = employeeRepository.findEmployeeById(id);
+        //        if (employee == null) {
+        //            throw new EmployeeNotFoundException("Employee not found");
+        //        }
+
 
         Employee updatedEmployee = new UpdateEmployeeDAO(employeeRepository, departmentRepository, projectRepository).updateEmployeeDetails(employeeDetails);
 

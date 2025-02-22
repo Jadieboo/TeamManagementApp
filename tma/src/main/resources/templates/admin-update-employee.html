@@ -12,9 +12,13 @@
 
         <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
 
+        <p> This section is for checking the correct details are pulled into the form to update</p>
+
         <h1 th:text="*{employee.id}"></h1>
         <h1 th:text="*{employee.firstName}"></h1>
         <h1 th:text="*{employee.lastName}"></h1>
+        <h1 th:text="*{employee.role}"></h1>
+        <h1 th:text="*{employee.department}"></h1>
         <h1 th:text="${employee.project}"></h1>
         <p> This is the page for updating details</p>
 

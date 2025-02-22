@@ -3,16 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <title>Homepage</title>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/employee-home.css}"/>
     </head>
     <body>
 
         <nav th:replace="~{fragments/employee-navbar-fragment :: employee-navbar}"></nav>
 
+        <div>
+            <h1>Employee homepage</h1>
+            <h2>Welcome,</h2>
+            <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+            <h4 th:text="'My department: ' + ${employee.getDepartment()}"></h4>
+            <h4 th:text="'Assigned project: ' + ${employee.getProject()}"></h4>
+        </div>
 
-        <h1>Employee homepage</h1>
-        <h2>Welcome,</h2>
-        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+
+
+    <div>
+        <a th:href="@{/employee/view/colleagues}">
+            View Colleagues
+        </a>
+    </div>
 
 
     </body>

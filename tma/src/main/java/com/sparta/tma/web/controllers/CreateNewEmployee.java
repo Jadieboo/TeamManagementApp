@@ -62,7 +62,7 @@ public class CreateNewEmployee {
         AppUser appUser = appUserRepository.saveAndFlush(newAppUser);
         logger.info("New user saved, {}", appUser);
 
-        Employee employeeExists = employeeRepository.findById(employee.getId()).orElseThrow(() -> new EmployeeNotFoundException("Employee " + employee + " not found/created"));
+            Employee employeeExists = employeeRepository.findById(employee.getId()).orElseThrow(() -> new EmployeeNotFoundException("Employee " + employee + " not found/created"));
 
         if (employeeExists == null) {
             model.addAttribute("showConfirmation", false);
