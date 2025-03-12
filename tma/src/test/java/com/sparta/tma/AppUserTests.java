@@ -53,6 +53,7 @@ public class AppUserTests {
         employeeDetails.setDepartment("hr");
         employeeDetails.setProject("unassigned");
 
+        // TODO fix tests since i have now changed employeedao to a component
         Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
         employee.setId(1);
 

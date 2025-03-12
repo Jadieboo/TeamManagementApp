@@ -17,25 +17,20 @@ import java.util.Set;
 @Service
 public class AppUserService implements UserDetailsService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
     private final static String USER_NOT_FOUND_MSG = "User with username: \"%s\" is not found";
-
-    @Autowired
     private final AppUserRepository appUserRepository;
+    private final PasswordEncoder encoder;
 
     @Autowired
-    private PasswordEncoder encoder;
-
-    public AppUserService(AppUserRepository userRepository) {
-        this.appUserRepository = userRepository;
+    public AppUserService(AppUserRepository appUserRepository, PasswordEncoder encoder) {
+        this.appUserRepository = appUserRepository;
+        this.encoder = encoder;
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("In the user service, load user by username: " + username);
-
-        //TODO: validate that the user exists and matches what is in the database
 
         return appUserRepository.findByUsername(username)
                 .orElseThrow(() -> new  UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, username)));

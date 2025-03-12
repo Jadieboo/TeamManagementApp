@@ -27,14 +27,18 @@ import java.util.Optional;
 @Controller
 public class ViewEmployees {
     Logger logger = LoggerFactory.getLogger(getClass());
+    private final ViewEmployeesService viewEmployeesService;
+    private final AppUserRepository appUserRepository;
+    private final EmployeeRepository employeeRepository;
+    private final PopulateModelAttributes modelUtil;
+
     @Autowired
-    private ViewEmployeesService viewEmployeesService;
-    @Autowired
-    private AppUserRepository appUserRepository;
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private PopulateModelAttributes modelUtil;
+    public ViewEmployees(ViewEmployeesService viewEmployeesService, AppUserRepository appUserRepository, EmployeeRepository employeeRepository, PopulateModelAttributes modelUtil) {
+        this.viewEmployeesService = viewEmployeesService;
+        this.appUserRepository = appUserRepository;
+        this.employeeRepository = employeeRepository;
+        this.modelUtil = modelUtil;
+    }
 
     /**
      * ADMIN ACCESS

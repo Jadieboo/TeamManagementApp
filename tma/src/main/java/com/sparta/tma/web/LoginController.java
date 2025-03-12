@@ -20,12 +20,15 @@ import java.util.Optional;
 @Controller
 public class LoginController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final AppUserRepository appUserRepository;
+    private final EmployeeRepository employeeRepository;
+    private final PasswordEncoder encoder;
     @Autowired
-    private AppUserRepository appUserRepository;
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private PasswordEncoder encoder;
+    public LoginController(AppUserRepository appUserRepository, EmployeeRepository employeeRepository, PasswordEncoder encoder) {
+        this.appUserRepository = appUserRepository;
+        this.employeeRepository = employeeRepository;
+        this.encoder = encoder;
+    }
 
     @GetMapping("/login")
     public String loginPage(@RequestParam(name="error", required = false) String loginError,

@@ -16,10 +16,14 @@ import java.util.List;
 @Component
 public class PopulateEmployeeAttributes {
     Logger logger = LoggerFactory.getLogger(getClass());
+    private final DepartmentRepository departmentRepository;
+    private final ProjectRepository projectRepository;
+
     @Autowired
-    DepartmentRepository departmentRepository;
-    @Autowired
-    ProjectRepository projectRepository;
+    public PopulateEmployeeAttributes(DepartmentRepository departmentRepository, ProjectRepository projectRepository) {
+        this.departmentRepository = departmentRepository;
+        this.projectRepository = projectRepository;
+    }
 
     public List<String> populateDepartmentOptions() {
         List<String> departments = new ArrayList<>();
@@ -50,8 +54,6 @@ public class PopulateEmployeeAttributes {
     }
 
     public List<String> populateRoleOptions() {
-        // TODO: refactor this method so its not hard coded
-        //  something like this but need format the results
 
         List<String> roles = new ArrayList<>();
 

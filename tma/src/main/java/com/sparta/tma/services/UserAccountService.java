@@ -28,10 +28,14 @@ import java.util.List;
 
 @Service
 public class UserAccountService {
+    private final PasswordEncoder encoder;
+    private final EmployeeRepository employeeRepository;
+
     @Autowired
-    private PasswordEncoder encoder;
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    public UserAccountService(PasswordEncoder encoder, EmployeeRepository employeeRepository) {
+        this.encoder = encoder;
+        this.employeeRepository = employeeRepository;
+    }
 
     /**
      * Creates a new user account when a new employee is created

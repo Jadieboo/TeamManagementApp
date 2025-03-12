@@ -7,24 +7,20 @@ import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UpdateEmployeeDAO extends EmployeeDAO {
     Logger logger = LoggerFactory.getLogger(getClass());
-
     private final EmployeeRepository employeeRepository;
 
-    ProjectDAO projectDAO = new ProjectDAO(projectRepository);
-    DepartmentDAO departmentDAO = new DepartmentDAO(departmentRepository);
-
-    public UpdateEmployeeDAO(EmployeeRepository employeeRepository, DepartmentRepository departmentRepository, ProjectRepository projectRepository) {
-        super(departmentRepository, projectRepository);
+    @Autowired
+    public UpdateEmployeeDAO(DepartmentDAO departmentDAO, ProjectDAO projectDAO, EmployeeRepository employeeRepository) {
+        super(departmentDAO, projectDAO);
         this.employeeRepository = employeeRepository;
     }
 
-    public UpdateEmployeeDAO(EmployeeRepository employeeRepository, ProjectRepository projectRepository) {
-        super(projectRepository);
-        this.employeeRepository = employeeRepository;
-    }
 
     public Employee updateEmployeeDetails(EmployeeDTO employeeDetails) {
         logger.info("update employee details method active in UpdateEmployeeDAO");
@@ -53,13 +49,13 @@ public class UpdateEmployeeDAO extends EmployeeDAO {
         if (isFieldUpdated(employee.getDepartment().getDepartment(), employeeDetails.getDepartment())) {
             logger.info("department is updated");
 
-            employee.setDepartment(new DepartmentDAO(departmentRepository).getDepartment(employeeDetails));
+            employee.setDepartment(departmentDAO.getDepartment(employeeDetails));
         }
 
         if (isFieldUpdated(employee.getProject().getProject(), employeeDetails.getProject())) {
             logger.info("project is updated");
 
-            employee.setProject(new ProjectDAO(projectRepository).getProject(employeeDetails));
+            employee.setProject(projectDAO.getProject(employeeDetails));
         }
 
         logger.info("updated employee {}", employee);
@@ -72,7 +68,7 @@ public class UpdateEmployeeDAO extends EmployeeDAO {
 
         Employee updateEmployee = employeeRepository.findEmployeeById(employeeId);
 
-        updateEmployee.setProject(new ProjectDAO(projectRepository).getProject(employeeDetails));
+        updateEmployee.setProject(projectDAO.getProject(employeeDetails));
 
         return updateEmployee;
     }

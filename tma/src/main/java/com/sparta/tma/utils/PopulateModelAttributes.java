@@ -14,8 +14,11 @@ import java.util.List;
 @Component
 public class PopulateModelAttributes {
     Logger logger = LoggerFactory.getLogger(getClass());
+    private final PopulateEmployeeAttributes employeeUtil;
     @Autowired
-    private PopulateEmployeeAttributes employeeUtil;
+    public PopulateModelAttributes(PopulateEmployeeAttributes employeeUtil) {
+        this.employeeUtil = employeeUtil;
+    }
 
     public void getAuthorityRoleModelAttribute(Model model, AppUser user) {
         model.addAttribute("isAdmin", false);

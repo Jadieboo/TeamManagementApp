@@ -33,18 +33,19 @@ public class UpdateAssignedProjects {
     // TODO: find out why this is null
     //  also for create new employee web controller
 
+    private final PopulateEmployeeAttributes employeeUtil;
+    private final PopulateModelAttributes modelUtil;
+    private final EmployeeRepository employeeRepository;
+    private final AppUserRepository appUserRepository;
+    private final UpdateEmployeeDAO updateEmployeeDAO;
     @Autowired
-    private PopulateEmployeeAttributes employeeUtil;
-    @Autowired
-    private PopulateModelAttributes modelUtil;
-    @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private ProjectRepository projectRepository;
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private AppUserRepository appUserRepository;
+    public UpdateAssignedProjects(PopulateEmployeeAttributes employeeUtil, PopulateModelAttributes modelUtil, UpdateEmployeeDAO updateEmployeeDAO, EmployeeRepository employeeRepository, AppUserRepository appUserRepository) {
+        this.employeeUtil = employeeUtil;
+        this.modelUtil = modelUtil;
+        this.updateEmployeeDAO = updateEmployeeDAO;
+        this.employeeRepository = employeeRepository;
+        this.appUserRepository = appUserRepository;
+    }
 
     @GetMapping("/manager/view/employees/update/{id}")
     public String updateEmployeeDetailsPage(@PathVariable int id, Model model, Principal principal) {
@@ -85,7 +86,7 @@ public class UpdateAssignedProjects {
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
         modelUtil.getAuthorityRoleModelAttribute(model, user);
 
-        Employee savedEmployee = employeeRepository.save(new UpdateEmployeeDAO(employeeRepository, projectRepository).updateAssignedProjectToEmployee(id, employeeDetails));
+        Employee savedEmployee = employeeRepository.save(updateEmployeeDAO.updateAssignedProjectToEmployee(id, employeeDetails));
         logger.info("saved employee with new assigned project {}", savedEmployee.getProject());
 
         model.addAttribute("employee", savedEmployee);

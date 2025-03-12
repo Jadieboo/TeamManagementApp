@@ -27,18 +27,19 @@ import java.security.Principal;
 @Controller
 public class UpdateEmployeeDetails {
     Logger logger = LoggerFactory.getLogger(getClass());
+    private final PopulateModelAttributes modelUtil;
+    private final EmployeeRepository employeeRepository;
+    private final AppUserRepository appUserRepository;
+    private final UpdateEmployeeDAO updateEmployeeDAO;
+
+    // TODO - check this works after the big refactor - check tests too
     @Autowired
-    private PopulateModelAttributes modelUtil;
-    @Autowired
-    private PopulateEmployeeAttributes employeeUtil;
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private AppUserRepository appUserRepository;
-    @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private ProjectRepository projectRepository;
+    public UpdateEmployeeDetails(PopulateModelAttributes modelUtil, EmployeeRepository employeeRepository, AppUserRepository appUserRepository, UpdateEmployeeDAO updateEmployeeDAO) {
+        this.modelUtil = modelUtil;
+        this.employeeRepository = employeeRepository;
+        this.appUserRepository = appUserRepository;
+        this.updateEmployeeDAO = updateEmployeeDAO;
+    }
 
     @GetMapping("/admin/view/employees/update/{id}")
     public String updateEmployeeDetails(@PathVariable int id, Model model, Principal principal) {
@@ -60,7 +61,6 @@ public class UpdateEmployeeDetails {
         return "admin-update-employee";
     }
 
-    //TODO implement form on front end
     @Transactional
     @PatchMapping("/admin/update/employees/{id}")
     public String updateEmployeeDetailsFormData(@PathVariable int id, @ModelAttribute("employeeDetails") EmployeeDTO employeeDetails, Model model, Principal principal) {
@@ -70,14 +70,7 @@ public class UpdateEmployeeDetails {
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
         modelUtil.getAuthorityRoleModelAttribute(model, user);
 
-        //TODO find out where the employee id is being passed and throw new EmployeeNotFoundException
-        // like so - Employee employee = employeeRepository.findEmployeeById(id);
-        //        if (employee == null) {
-        //            throw new EmployeeNotFoundException("Employee not found");
-        //        }
-
-
-        Employee updatedEmployee = new UpdateEmployeeDAO(employeeRepository, departmentRepository, projectRepository).updateEmployeeDetails(employeeDetails);
+        Employee updatedEmployee = updateEmployeeDAO.updateEmployeeDetails(employeeDetails);
 
         logger.info("saving updated employee to database: {}", updatedEmployee);
         employeeRepository.saveAndFlush(updatedEmployee);

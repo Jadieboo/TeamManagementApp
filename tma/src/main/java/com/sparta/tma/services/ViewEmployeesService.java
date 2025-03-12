@@ -17,8 +17,12 @@ import java.util.List;
 public class ViewEmployeesService {
     Logger logger = LoggerFactory.getLogger(getClass());
 
+    private final EmployeeRepository employeeRepository;
+
     @Autowired
-    private EmployeeRepository employeeRepository;
+    public ViewEmployeesService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     public List<Employee> getAllEmployees() {
         logger.info("In the view employees service > get all employees method active");
