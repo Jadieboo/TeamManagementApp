@@ -136,7 +136,7 @@ public class ViewEmployees {
 
     // all colleagues with role employee, incl manager and admins
     @GetMapping("/employee/view/colleagues")
-    public String getColleaguesForEmployee(Model model, Authentication authentication) {
+    public String viewColleaguesForEmployee(Model model, Authentication authentication) {
         logger.info("view colleagues for employee GET method");
 
         AppUser user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername()).get();

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Homepage</title>
         <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
 <!--        <script src="https://cdn.tailwindcss.com"></script>-->
@@ -9,73 +9,111 @@
     </head>
     <body>
 
-            <!--    I decided to wrap the buttons in a div so that I can hide them on larger screens because I still want the fixed open nav on larger screens
-                - To do this I have javascript functions to toggle css styles on the sidebar div,
-                - the blocker div is acting as the buffer layer between the nav and the screen and enables the user to click on the screen to hide the nav
-                - the content div displays the nav fragment
-                -->
 
 <!--        todo: need to add the side bar section to all pages with navigation
-            todo: fix small screen navbar not hiding initially
+            todo: mobile nav starts with menu on when logging in or refreshing
 -->
 
         <div class="fixed w-48 p-1 flex justify-between z-50 lg:hidden">
             <button
                     onclick="toggle()"
-                    class="show-nav-btn z-50 w-max h-max text-3xl
-                    hover:font-medium
-                    md:text-2xl"
-            >
+                    class="show-nav-btn z-50 w-max h-max text-3xl hover:font-medium md:text-2xl">
                 >>
             </button>
 
             <button
                     onclick="toggle()"
-                    class="hide-nav-btn z-50 w-max h-max text-3xl hidden
-                    hover:font-medium
-                    md:text-2xl"
-            >
+                    class="hide-nav-btn z-50 w-max h-max text-3xl hidden hover:font-medium md:text-2xl">
                 <<
             </button>
         </div>
 
-        <div class="hidden sidebar fixed top-0 left-0 z-40 h-screen w-screen p-0
-        lg:flex lg:bg-transparent lg:w-48">
-            <div class="blocker absolute bg-black/50 -z-10"></div>
+        <div class="sidebar fixed top-0 left-0 z-40 h-screen w-full p-0 lg:flex lg:w-48">
             <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"
-                 class=" absolute top-0 left-0 bg-gray-200"></nav>
+                 class="absolute top-0 left-0 bg-gray-200 w-48 h-screen"></nav>
         </div>
 
+        <main class="flex flex-col h-screen m-auto justify-evenly lg:ml-[190px]">
 
-        <main class="flex flex-col w-3/4 h-screen pl-4 m-auto justify-evenly bg-red-400
-                    lg:ml-[190px]">
+            <section class="border-4 !border-red-500 border-solid w-full max-w-full">
+                <div class="flex flex-row justify-center md:flex-row bg-blue-500 p-8 gap-6">
+                    <div>
+                        <img
+                                th:src="@{/static/images/profile-unsplash.jpg}"
+                                alt="Employee profile picture"
+                                class="w-48 h-48 rounded-full"
+                        />
+                    </div>
 
-            <section class="flex flex-col md:flex-row bg-green-500 w-1/2" >
-                <div class="rounded-3xl w-1/4">
-                    <img
-                            th:src="@{/static/images/hello.png}"
-                            alt="Hello displayed as a neon light speech bubble"
-                            class=""
-                    />
-                </div>
-
-                <div>
-                    <h1>Admin homepage</h1>
-                    <h2>Welcome,</h2>
-                    <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+                    <div class="flex flex-col justify-center">
+                        <h1>Admin homepage</h1>
+                        <h2>Welcome,</h2>
+                        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+                    </div>
                 </div>
             </section>
 
+<!--            TODO: FIX A TAG - I BROKE IT!!!-->
 
-            <section class="bg-pink-500 w-1/2">
-                <p>This is where the team will go</p>
-                <img
-                        th:src="@{/static/images/hello.png}"
-                        alt="Hello displayed as a neon light speech bubble"
-                        class="w-1/4"
-                />
+            <section class="w-full bg-yellow-500">
+                <section th:if="${results_populated}"
+                         class="bg-pink-500 flex flex-col gap-4 max-w-full
+                       lg:flex-row lg:flex-wrap">
+                    <section th:each="employee : ${employeeList}"
+                             class="block p-4 bg-pink-300 border border-black rounded-lg shadow-lg hover:bg-red-500 transition-all ease-in-out h-[200px] w-full lg:w-1/4">
+                        <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: admin-team} : ~{}"></a>
+                    </section>
+                </section>
+
+                <section th:if="${results_not_found}">
+                    <h2>No team available yet!</h2>
+                </section>
             </section>
         </main>
+
+
+
+
+<!--        <main class="flex flex-col w-full h-screen pl-4 m-auto justify-evenly bg-red-100-->
+<!--                lg:ml-[190px]"-->
+<!--        >-->
+
+<!--&lt;!&ndash;            TODO:: add a bottom border to separate sections&ndash;&gt;-->
+<!--            <section class="w-full bg-blue-300">-->
+<!--                <div class="flex flex-col md:flex-row bg-blue-500/75 w-1/2">-->
+<!--                    <div class="rounded-3xl w-1/4">-->
+<!--                        <img-->
+<!--                                th:src="@{/static/images/profile-unsplash.jpg}"-->
+<!--                                alt="Employee profile picture"-->
+<!--                                class=""-->
+<!--                        />-->
+<!--                    </div>-->
+
+<!--                    <div>-->
+<!--                        <h1>Admin homepage</h1>-->
+<!--                        <h2>Welcome,</h2>-->
+<!--                        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </section>-->
+
+<!--            <section class="w-full bg-yellow-500">-->
+
+<!--                <section th:if="${results_populated}" class="bg-pink-500 w-1/2"-->
+<!--                         style="display: flex; flex-wrap: wrap; gap: 20px 20px; max-width: 100%">-->
+<!--                    <section th:each="employee : ${employeeList}"-->
+<!--                             style="background-color: #FFD1DC; border: 1px solid black; height: 150px; width: 150px;">-->
+
+<!--                        <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: admin-team} : ~{}"></a>-->
+
+<!--                    </section>-->
+<!--                </section>-->
+
+<!--                <section th:if="${results_not_found}">-->
+<!--                    <h2>No team available yet!</h2>-->
+<!--                </section>-->
+<!--            </section>-->
+<!--        </main>-->
 
         <script type="text/javascript" src="../static/js/nav.js" th:src="@{/static/js/nav.js}"></script>
 

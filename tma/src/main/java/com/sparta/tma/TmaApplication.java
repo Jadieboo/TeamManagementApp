@@ -12,15 +12,63 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.InputStream;
+import java.util.Scanner;
+
 @SpringBootApplication
 public class TmaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TmaApplication.class, args);
-		System.out.println("Hello, World!");
+		System.out.println("*** App Running ***");
+
+
+//		System.out.println("** 100 days of code **");
+
+		//TODO :
+		// Day 7 Math Operations
+		// Write a program that performs the following tasks using Math class:
+		// Maximum of 2 numbers - DONE
+		// Minimum of 2 numbers - DONE
+		// Square root of a number - DONE
+		// Floor and Ceil of a float - DONE
+		// Abs value of a double
+
+		System.out.println(max(50,30));
+		System.out.println(min(50,30));
+		System.out.println(sqrt(49));
+		System.out.println(floorCeil(100.45f, "floor"));
+		System.out.println(floorCeil(100.45f, "ceil"));
 
 
 	}
+
+	public static int max(int num1, int num2) {
+		return Math.max(num1, num2);
+	}
+
+	public static int min(int num1, int num2) {
+		return Math.min(num1, num2);
+	}
+
+	public static double sqrt(int num1) {
+		return Math.sqrt(num1);
+	}
+
+	public static double floorCeil(float num1, String type) {
+		double outcome = 0;
+		switch (type) {
+			case "floor" -> {
+				outcome = Math.floor(num1);
+			}
+			case "ceil" -> {
+				outcome = Math.ceil(num1);
+			}
+		}
+
+		return outcome;
+	}
+
 
 	@Transactional
 	@Bean

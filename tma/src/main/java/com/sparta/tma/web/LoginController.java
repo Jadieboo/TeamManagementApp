@@ -4,6 +4,9 @@ import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
+import com.sparta.tma.services.ViewEmployeesService;
+import com.sparta.tma.utils.PopulateEmployeeAttributes;
+import com.sparta.tma.utils.PopulateModelAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +18,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class LoginController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final AppUserRepository appUserRepository;
-    private final EmployeeRepository employeeRepository;
-    private final PasswordEncoder encoder;
+    private final ViewEmployeesService viewEmployeesService;
+    private final PopulateModelAttributes modelUtil;
+
+//    private final AppUserRepository appUserRepository;
+//    private final EmployeeRepository employeeRepository;
+//    private final PasswordEncoder encoder;
     @Autowired
-    public LoginController(AppUserRepository appUserRepository, EmployeeRepository employeeRepository, PasswordEncoder encoder) {
-        this.appUserRepository = appUserRepository;
-        this.employeeRepository = employeeRepository;
-        this.encoder = encoder;
+    public LoginController(ViewEmployeesService viewEmployeesService, PopulateModelAttributes modelUtil) {
+        this.viewEmployeesService = viewEmployeesService;
+        this.modelUtil = modelUtil;
     }
 
     @GetMapping("/login")
@@ -50,10 +56,20 @@ public class LoginController {
     public String adminHomepage(Model model, Authentication authentication) {
         logger.info("admin homepage get method active");
 
-        Employee employee = ((AppUser) authentication.getPrincipal()).getEmployee();
+        AppUser user = ((AppUser) authentication.getPrincipal());
+        Employee employee = user.getEmployee();
         logger.info("Employee: {}", employee);
 
         model.addAttribute("employee", employee);
+        modelUtil.getAuthorityRoleModelAttribute(model, (AppUser) authentication.getPrincipal());
+
+        List<Employee> employeeList = viewEmployeesService.getEmployeesByDepartment(employee.getDepartment());
+
+        if (!employeeList.isEmpty()) {
+            employeeList.remove(user.getEmployee());
+        }
+
+        modelUtil.getPopulatedResultsModelAttribute(model, employeeList);
 
         return "adminHomepage";
     }
@@ -62,10 +78,20 @@ public class LoginController {
     public String managerHomepage(Model model, Authentication authentication) {
         logger.info("manager homepage get method active");
 
-        Employee employee = ((AppUser) authentication.getPrincipal()).getEmployee();
+        AppUser user = ((AppUser) authentication.getPrincipal());
+        Employee employee = user.getEmployee();
         logger.info("Employee: {}", employee);
 
         model.addAttribute("employee", employee);
+        modelUtil.getAuthorityRoleModelAttribute(model, (AppUser) authentication.getPrincipal());
+
+        List<Employee> employeeList = viewEmployeesService.getEmployeesByDepartment(employee.getDepartment());
+
+        if (!employeeList.isEmpty()) {
+            employeeList.remove(user.getEmployee());
+        }
+
+        modelUtil.getPopulatedResultsModelAttribute(model, employeeList);
 
         return "managerHomepage";
     }
@@ -74,11 +100,21 @@ public class LoginController {
     public String employeeHomepage(Model model, Authentication authentication) {
         logger.info("employee homepage get method active");
 
-        Employee employee = ((AppUser) authentication.getPrincipal()).getEmployee();
+        AppUser user = ((AppUser) authentication.getPrincipal());
+        Employee employee = user.getEmployee();
         logger.info("Employee: {}", employee);
 
 
         model.addAttribute("employee", employee);
+        modelUtil.getAuthorityRoleModelAttribute(model, (AppUser) authentication.getPrincipal());
+
+        List<Employee> employeeList = viewEmployeesService.getEmployeesByDepartment(employee.getDepartment());
+
+        if (!employeeList.isEmpty()) {
+            employeeList.remove(user.getEmployee());
+        }
+
+        modelUtil.getPopulatedResultsModelAttribute(model, employeeList);
 
         return "employeeHomepage";
     }

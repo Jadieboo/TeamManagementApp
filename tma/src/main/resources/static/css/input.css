@@ -3,40 +3,28 @@
 @tailwind utilities;
 
 
-/* user content */
-/*.sidebar .content {*/
-/*    left: -50%;   !* will be animated to left: 0, by animation *!*/
-/*    animation: slide 5s forwards;*/
-/*    animation-duration: 20s;*/
-/*}*/
-
-.sidebar-flex {
-    display: flex;
-    left: -100%;
-    animation: slide-in 0.5s forwards ease-in-out;
-}
-
+/* Sidebar hidden on small screens */
 .sidebar-hidden {
-    display: flex;
-    left: 0;
-    animation: slide-out 0.5s forwards ease-in-out;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
 }
 
-.blocker {
-    width: 100%;
-    height: 100%;
+/* Sidebar visible on small screens */
+.sidebar-flex {
+    transform: translateX(0);
+    transition: transform 0.3s ease;
 }
 
-@keyframes slide-in {
-    100% { left: 0; }
-}
-
-@keyframes slide-out {
-    100% {
-        left: -100%;
-        display: none;
+ /* On smaller screens, sidebar full screen */
+@media screen and (max-width: 1024px) {
+    .sidebar-flex {
+        width: 100vw;
+        height: 100vh;
     }
 }
+
+
+
 
 /*@media screen and (min-width: 1024px) {*/
 /*    .sidebar-hidden {*/

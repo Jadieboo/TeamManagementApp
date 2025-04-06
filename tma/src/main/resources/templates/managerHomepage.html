@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>Homepage</title>
         <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
+
 
     </head>
     <body>
@@ -11,11 +13,35 @@
         <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}"></nav>
 
 
-        <h1>Manager homepage</h1>
-        <h2>Welcome,</h2>
-        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-        <br/>
+        <main class="flex flex-col w-3/4 h-screen pl-4 m-auto justify-evenly bg-red-400
+                    lg:ml-[190px]"
+        >
+            <section class="flex flex-col md:flex-row bg-green-500 w-1/2">
+                <div class="rounded-3xl w-1/4">
+                    <img
+                            th:src="@{/static/images/profile-unsplash.jpg}"
+                            alt="Employee profile picture"
+                            class="w-1/2"
+                    />
+                </div>
 
+                <div>
+                    <h1>Manager homepage</h1>
+                    <h2>Welcome,</h2>
+                    <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+                    <br/>
+                </div>
+            </section>
 
+            <section th:if="${results_populated}" class="container bg-pink-500 w-1/2"
+                     style="display: flex; flex-wrap: wrap; gap: 20px 20px; max-width: 100%">
+                <section th:each="employee : ${employeeList}"
+                         style="background-color: #FFD1DC; border: 1px solid black; height: 150px; width: 150px;">
+
+                    <a th:replace="${isManager} ? ~{fragments/view-employees-populate :: manager-populate} : ~{}"></a>
+
+                </section>
+            </section>
+        </main>
     </body>
 </html>
