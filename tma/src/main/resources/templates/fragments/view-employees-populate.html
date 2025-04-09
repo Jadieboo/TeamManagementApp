@@ -30,9 +30,10 @@
              class="w-32 h-32 rounded-full"
         />
         <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-        <p th:if="${employee.getRole() != null and employee.getRole() == T(com.sparta.tma.entities.Role).MANAGER}"
-           th:text="${employee.getRole()}">
-        </p>
+<!--          TODO: figure out if you want to show manager role-->
+<!--        <p th:if="${employee.getRole() != null and employee.getRole() == T(com.sparta.tma.entities.Role).MANAGER}"-->
+<!--           th:text="${employee.getRole()}">-->
+<!--        </p>-->
         <p th:text="'Project: ' + ${employee.getProject()}"></p>
       </div>
     </a>
@@ -46,9 +47,10 @@
                 class="w-1/4"
         />
         <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-        <p th:if="${employee.getRole() != null and (employee.getRole() == T(com.sparta.tma.entities.Role).MANAGER or employee.getRole() == T(com.sparta.tma.entities.Role).ADMIN)}"
-           th:text="${employee.getRole()}">
-        </p>
+          <!--          TODO: figure out if you want to show manager role-->
+<!--        <p th:if="${employee.getRole() != null and (employee.getRole() == T(com.sparta.tma.entities.Role).MANAGER or employee.getRole() == T(com.sparta.tma.entities.Role).ADMIN)}"-->
+<!--           th:text="${employee.getRole()}">-->
+<!--        </p>-->
         <p th:text="${employee.getDepartment()}"></p>
         <p th:text="${employee.getProject()}"></p>
       </div>
@@ -63,9 +65,10 @@
                 class="w-1/4"
         />
         <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-        <p th:if="${employee.getRole() != null and (employee.getRole() == T(com.sparta.tma.entities.Role).MANAGER or employee.getRole() == T(com.sparta.tma.entities.Role).ADMIN)}"
-           th:text="${employee.getRole()}">
-        </p>
+          <!--          TODO: figure out if you want to show manager role-->
+<!--        <p th:if="${employee.getRole() != null and (employee.getRole() == T(com.sparta.tma.entities.Role).MANAGER or employee.getRole() == T(com.sparta.tma.entities.Role).ADMIN)}"-->
+<!--           th:text="${employee.getRole()}">-->
+<!--        </p>-->
         <p th:text="${employee.getDepartment()}"></p>
         <p th:text="${employee.getProject()}"></p>
       </div>
