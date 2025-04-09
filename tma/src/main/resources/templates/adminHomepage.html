@@ -41,28 +41,28 @@
                         <img
                                 th:src="@{/static/images/profile-unsplash.jpg}"
                                 alt="Employee profile picture"
-                                class="w-48 h-48 rounded-full"
+                                class="w-80 h-80 rounded-full"
                         />
                     </div>
 
                     <div class="flex flex-col justify-center">
-                        <h1>Admin homepage</h1>
-                        <h2>Welcome,</h2>
-                        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+                        <h1 class="text-4xl">Welcome,</h1>
+                        <h2 class="text-3xl" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h2>
                     </div>
                 </div>
             </section>
 
 <!--            TODO: FIX A TAG - I BROKE IT!!!-->
 
-            <section class="w-full bg-yellow-500">
+            <section class="flex justify-center w-full">
                 <section th:if="${results_populated}"
-                         class="bg-pink-500 flex flex-col gap-4 max-w-full
+                         class="bg-pink-500 flex flex-col gap-4 w-3/4 justify-center
                        lg:flex-row lg:flex-wrap">
                     <section th:each="employee : ${employeeList}"
                              class="block p-4 bg-pink-300 border border-black rounded-lg shadow-lg hover:bg-red-500 transition-all ease-in-out h-[200px] w-full lg:w-1/4">
                         <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: admin-team} : ~{}"></a>
                     </section>
+
                 </section>
 
                 <section th:if="${results_not_found}">

@@ -9,19 +9,19 @@
 
   <body>
 
-    <a th:fragment="admin-populate" th:href="@{/admin/view/employees/{id}(id = ${employee.id})}">
-      <div>
-        <img
-                th:src="@{/static/images/profile-unsplash.jpg}"
-                alt="Employee profile picture"
-                class="w-1/4"
-        />
-        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-        <p th:if="${employee.getRole() != null and employee.getRole() == T(com.sparta.tma.entities.Role).MANAGER}" th:text="${employee.getRole()}"></p>
-        <p th:text="${employee.getDepartment()}"></p>
-        <p th:text="${employee.getProject()}"></p>
-      </div>
-    </a>
+<!--    <a th:fragment="admin-populate" th:href="@{/admin/view/employees/{id}(id = ${employee.id})}">-->
+<!--      <div>-->
+<!--        <img-->
+<!--                th:src="@{/static/images/profile-unsplash.jpg}"-->
+<!--                alt="Employee profile picture"-->
+<!--                class="w-1/4"-->
+<!--        />-->
+<!--        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>-->
+<!--        <p th:if="${employee.getRole() != null and employee.getRole() == T(com.sparta.tma.entities.Role).MANAGER}" th:text="${employee.getRole()}"></p>-->
+<!--        <p th:text="${employee.getDepartment()}"></p>-->
+<!--        <p th:text="${employee.getProject()}"></p>-->
+<!--      </div>-->
+<!--    </a>-->
 
     <a th:fragment="admin-team" th:href="@{/admin/view/employees/{id}(id = ${employee.id})}">
       <div class="">
