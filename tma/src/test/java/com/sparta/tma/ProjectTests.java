@@ -1,6 +1,5 @@
 package com.sparta.tma;
 
-import com.sparta.tma.daos.EmployeeDAO;
 import com.sparta.tma.daos.ProjectDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Employee;
@@ -29,6 +28,8 @@ public class ProjectTests {
     private DepartmentRepository departmentRepository;
     @Autowired
     private ProjectRepository projectRepository;
+    @Autowired
+    private com.sparta.tma.daos.employeeDAO employeeDAO;
 
 
 
@@ -44,7 +45,7 @@ public class ProjectTests {
             " Accounts , Accounts"
     })
     public void setOrUpdateEmployeeProject(String project, String expectedProject) {
-        Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(utils.employeeDetails());
+        Employee employee = employeeDAO.createNewEmployee(utils.employeeDetails());
 
         logger.info("Unit Test employee information before update: {}", employee);
 

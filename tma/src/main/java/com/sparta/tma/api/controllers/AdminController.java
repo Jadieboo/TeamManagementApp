@@ -7,7 +7,6 @@ import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.exceptions.EmployeeNotFoundException;
 import com.sparta.tma.repositories.AppUserRepository;
-import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 import com.sparta.tma.services.UserAccountService;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,10 +34,10 @@ public class AdminController {
     private final ProjectRepository projectRepository;
     private final UserAccountService userAccountService;
     private final ViewEmployeesService viewEmployeesService;
-    private final EmployeeDAO employeeDAO;
+    private final com.sparta.tma.daos.employeeDAO employeeDAO;
 
     @Autowired
-    public AdminController(EmployeeRepository employeeRepository, AppUserRepository appUserRepository, DepartmentDAO departmentDAO, ProjectRepository projectRepository, UserAccountService userAccountService, ViewEmployeesService viewEmployeesService, EmployeeDAO employeeDAO) {
+    public AdminController(EmployeeRepository employeeRepository, AppUserRepository appUserRepository, DepartmentDAO departmentDAO, ProjectRepository projectRepository, UserAccountService userAccountService, ViewEmployeesService viewEmployeesService, com.sparta.tma.daos.employeeDAO employeeDAO) {
         this.employeeRepository = employeeRepository;
         this.appUserRepository = appUserRepository;
         this.departmentDAO = departmentDAO;

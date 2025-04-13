@@ -1,7 +1,6 @@
 package com.sparta.tma;
 
 import com.sparta.tma.daos.DepartmentDAO;
-import com.sparta.tma.daos.EmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.DepartmentRepository;
@@ -28,6 +27,9 @@ public class DepartmentTests {
     private DepartmentRepository departmentRepository;
     @Autowired
     private ProjectRepository projectRepository;
+    @Autowired
+    private com.sparta.tma.daos.employeeDAO employeeDAO;
+
 
     @ParameterizedTest
     @DisplayName("method returns a department regardless of the input being uppercase, lowercase, mixed case or has any whitespaces")
@@ -41,7 +43,7 @@ public class DepartmentTests {
             " customer Service , Customer Service"
     })
     public void setOrUpdateEmployeeDepartment(String department, String expectedDepartment) {
-        Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(utils.employeeDetails());
+        Employee employee = employeeDAO.createNewEmployee(utils.employeeDetails());
 
         logger.info("Unit Test employee information before update: {}", employee);
 

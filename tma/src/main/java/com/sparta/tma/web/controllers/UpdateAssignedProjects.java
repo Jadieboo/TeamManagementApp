@@ -1,6 +1,5 @@
 package com.sparta.tma.web.controllers;
 
-import com.sparta.tma.daos.EmployeeDAO;
 import com.sparta.tma.daos.UpdateEmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
@@ -8,9 +7,7 @@ import com.sparta.tma.entities.Employee;
 import com.sparta.tma.exceptions.EmployeeNotFoundException;
 import com.sparta.tma.exceptions.UnauthorizedAccessException;
 import com.sparta.tma.repositories.AppUserRepository;
-import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
-import com.sparta.tma.repositories.ProjectRepository;
 import com.sparta.tma.utils.PopulateEmployeeAttributes;
 import com.sparta.tma.utils.PopulateModelAttributes;
 import org.slf4j.Logger;

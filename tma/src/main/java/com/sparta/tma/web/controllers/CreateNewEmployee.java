@@ -1,10 +1,7 @@
 package com.sparta.tma.web.controllers;
 
-import com.sparta.tma.daos.EmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
-import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
-import com.sparta.tma.exceptions.EmployeeNotFoundException;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;

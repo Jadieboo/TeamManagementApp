@@ -2,16 +2,14 @@ package com.sparta.tma.daos;
 
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Employee;
-import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
-import com.sparta.tma.repositories.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UpdateEmployeeDAO extends EmployeeDAO {
+public class UpdateEmployeeDAO extends employeeDAO {
     Logger logger = LoggerFactory.getLogger(getClass());
     private final EmployeeRepository employeeRepository;
 

@@ -1,6 +1,6 @@
 package com.sparta.tma;
 
-import com.sparta.tma.daos.EmployeeDAO;
+import com.sparta.tma.daos.employeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Department;
 import com.sparta.tma.entities.Employee;
@@ -31,12 +31,15 @@ public class EmployeeTests {
     private ProjectRepository projectRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private com.sparta.tma.daos.employeeDAO employeeDAO;
+
 
     @Test
     @DisplayName("Creates a new employee using createNewEmployee() DAO method to set id, first name, last name, role, department and project")
     public void newEmployeeDaoMethod() {
 
-        Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(utils.employeeDetails());
+        Employee employee = employeeDAO.createNewEmployee(utils.employeeDetails());
 
         String result = employee.toString();
 
@@ -52,7 +55,7 @@ public class EmployeeTests {
         EmployeeDTO employeeDetails = utils.employeeDetails();
         employeeDetails.setFirstName(null);
 
-        Throwable exception = assertThrows(NullPointerException.class, () -> new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails));
+        Throwable exception = assertThrows(NullPointerException.class, () -> employeeDAO.createNewEmployee(employeeDetails));
 
         String expectedExceptionMessage = "Error: First name field is null or blank";
 
@@ -67,7 +70,7 @@ public class EmployeeTests {
         EmployeeDTO employeeDetails = utils.employeeDetails();
         employeeDetails.setFirstName(null);
 
-        Throwable exception = assertThrows(NullPointerException.class, () -> new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails));
+        Throwable exception = assertThrows(NullPointerException.class, () -> employeeDAO.createNewEmployee(employeeDetails));
 
         String expectedExceptionMessage = "Error: First name field is null or blank";
 
@@ -87,7 +90,7 @@ public class EmployeeTests {
         EmployeeDTO employeeDetails = utils.employeeDetails();
         employeeDetails.setFirstName(fieldInput);
 
-        Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
+        Employee employee = employeeDAO.createNewEmployee(employeeDetails);
 
         assertEquals(employee.getFirstName(), formattedFirstName);
     }
@@ -98,7 +101,7 @@ public class EmployeeTests {
         EmployeeDTO employeeDetails = utils.employeeDetails();
         employeeDetails.setLastName(null);
 
-        Throwable exception = assertThrows(NullPointerException.class, () -> new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails));
+        Throwable exception = assertThrows(NullPointerException.class, () -> employeeDAO.createNewEmployee(employeeDetails));
 
         String expectedExceptionMessage = "Error: Last name field is null or blank";
 
@@ -113,7 +116,7 @@ public class EmployeeTests {
         EmployeeDTO employeeDetails = utils.employeeDetails();
         employeeDetails.setLastName(null);
 
-        Throwable exception = assertThrows(NullPointerException.class, () -> new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails));
+        Throwable exception = assertThrows(NullPointerException.class, () -> employeeDAO.createNewEmployee(employeeDetails));
 
         String expectedExceptionMessage = "Error: Last name field is null or blank";
 
@@ -133,7 +136,7 @@ public class EmployeeTests {
         EmployeeDTO employeeDetails = utils.employeeDetails();
         employeeDetails.setLastName(fieldInput);
 
-        Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
+        Employee employee = employeeDAO.createNewEmployee(employeeDetails);
 
         assertEquals(employee.getLastName(), formattedLastName);
     }

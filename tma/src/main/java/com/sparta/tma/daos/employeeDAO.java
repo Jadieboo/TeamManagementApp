@@ -2,22 +2,19 @@ package com.sparta.tma.daos;
 
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Employee;
-import com.sparta.tma.repositories.DepartmentRepository;
-import com.sparta.tma.repositories.EmployeeRepository;
-import com.sparta.tma.repositories.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmployeeDAO {
+public class employeeDAO {
     Logger logger = LoggerFactory.getLogger(getClass());
     protected final DepartmentDAO departmentDAO;
     protected final ProjectDAO projectDAO;
 
     @Autowired
-    public EmployeeDAO(DepartmentDAO departmentDAO, ProjectDAO projectDAO) {
+    public employeeDAO(DepartmentDAO departmentDAO, ProjectDAO projectDAO) {
         this.departmentDAO = departmentDAO;
         this.projectDAO = projectDAO;
     }

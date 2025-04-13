@@ -1,15 +1,12 @@
 package com.sparta.tma;
 
 import com.sparta.tma.services.UserAccountService;
-import com.sparta.tma.daos.EmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.entities.Role;
 import com.sparta.tma.repositories.AppUserRepository;
-import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
-import com.sparta.tma.repositories.ProjectRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +27,14 @@ public class AppUserTests {
     @Autowired
     EmployeeRepository employeeRepository;
     @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private ProjectRepository projectRepository;
-    @Autowired
     AppUserRepository appUserRepository;
     @Autowired
     PasswordEncoder encoder;
     @Autowired
     UserAccountService userAccountService;
+    @Autowired
+    private com.sparta.tma.daos.employeeDAO employeeDAO;
+
 
     @Test
     @DisplayName("Given all employeeDTO fields are present -> Creates a new AppUser using createNewAppUser() method to set " +
@@ -54,7 +50,7 @@ public class AppUserTests {
         employeeDetails.setProject("unassigned");
 
         // TODO fix tests since i have now changed employeedao to a component
-        Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
+        Employee employee = employeeDAO.createNewEmployee(employeeDetails);
         employee.setId(1);
 
         AppUser user = userAccountService.createNewAppUser(employeeDetails, employee.getId());
