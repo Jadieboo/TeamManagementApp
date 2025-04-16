@@ -41,30 +41,29 @@
                         <img
                                 th:src="@{/static/images/profile-unsplash.jpg}"
                                 alt="Employee profile picture"
-                                class="w-80 h-80 rounded-full"
+                                class="w-40 h-40 rounded-full md:w-60 md:h-60 lg:w-80 lg:h-80"
                         />
                     </div>
 
                     <div class="flex flex-col justify-center">
-                        <h1 class="text-5xl mb-4" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h1>
-                        <h2 class="text-2xl" th:text="'Team: ' + ${employee.getDepartment()}"></h2>
-                        <h2 class="text-2xl" th:text="'Project: ' + ${employee.getProject()}"></h2>
+                        <h1 class="text-3xl md:text-4xl md:mb-2 lg:text-5xl font-semibold" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h1>
+                        <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Team: ' + ${employee.getDepartment()}"></h2>
+                        <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Project: ' + ${employee.getProject()}"></h2>
                     </div>
                 </div>
             </section>
-
-<!--            TODO: FIX A TAG - I BROKE IT!!!-->
+            
 
             <section class="flex flex-col items-center w-full border-t-2 border-black">
                 <section>
-                    <h3>My Team</h3>
+                    <h3 class="text-2xl font-medium m-3 lg:text-3xl">My Team</h3>
                 </section>
-
                 <section th:if="${results_populated}"
-                         class="flex flex-col gap-4 w-3/4 items-center border border-pink-500
-                       lg:flex-row lg:flex-wrap lg:justify-center">
+                         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+
                     <section th:each="employee : ${employeeList}"
-                             class="block p-4 bg-pink-300 border border-black rounded-lg shadow-lg hover:bg-red-500 transition-all ease-in-out w-3/4 lg:w-1/4">
+                             class="rounded-lg transition-all ease-in-out
+                                    p-4 min-h-64 flex flex-col justify-between">
                         <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: admin-team} : ~{}"></a>
                     </section>
 

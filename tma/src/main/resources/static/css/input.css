@@ -23,6 +23,20 @@
     }
 }
 
+.card {
+    padding: 2rem;
+    border: 1px solid rgb(75,82,92);
+    border-radius: 10px;
+    background-color: #222429;
+    text-align: center;
+}
+
+.grid-container {
+    display: grid;
+    border: 1px solid red;
+    grid-template-columns: repeat(3, 1fr);
+}
+
 
 
 

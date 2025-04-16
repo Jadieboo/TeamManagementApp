@@ -23,19 +23,28 @@
 <!--      </div>-->
 <!--    </a>-->
 
-    <a th:fragment="admin-team" th:href="@{/admin/view/employees/{id}(id = ${employee.id})}">
-      <div class="">
+    <a th:fragment="admin-team" th:href="@{/admin/view/employees/{id}(id = ${employee.id})}"
+    class="flex flex-col items-center text-center gap-2">
         <img th:src="@{/static/images/profile-unsplash.jpg}"
              alt="Employee profile picture"
-             class="w-32 h-32 rounded-full"
+             class="w-48 h-48 rounded-full object-cover hover:shadow-xl-mid"
         />
-        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-<!--          TODO: figure out if you want to show manager role-->
-<!--        <p th:if="${employee.getRole() != null and employee.getRole() == T(com.sparta.tma.entities.Role).MANAGER}"-->
-<!--           th:text="${employee.getRole()}">-->
-<!--        </p>-->
-        <p th:text="'Project: ' + ${employee.getProject()}"></p>
-      </div>
+
+        <div>
+            <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}"
+                class="font-semibold text-xl truncate w-full">
+                Name
+            </h3>
+    <!--          TODO: figure out if you want to show manager role-->
+    <!--        <p th:if="${employee.getRole() != null and employee.getRole() == T(com.sparta.tma.entities.Role).MANAGER}"-->
+    <!--           th:text="${employee.getRole()}">-->
+    <!--        </p>-->
+            <p th:text="'Project: ' + ${employee.getProject()}"
+                class="text-md text-gray-700 truncate w-full">
+                Project
+            </p>
+
+        </div>
     </a>
 
 
