@@ -10,38 +10,68 @@
     </head>
     <body>
 
-        <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}"></nav>
+        <div class="fixed w-48 p-1 flex justify-between z-50 lg:hidden">
+            <button
+                    onclick="toggle()"
+                    class="show-nav-btn z-50 w-max h-max text-3xl hover:font-medium md:text-2xl">
+                >>
+            </button>
+
+            <button
+                    onclick="toggle()"
+                    class="hide-nav-btn z-50 w-max h-max text-3xl hidden hover:font-medium md:text-2xl">
+                <<
+            </button>
+        </div>
+
+        <div class="sidebar fixed top-0 left-0 z-40 h-screen w-full p-0 lg:flex lg:w-48">
+            <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}"
+                 class="absolute top-0 left-0 bg-gray-200 w-48 h-screen"></nav>
+        </div>
+
+<!--        <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}"></nav>-->
 
 
-        <main class="flex flex-col w-3/4 h-screen pl-4 m-auto justify-evenly bg-red-400
-                    lg:ml-[190px]"
-        >
-            <section class="flex flex-col md:flex-row bg-green-500 w-1/2">
-                <div class="rounded-3xl w-1/4">
-                    <img
-                            th:src="@{/static/images/profile-unsplash.jpg}"
-                            alt="Employee profile picture"
-                            class="w-1/2"
-                    />
-                </div>
+        <main class="flex flex-col h-screen m-auto justify-evenly lg:ml-[190px]">
 
-                <div>
-                    <h1>Manager homepage</h1>
-                    <h2>Welcome,</h2>
-                    <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-                    <br/>
+            <section class="w-full max-w-full">
+                <div class="flex flex-row justify-center md:flex-row p-8 gap-6">
+                    <div>
+                        <img
+                                th:src="@{/static/images/profile-unsplash.jpg}"
+                                alt="Employee profile picture"
+                                class="w-40 h-40 rounded-full md:w-60 md:h-60 lg:w-80 lg:h-80"
+                        />
+                    </div>
+
+                    <div class="flex flex-col justify-center">
+                        <h1 class="text-3xl md:text-4xl md:mb-2 lg:text-5xl font-semibold" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h1>
+                        <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Team: ' + ${employee.getDepartment()}"></h2>
+                        <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Project: ' + ${employee.getProject()}"></h2>
+                    </div>
                 </div>
             </section>
 
-            <section th:if="${results_populated}" class="container bg-pink-500 w-1/2"
-                     style="display: flex; flex-wrap: wrap; gap: 20px 20px; max-width: 100%">
-                <section th:each="employee : ${employeeList}"
-                         style="background-color: #FFD1DC; border: 1px solid black; height: 150px; width: 150px;">
+            <section class="flex flex-col items-center w-full border-t-2 border-black">
+                <section>
+                    <h3 class="text-2xl font-medium m-3 lg:text-3xl">My Team</h3>
+                </section>
+                <section th:if="${results_populated}"
+                         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
 
-                    <a th:replace="${isManager} ? ~{fragments/view-employees-populate :: manager-populate} : ~{}"></a>
+                    <section th:each="employee : ${employeeList}"
+                             class="rounded-lg transition-all ease-in-out
+                                    p-4 min-h-64 flex flex-col justify-between">
+                        <a th:replace="${isManager} ? ~{fragments/view-employees-populate :: manager-populate} : ~{}"></a>
+                    </section>
 
+                </section>
+
+                <section th:if="${results_not_found}">
+                    <h2>No team available yet!</h2>
                 </section>
             </section>
         </main>
+        <script type="text/javascript" src="../static/js/nav.js" th:src="@{/static/js/nav.js}"></script>
     </body>
 </html>

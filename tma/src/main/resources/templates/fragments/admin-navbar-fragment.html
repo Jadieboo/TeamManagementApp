@@ -8,11 +8,11 @@
     <body>
 
         <nav th:fragment="admin-navbar"
-             class="flex flex-col w-full border-0 border-r-2 border-r-black bg-violet-300 justify-between pb-4
+             class="relative flex flex-col w-full border-0 border-r-2 border-r-black bg-violet-300 justify-between pb-4
              lg:-z-0"
         >
 
-            <ul class="relative flex flex-col h-screen justify-evenly text-center">
+            <ul class="flex flex-col h-screen justify-evenly text-center">
                 <li>
                     <a th:href="@{/admin/homepage}"
                        class="block p-6 text-3xl
@@ -45,7 +45,7 @@
                         View Employees
                     </a>
                 </li>
-                <form th:action="@{/logout}" method="post" class="absolute bottom-0 w-full flex justify-center justify-items-center">
+                <form th:action="@{/logout}" method="post" class="absolute bottom-8 w-full flex justify-center justify-items-center">
                     <button type="submit" class="px-8 py-2 rounded-full bg-black text-white text-2xl
                     lg:text-sm
                     hover:text-black hover:bg-violet-300 hover:border hover:border-black">Logout</button>
