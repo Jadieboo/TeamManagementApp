@@ -570,10 +570,6 @@ video {
   }
 }
 
-.visible {
-  visibility: visible;
-}
-
 .fixed {
   position: fixed;
 }
@@ -586,8 +582,8 @@ video {
   position: relative;
 }
 
-.bottom-0 {
-  bottom: 0px;
+.bottom-8 {
+  bottom: 2rem;
 }
 
 .left-0 {
@@ -596,22 +592,6 @@ video {
 
 .top-0 {
   top: 0px;
-}
-
-.bottom-4 {
-  bottom: 1rem;
-}
-
-.bottom-8 {
-  bottom: 2rem;
-}
-
-.bottom-12 {
-  bottom: 3rem;
-}
-
-.bottom-10 {
-  bottom: 2.5rem;
 }
 
 .-z-10 {
@@ -632,14 +612,6 @@ video {
 
 .m-auto {
   margin: auto;
-}
-
-.m-4 {
-  margin: 1rem;
-}
-
-.m-2 {
-  margin: 0.5rem;
 }
 
 .-mx-3 {
@@ -1056,11 +1028,16 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
 /* Sidebar hidden on small screens */
 
 .sidebar-hidden {
   transform: translateX(-100%);
-  transition: transform 0.3s ease;
+  transition: none;
 }
 
 /* Sidebar visible on small screens */
@@ -1093,23 +1070,11 @@ video {
   grid-template-columns: repeat(3, 1fr);
 }
 
-/*@media screen and (min-width: 1024px) {*/
-
-/*    .sidebar-hidden {*/
-
-/*        animation-duration: 1s;*/
-
-/*    }*/
-
-/*    .sidebar-flex {*/
-
-/*        animation-duration: 1s;*/
-
-/*        animation-timing-function: linear;*/
-
-/*    }*/
-
-/*}*/
+@media (max-width: 1023px) {
+  body:not(.js-loaded) #sidebar {
+    visibility: hidden;
+  }
+}
 
 .hover\:cursor-pointer:hover {
   cursor: pointer;
@@ -1173,21 +1138,7 @@ video {
   outline-offset: 2px;
 }
 
-@media (min-width: 640px) {
-  .sm\:m-4 {
-    margin: 1rem;
-  }
-
-  .sm\:m-2 {
-    margin: 0.5rem;
-  }
-}
-
 @media (min-width: 768px) {
-  .md\:m-4 {
-    margin: 1rem;
-  }
-
   .md\:mb-0 {
     margin-bottom: 0px;
   }
@@ -1232,10 +1183,6 @@ video {
 }
 
 @media (min-width: 1024px) {
-  .lg\:bottom-8 {
-    bottom: 2rem;
-  }
-
   .lg\:-z-0 {
     z-index: 0;
   }

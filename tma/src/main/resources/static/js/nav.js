@@ -1,62 +1,28 @@
-//const sidebar = document.querySelector('.sidebar');
-//sidebar.querySelector('.blocker').onclick = hide;
-//
-//const showNavBtn = document.querySelector('.show-nav-btn');
-//const hideNavBtn = document.querySelector('.hide-nav-btn');
-//
-//function show() { // swipe right
-//    sidebar.classList.remove('hidden');
-//    sidebar.classList.remove('sidebar-hidden');
-//    sidebar.classList.add('sidebar-flex');
-//
-//    hideNavBtn.classList.remove('hidden');
-//    showNavBtn.classList.add('hidden');
-//
-//
-//    // document.body.style.overflow = 'hidden';
-//    console.log("SHOW");
-//
-//}
-//function hide() { // by blocker click, swipe left, or url change
-//    sidebar.classList.add('sidebar-hidden');
-//    sidebar.classList.remove('sidebar-flex');
-//
-//    showNavBtn.classList.remove('hidden');
-//    hideNavBtn.classList.add('hidden');
-//
-//
-//
-//    document.body.style.overflow = '';
-//    console.log("HIDE");
-//}
-//function toggle() {
-//    sidebar.classList.contains('hidden') || sidebar.classList.contains('sidebar-hidden') ? show() : hide();
-//}
-//
 
 
-const sidebar = document.querySelector('.sidebar');
-const showNavBtn = document.querySelector('.show-nav-btn');
-const hideNavBtn = document.querySelector('.hide-nav-btn');
+const sidebar = document.getElementById('sidebar');
 
 function show() {
     sidebar.classList.remove('sidebar-hidden');
     sidebar.classList.add('sidebar-flex');
-    hideNavBtn.classList.remove('hidden');
-    showNavBtn.classList.add('hidden');
-    console.log("Sidebar shown.");
+
+    if (window.innerWidth < 1024) {
+        document.body.classList.add('no-scroll');
+    }
+
 }
 
 function hide() {
     sidebar.classList.add('sidebar-hidden');
     sidebar.classList.remove('sidebar-flex');
-    showNavBtn.classList.remove('hidden');
-    hideNavBtn.classList.add('hidden');
-    console.log("Sidebar hidden.");
+
+    if (window.innerWidth < 1024) {
+        document.body.classList.remove('no-scroll');
+    }
+
 }
 
 function toggle() {
-    // Toggle the sidebar between hidden and visible
     if (sidebar.classList.contains('sidebar-hidden')) {
         show();
     } else {
@@ -64,20 +30,44 @@ function toggle() {
     }
 }
 
-window.addEventListener('resize', () => {
+function setSidebarClass() {
     if (window.innerWidth >= 1024) {
-        // Large screens: Sidebar should always be visible
-        sidebar.classList.remove('sidebar-hidden');
-        sidebar.classList.add('sidebar-flex');
-        showNavBtn.classList.add('hidden');
-        hideNavBtn.classList.remove('hidden');
+            show();
     } else {
-        // Small screens: Sidebar is hidden by default
-        sidebar.classList.add('sidebar-hidden');
-        sidebar.classList.remove('sidebar-flex');
-        showNavBtn.classList.remove('hidden');
-        hideNavBtn.classList.add('hidden');
+            hide();
     }
+
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.body.classList.add('js-loaded');
+  setSidebarClass();
+});
+
+window.addEventListener('resize', setSidebarClass);
+
+// Trap Focus for mobile nav
+//TODO: test this properly
+document.addEventListener('keydown', function (e) {
+  if (!sidebar.classList.contains('sidebar-flex')) return;
+
+  const focusableElements = sidebar.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+  const first = focusableElements[0];
+  const last = focusableElements[focusableElements.length - 1];
+
+  if (e.key === 'Tab') {
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  if (e.key === 'Escape') {
+    hide();
+  }
 });
 
 

@@ -2,11 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.no-scroll {
+    overflow: hidden;
+    height: 100vh;
+}
 
 /* Sidebar hidden on small screens */
 .sidebar-hidden {
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    transition: none;
 }
 
 /* Sidebar visible on small screens */
@@ -37,18 +41,9 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
-
-
-
-/*@media screen and (min-width: 1024px) {*/
-/*    .sidebar-hidden {*/
-/*        animation-duration: 1s;*/
-/*    }*/
-
-/*    .sidebar-flex {*/
-/*        animation-duration: 1s;*/
-/*        animation-timing-function: linear;*/
-/*    }*/
-
-/*}*/
+@media (max-width: 1023px) {
+  body:not(.js-loaded) #sidebar {
+    visibility: hidden;
+  }
+}
 
