@@ -1,6 +1,7 @@
 
 
 const sidebar = document.getElementById('sidebar');
+const navElements = sidebar.querySelectorAll('button, [href], input, select, textarea, [tabindex]');
 const navOpenIcon = document.getElementById('nav-open-icon');
 const navClosedIcon = document.getElementById('nav-closed-icon');
 const showNavBtn = document.getElementById('show-nav-button');
@@ -12,6 +13,8 @@ let removeFocusTrap = null;
 function show() {
     sidebar.classList.remove('sidebar-hidden');
     sidebar.classList.add('sidebar-flex');
+    navClosedIcon.classList.remove('bg-white');
+    setTabIndex(navElements, 0);
 //    showNavBtn.classList.add('hidden');
 //    hideNavBtn.classList.remove('hidden');
 
@@ -31,8 +34,12 @@ function show() {
 }
 
 function hide() {
+    setTabIndex(navElements, -1);
     sidebar.classList.add('sidebar-hidden');
     sidebar.classList.remove('sidebar-flex');
+    if (!navClosedIcon.classList.contains('bg-white')) {
+        navClosedIcon.classList.add('bg-white');
+    }
 //    showNavBtn.classList.remove('hidden');
 //    hideNavBtn.classList.add('hidden');
 
@@ -61,7 +68,10 @@ function setSidebarClass() {
     } else {
             hide();
     }
+}
 
+function setTabIndex(elements, value) {
+    elements.forEach(element => element.tabIndex = value);
 }
 
 //TODO do i need this
@@ -119,6 +129,7 @@ function focusTrap(element) {
 
     return () => {
         element.removeEventListener('keydown', handleKeydown);
+        console.log('remove event listener');
     };
 }
 
