@@ -18,16 +18,17 @@
         <div class="fixed w-48 p-1 flex justify-between z-50 lg:hidden">
             <button
                     onclick="toggle()"
-                    id="nav-button"
-                    class="z-50 w-max h-max text-3xl hover:font-medium md:text-2xl">
-                <i class="fa-solid fa-bars"></i>
+                    id="show-nav-button"
+                    class="z-50 w-max h-max text-3xl hover:font-medium md:text-2xl p-2">
+                <i id="nav-closed-icon" class="fa-solid fa-bars bg-white px-1 text-pink-500"></i>
             </button>
 
-<!--            <button-->
-<!--                    onclick="toggle()"-->
-<!--                    class="hide-nav-btn z-50 w-max h-max text-3xl hidden hover:font-medium md:text-2xl">-->
-<!--                <i class="fa-solid fa-bars"></i>-->
-<!--            </button>-->
+            <button
+                    id="hide-nav-button"
+                    onclick="toggle()"
+                    class="z-50 w-max h-max text-3xl hidden hover:font-medium md:text-2xl p-2">
+                <i id="nav-open-icon" class="fa-solid fa-bars px-1 text-blue-500"></i>
+            </button>
         </div>
 
         <div id="sidebar" class="fixed top-0 left-0 z-40 h-screen w-full p-0
