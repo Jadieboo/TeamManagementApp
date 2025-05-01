@@ -23,17 +23,21 @@
                 <i id="nav-closed-icon" class="fa-solid fa-bars bg-white px-1"></i>
             </button>
 
-            <button
-                    id="hide-nav-button"
-                    onclick="toggle()"
-                    class="z-50 w-max h-max text-3xl hidden hover:font-medium p-2">
-                <i id="nav-open-icon" class="fa-solid fa-bars px-1"></i>
-            </button>
         </div>
 
         <div id="sidebar" class="fixed top-0 left-0 z-40 h-screen w-full p-0
             lg:w-48"
         >
+            <div class="fixed w-48 p-1 flex justify-between z-50 lg:hidden">
+                <button
+                        id="hide-nav-button"
+                        onclick="toggle()"
+                        tabindex="-1"
+                        class="z-50 w-max h-max text-3xl hidden hover:font-medium p-2">
+                    <i id="nav-open-icon" class="fa-solid fa-bars px-1"></i>
+                </button>
+            </div>
+
             <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"
                  class="absolute top-0 left-0 bg-gray-200 w-48 h-screen"></nav>
         </div>
