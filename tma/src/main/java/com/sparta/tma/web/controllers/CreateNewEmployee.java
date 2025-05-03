@@ -1,6 +1,7 @@
 package com.sparta.tma.web.controllers;
 
 import com.sparta.tma.dtos.EmployeeDTO;
+import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.DepartmentRepository;
@@ -12,6 +13,7 @@ import com.sparta.tma.utils.PopulateModelAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -42,8 +44,11 @@ public class CreateNewEmployee {
     }
 
     @GetMapping("/admin/new/employees")
-    public String newEmployees(Model model) {
+    public String newEmployees(Model model, Authentication authentication) {
+        AppUser user = ((AppUser) authentication.getPrincipal());
+
         modelUtil.initializeEmployeeDetailsFormModel(model);
+        modelUtil.getAuthorityRoleModelAttribute(model, user);
         return "adminCreateNewEmployee";
     }
 

@@ -9,7 +9,7 @@
     </head>
     <body>
 
-        <nav th:replace="~{fragments/employee-navbar-fragment :: employee-navbar}"></nav>
+        <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
 
         <main class="flex flex-col w-3/4 h-screen pl-4 m-auto justify-evenly bg-red-400
                     lg:ml-[190px]"
@@ -36,7 +36,7 @@
                 <section th:each="employee : ${employeeList}"
                          style="background-color: #FFD1DC; border: 1px solid black; height: 150px; width: 150px;">
 
-                    <a th:replace="${isEmployee} ? ~{fragments/view-employees-populate :: employee-populate} : ~{}"></a>
+                    <a th:if="${isEmployee}" th:replace="~{fragments/view-employees-populate :: employee-populate}"></a>
 
                 </section>
             </section>
@@ -46,5 +46,6 @@
             </section>
         </main>
 
+        <script type="text/javascript" src="../static/js/nav.js" th:src="@{/static/js/nav.js}"></script>
     </body>
 </html>

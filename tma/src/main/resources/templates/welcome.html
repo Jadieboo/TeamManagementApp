@@ -3,13 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <title>Welcome</title>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
 
     </head>
     <body>
-
-        <nav th:replace="~{fragments/welcome-navbar-fragment :: welcome-navbar}"></nav>
-
+        <!--TODO might need to pass role-->
+        <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
 
         <h1>Testing! Hiiiii</h1>
     </body>

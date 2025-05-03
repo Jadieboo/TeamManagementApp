@@ -9,8 +9,8 @@
 <!--            <script src="https://cdn.tailwindcss.com"></script>-->
     </head>
     <body>
-
-        <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"></nav>
+        <!--TODO might need to pass role-->
+        <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
 
         <p> This section is for checking the correct details are pulled into the form to update</p>
 

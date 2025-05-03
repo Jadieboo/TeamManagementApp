@@ -6,6 +6,10 @@ const showNavBtn = document.getElementById('show-nav-button');
 const hideNavBtn = document.getElementById('hide-nav-button');
 let removeFocusTrap = null;
 
+console.log(navElements);
+
+console.log(showNavBtn.classList);
+
 
 function show() {
     sidebar.classList.remove('sidebar-hidden');

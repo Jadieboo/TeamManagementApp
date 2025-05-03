@@ -15,32 +15,8 @@
             todo: mobile nav starts with menu on when logging in or refreshing
 -->
 
-        <div class="fixed w-48 p-1 flex justify-between z-50 lg:hidden">
-            <button
-                    onclick="toggle()"
-                    id="show-nav-button"
-                    class="z-50 w-max h-max text-3xl hover:font-medium p-2">
-                <i id="nav-closed-icon" class="fa-solid fa-bars bg-white px-1"></i>
-            </button>
+        <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
 
-        </div>
-
-        <div id="sidebar" class="fixed top-0 left-0 z-40 h-screen w-full p-0
-            lg:w-48"
-        >
-            <div class="fixed w-48 p-1 flex justify-between z-50 lg:hidden">
-                <button
-                        id="hide-nav-button"
-                        onclick="toggle()"
-                        tabindex="-1"
-                        class="z-50 w-max h-max text-3xl hidden hover:font-medium p-2">
-                    <i id="nav-open-icon" class="fa-solid fa-bars px-1"></i>
-                </button>
-            </div>
-
-            <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"
-                 class="absolute top-0 left-0 bg-gray-200 w-48 h-screen"></nav>
-        </div>
 
         <main class="flex flex-col h-screen m-auto justify-evenly lg:ml-[190px]">
 
@@ -73,7 +49,7 @@
                     <section th:each="employee : ${employeeList}"
                              class="rounded-lg transition-all ease-in-out
                                     p-4 min-h-64 flex flex-col justify-between">
-                        <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: admin-team} : ~{}"></a>
+                        <a th:if="${isAdmin}" th:replace="~{fragments/view-employees-populate :: admin-team}"></a>
                     </section>
 
                 </section>
@@ -83,52 +59,6 @@
                 </section>
             </section>
         </main>
-
-
-
-
-<!--        <main class="flex flex-col w-full h-screen pl-4 m-auto justify-evenly bg-red-100-->
-<!--                lg:ml-[190px]"-->
-<!--        >-->
-
-<!--&lt;!&ndash;            TODO:: add a bottom border to separate sections&ndash;&gt;-->
-<!--            <section class="w-full bg-blue-300">-->
-<!--                <div class="flex flex-col md:flex-row bg-blue-500/75 w-1/2">-->
-<!--                    <div class="rounded-3xl w-1/4">-->
-<!--                        <img-->
-<!--                                th:src="@{/static/images/profile-unsplash.jpg}"-->
-<!--                                alt="Employee profile picture"-->
-<!--                                class=""-->
-<!--                        />-->
-<!--                    </div>-->
-
-<!--                    <div>-->
-<!--                        <h1>Admin homepage</h1>-->
-<!--                        <h2>Welcome,</h2>-->
-<!--                        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </section>-->
-
-<!--            <section class="w-full bg-yellow-500">-->
-
-<!--                <section th:if="${results_populated}" class="bg-pink-500 w-1/2"-->
-<!--                         style="display: flex; flex-wrap: wrap; gap: 20px 20px; max-width: 100%">-->
-<!--                    <section th:each="employee : ${employeeList}"-->
-<!--                             style="background-color: #FFD1DC; border: 1px solid black; height: 150px; width: 150px;">-->
-
-<!--                        <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: admin-team} : ~{}"></a>-->
-
-<!--                    </section>-->
-<!--                </section>-->
-
-<!--                <section th:if="${results_not_found}">-->
-<!--                    <h2>No team available yet!</h2>-->
-<!--                </section>-->
-<!--            </section>-->
-<!--        </main>-->
-
-        <script type="text/javascript" src="../static/js/nav.js" th:src="@{/static/js/nav.js}"></script>
 
     </body>
 </html>

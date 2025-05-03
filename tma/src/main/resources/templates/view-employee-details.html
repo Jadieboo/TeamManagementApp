@@ -4,22 +4,40 @@
         <meta charset="UTF-8">
         <title th:text="*{employee.firstName} + ' ' + *{employee.lastName} + '\'s details'">Employee details</title>
         <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/register.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
         <!--    <script src="https://cdn.tailwindcss.com"></script>-->
     </head>
 
     <body>
-        <nav th:replace="${isAdmin} ? ~{fragments/admin-navbar-fragment :: admin-navbar} : ~{}"></nav>
-        <nav th:replace="${isManager} ? ~{fragments/manager-navbar-fragment :: manager-navbar} : ~{}"></nav>
-        <nav th:replace="${isEmployee} ? ~{fragments/employee-navbar-fragment :: employee-navbar} : ~{}"></nav>
+        <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
 
-        <h1 th:text="*{employee.firstName} + ' ' + *{employee.lastName}"></h1>
-        <h1 th:text="'Department: ' + *{employee.department}"></h1>
+        <main class="flex flex-col h-screen m-auto justify-evenly lg:ml-[190px]">
+            <section class="w-full max-w-full">
+                <div class="flex flex-row justify-center md:flex-row p-8 gap-6">
+                    <div>
+                        <img
+                                th:src="@{/static/images/profile-unsplash.jpg}"
+                                alt="Employee profile picture"
+                                class="w-40 h-40 rounded-full md:w-60 md:h-60 lg:w-80 lg:h-80"
+                        />
+                    </div>
 
-        <h1 th:text="'Role: ' + *{employee.project}"></h1>
+                    <div class="flex flex-col justify-center">
+                        <div class="flex flex-row gap-4 items-center">
+                            <h1 class="text-3xl md:text-4xl md:mb-2 lg:text-5xl font-semibold" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h1>
+                            <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: edit-icon-a} : ~{}"></a>
+                            <a th:replace="${isManager} ? ~{fragments/view-employees-populate :: edit-icon-m} : ~{}"></a>
 
-        <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: edit-icon-a} : ~{}"></a>
-        <a th:replace="${isManager} ? ~{fragments/view-employees-populate :: edit-icon-m} : ~{}"></a>
+                        </div>
+                        <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Team: ' + ${employee.getDepartment()}"></h2>
+                        <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Project: ' + ${employee.getProject()}"></h2>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+
+
 
         <script>
             function addBounceClass(element) {

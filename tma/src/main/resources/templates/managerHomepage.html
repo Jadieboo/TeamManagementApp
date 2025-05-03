@@ -9,28 +9,8 @@
 
     </head>
     <body>
-
-        <div class="fixed w-48 p-1 flex justify-between z-50 lg:hidden">
-            <button
-                    onclick="toggle()"
-                    class="show-nav-btn z-50 w-max h-max text-3xl hover:font-medium md:text-2xl">
-                >>
-            </button>
-
-            <button
-                    onclick="toggle()"
-                    class="hide-nav-btn z-50 w-max h-max text-3xl hidden hover:font-medium md:text-2xl">
-                <<
-            </button>
-        </div>
-
-        <div class="sidebar fixed top-0 left-0 z-40 h-screen w-full p-0 lg:flex lg:w-48">
-            <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}"
-                 class="absolute top-0 left-0 bg-gray-200 w-48 h-screen"></nav>
-        </div>
-
-<!--        <nav th:replace="~{fragments/manager-navbar-fragment :: manager-navbar}"></nav>-->
-
+    <!--TODO might need to pass role-->
+        <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
 
         <main class="flex flex-col h-screen m-auto justify-evenly lg:ml-[190px]">
 
@@ -62,7 +42,7 @@
                     <section th:each="employee : ${employeeList}"
                              class="rounded-lg transition-all ease-in-out
                                     p-4 min-h-64 flex flex-col justify-between">
-                        <a th:replace="${isManager} ? ~{fragments/view-employees-populate :: manager-populate} : ~{}"></a>
+                        <a th:if="${isManager}" th:replace="~{fragments/view-employees-populate :: manager-populate}"></a>
                     </section>
 
                 </section>
