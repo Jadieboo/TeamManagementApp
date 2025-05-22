@@ -9,7 +9,11 @@ module.exports = {
     container: {
       center: true,
     },
-    extend: {},
+    extend: {
+        boxShadow: {
+            'xl-mid': '0 15px 20px -10px rgba(0, 0, 0, 0.5)', // halfway vibes
+          }
+    },
   },
   plugins: [],
 }

@@ -1,83 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Homepage</title>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/output.css}"/>
+        <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
 <!--        <script src="https://cdn.tailwindcss.com"></script>-->
 
     </head>
     <body>
 
-            <!--    I decided to wrap the buttons in a div so that I can hide them on larger screens because I still want the fixed open nav on larger screens
-                - To do this I have javascript functions to toggle css styles on the sidebar div,
-                - the blocker div is acting as the buffer layer between the nav and the screen and enables the user to click on the screen to hide the nav
-                - the content div displays the nav fragment
-                -->
 
 <!--        todo: need to add the side bar section to all pages with navigation
-            todo: fix small screen navbar not hiding initially
+            todo: mobile nav starts with menu on when logging in or refreshing
 -->
 
-        <div class="fixed w-48 p-1 flex justify-between z-50 lg:hidden">
-            <button
-                    onclick="toggle()"
-                    class="show-nav-btn z-50 w-max h-max text-3xl
-                    hover:font-medium
-                    md:text-2xl"
-            >
-                >>
-            </button>
-
-            <button
-                    onclick="toggle()"
-                    class="hide-nav-btn z-50 w-max h-max text-3xl hidden
-                    hover:font-medium
-                    md:text-2xl"
-            >
-                <<
-            </button>
-        </div>
-
-        <div class="hidden sidebar fixed top-0 left-0 z-40 h-screen w-screen p-0
-        lg:flex lg:bg-transparent lg:w-48">
-            <div class="blocker absolute bg-black/50 -z-10"></div>
-            <nav th:replace="~{fragments/admin-navbar-fragment :: admin-navbar}"
-                 class=" absolute top-0 left-0 bg-gray-200"></nav>
-        </div>
+        <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
 
 
-        <main class="flex flex-col w-3/4 h-screen pl-4 m-auto justify-evenly bg-red-400
-                    lg:ml-[190px]">
+        <main class="flex flex-col h-screen m-auto justify-evenly lg:ml-[190px]">
 
-            <section class="flex flex-col md:flex-row bg-green-500 w-1/2" >
-                <div class="rounded-3xl w-1/4">
-                    <img
-                            th:src="@{/static/images/hello.png}"
-                            alt="Hello displayed as a neon light speech bubble"
-                            class=""
-                    />
-                </div>
-
-                <div>
-                    <h1>Admin homepage</h1>
-                    <h2>Welcome,</h2>
-                    <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+            <section class="w-full max-w-full">
+                <div class="flex flex-row justify-center md:flex-row p-8 gap-6">
+                    <div>
+                        <img
+                                th:src="@{/images/profile-unsplash.jpg}"
+                                alt="Employee profile picture"
+                                class="w-40 h-40 rounded-full md:w-60 md:h-60 lg:w-80 lg:h-80"
+                        />
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <h1 class="text-3xl md:text-4xl md:mb-2 lg:text-5xl font-semibold" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h1>
+                        <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Team: ' + ${employee.getDepartment()}"></h2>
+                        <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Project: ' + ${employee.getProject()}"></h2>
+                    </div>
                 </div>
             </section>
 
 
-            <section class="bg-pink-500 w-1/2">
-                <p>This is where the team will go</p>
-                <img
-                        th:src="@{/static/images/hello.png}"
-                        alt="Hello displayed as a neon light speech bubble"
-                        class="w-1/4"
-                />
+            <section class="flex flex-col items-center w-full border-t-2 border-black">
+                <section>
+                    <h3 class="text-2xl font-medium m-3 lg:text-3xl">My Team</h3>
+                </section>
+                <section th:if="${results_populated}"
+                         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+
+                    <section th:each="employee : ${employeeList}"
+                             class="rounded-lg transition-all ease-in-out
+                                    p-4 min-h-64 flex flex-col justify-between">
+                        <a th:if="${isAdmin}" th:replace="~{fragments/view-employees-populate :: admin-team}"></a>
+                    </section>
+
+                </section>
+
+                <section th:if="${results_not_found}">
+                    <h2>No team available yet!</h2>
+                </section>
             </section>
         </main>
-
-        <script type="text/javascript" src="../static/js/nav.js" th:src="@{/static/js/nav.js}"></script>
 
     </body>
 </html>

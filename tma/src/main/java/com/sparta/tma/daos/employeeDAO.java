@@ -2,24 +2,27 @@ package com.sparta.tma.daos;
 
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Employee;
-import com.sparta.tma.repositories.DepartmentRepository;
-import com.sparta.tma.repositories.EmployeeRepository;
-import com.sparta.tma.repositories.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-//@Service
-public class EmployeeDAO {
+@Component
+public class employeeDAO {
     Logger logger = LoggerFactory.getLogger(getClass());
-    protected DepartmentRepository departmentRepository;
-    protected ProjectRepository projectRepository;
-    public EmployeeDAO(DepartmentRepository departmentRepository, ProjectRepository projectRepository) {
-        this.departmentRepository = departmentRepository;
-        this.projectRepository = projectRepository;
+    protected final DepartmentDAO departmentDAO;
+    protected final ProjectDAO projectDAO;
+
+    @Autowired
+    public employeeDAO(DepartmentDAO departmentDAO, ProjectDAO projectDAO) {
+        this.departmentDAO = departmentDAO;
+        this.projectDAO = projectDAO;
     }
-    public EmployeeDAO(ProjectRepository projectRepository){
-        this.projectRepository = projectRepository;
-    }
+
+//    @Autowired
+//    public EmployeeDAO(ProjectRepository projectRepository){
+//        this.projectRepository = projectRepository;
+//    }
 
     public Employee createNewEmployee(EmployeeDTO employeeDetails) {
         logger.info("create new employee method active inside EmployeeDAO");
@@ -29,8 +32,8 @@ public class EmployeeDAO {
         newEmployee.setFirstName(getFormattedFirstName(employeeDetails));
         newEmployee.setLastName(getFormattedLastName(employeeDetails));
         newEmployee.setRole(new RoleDAO().getRole(employeeDetails));
-        newEmployee.setDepartment(new DepartmentDAO(departmentRepository).getDepartment(employeeDetails));
-        newEmployee.setProject(new ProjectDAO(projectRepository).getProject(employeeDetails));
+        newEmployee.setDepartment(departmentDAO.getDepartment(employeeDetails));
+        newEmployee.setProject(projectDAO.getProject(employeeDetails));
 
         return newEmployee;
     }

@@ -14,27 +14,40 @@ import java.util.List;
 @Component
 public class PopulateModelAttributes {
     Logger logger = LoggerFactory.getLogger(getClass());
+    private final PopulateEmployeeAttributes employeeUtil;
     @Autowired
-    private PopulateEmployeeAttributes employeeUtil;
+    public PopulateModelAttributes(PopulateEmployeeAttributes employeeUtil) {
+        this.employeeUtil = employeeUtil;
+    }
 
     public void getAuthorityRoleModelAttribute(Model model, AppUser user) {
+        // TODO - do i need both isAdmin and role attributes? Am I still using isAdmin, isManager etc
+
         model.addAttribute("isAdmin", false);
         model.addAttribute("isManager", false);
         model.addAttribute("isEmployee", false);
 
         String role = user.getRole().name().toLowerCase();
+        model.addAttribute("role", role);
+
         logger.info("user role: {}", role);
 
-        if (role.equals("admin")) {
-            model.addAttribute("isAdmin", true);
-            logger.info("Setting isAdmin model attribute to true");
-        } else if (role.equals("manager")) {
-            model.addAttribute("isManager", true);
-            logger.info("Setting isManager model attribute to true");
-        } else if (role.equals("employee")) {
-            model.addAttribute("isEmployee", true);
-            logger.info("Setting isEmployee model attribute to true");
+        switch (role) {
+            case "admin" -> {
+                model.addAttribute("isAdmin", true);
+                logger.info("Setting admin model attribute");
+            }
+            case "manager" -> {
+                model.addAttribute("isManager", true);
+                logger.info("Setting manager model attribute");
+            }
+            case "employee" -> {
+                model.addAttribute("isEmployee", true);
+                logger.info("Setting employee model attribute");
+            }
         }
+
+        logger.info("role model attr: {}", model.getAttribute("role"));
     }
 
     public void initializeEmployeeDetailsFormModel(Model model) {

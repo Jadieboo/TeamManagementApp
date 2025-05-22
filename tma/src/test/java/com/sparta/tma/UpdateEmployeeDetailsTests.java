@@ -1,6 +1,5 @@
 package com.sparta.tma;
 
-import com.sparta.tma.daos.EmployeeDAO;
 import com.sparta.tma.daos.UpdateEmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Employee;
@@ -29,6 +28,8 @@ public class UpdateEmployeeDetailsTests {
     DepartmentRepository departmentRepository;
     @Autowired
     ProjectRepository projectRepository;
+    @Autowired
+    private UpdateEmployeeDAO updateEmployeeDAO;
 
     @Test
     @DisplayName("Update employee's currently assigned project")
@@ -50,7 +51,7 @@ public class UpdateEmployeeDetailsTests {
                 employee.getDepartment().toString(),
                 expected);
 
-        Employee updatedEmployee = new UpdateEmployeeDAO(employeeRepository, projectRepository).updateAssignedProjectToEmployee(5, employeeDetails);
+        Employee updatedEmployee = updateEmployeeDAO.updateAssignedProjectToEmployee(5, employeeDetails);
 
         String result = updatedEmployee.getProject().toString();
 
@@ -70,7 +71,7 @@ public class UpdateEmployeeDetailsTests {
         // Act
         employeeDetails.setId(employeeIdToUpdate);
         employeeDetails.setFirstName(updateFirstName);
-        Employee updatedEmployee = new UpdateEmployeeDAO(employeeRepository, departmentRepository, projectRepository).updateEmployeeDetails(employeeDetails);
+        Employee updatedEmployee = updateEmployeeDAO.updateEmployeeDetails(employeeDetails);
 
         // Assert
         assertAll("Verify employee update",
@@ -92,7 +93,7 @@ public class UpdateEmployeeDetailsTests {
         // Act
         employeeDetails.setId(employeeIdToUpdate);
         employeeDetails.setLastName(updateLastName);
-        Employee updatedEmployee = new UpdateEmployeeDAO(employeeRepository, departmentRepository, projectRepository).updateEmployeeDetails(employeeDetails);
+        Employee updatedEmployee = updateEmployeeDAO.updateEmployeeDetails(employeeDetails);
 
         // Assert
         assertAll("Verify employee update",
@@ -114,7 +115,7 @@ public class UpdateEmployeeDetailsTests {
         // Act
         employeeDetails.setId(employeeIdToUpdate);
         employeeDetails.setRole(updateRole);
-        Employee updatedEmployee = new UpdateEmployeeDAO(employeeRepository, departmentRepository, projectRepository).updateEmployeeDetails(employeeDetails);
+        Employee updatedEmployee = updateEmployeeDAO.updateEmployeeDetails(employeeDetails);
 
         // Assert
         assertAll("Verify employee update",
@@ -136,7 +137,7 @@ public class UpdateEmployeeDetailsTests {
         // Act
         employeeDetails.setId(employeeIdToUpdate);
         employeeDetails.setDepartment(updateDepartment);
-        Employee updatedEmployee = new UpdateEmployeeDAO(employeeRepository, departmentRepository, projectRepository).updateEmployeeDetails(employeeDetails);
+        Employee updatedEmployee = updateEmployeeDAO.updateEmployeeDetails(employeeDetails);
 
         // Assert
         assertAll("Verify employee update",
@@ -158,7 +159,7 @@ public class UpdateEmployeeDetailsTests {
         // Act
         employeeDetails.setId(employeeIdToUpdate);
         employeeDetails.setProject(updateProject);
-        Employee updatedEmployee = new UpdateEmployeeDAO(employeeRepository, departmentRepository, projectRepository).updateEmployeeDetails(employeeDetails);
+        Employee updatedEmployee = updateEmployeeDAO.updateEmployeeDetails(employeeDetails);
 
         // Assert
         assertAll("Verify employee update",
@@ -187,7 +188,7 @@ public class UpdateEmployeeDetailsTests {
         expected.setRole(Role.MANAGER);
         expected.setDepartment(departmentRepository.findByDepartmentIgnoreCase("HR"));
         expected.setProject(projectRepository.findByProjectIgnoreCase("Logo"));
-        Employee updatedEmployee = new UpdateEmployeeDAO(employeeRepository, departmentRepository, projectRepository).updateEmployeeDetails(formData);
+        Employee updatedEmployee = updateEmployeeDAO.updateEmployeeDetails(formData);
 
         assertEquals(expected, updatedEmployee);
     }

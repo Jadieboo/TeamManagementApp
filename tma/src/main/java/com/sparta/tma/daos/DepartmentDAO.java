@@ -3,13 +3,16 @@ package com.sparta.tma.daos;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.Department;
 import com.sparta.tma.repositories.DepartmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-
+@Component
 public class DepartmentDAO {
 
     private final DepartmentRepository departmentRepository;
 
+    @Autowired
     public DepartmentDAO(DepartmentRepository departmentRepository) {
         this.departmentRepository = departmentRepository;
     }

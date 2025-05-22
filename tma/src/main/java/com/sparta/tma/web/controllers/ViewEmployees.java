@@ -3,6 +3,8 @@ package com.sparta.tma.web.controllers;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Department;
 import com.sparta.tma.entities.Employee;
+import com.sparta.tma.exceptions.EmployeeNotFoundException;
+import com.sparta.tma.exceptions.UnauthorizedAccessException;
 import com.sparta.tma.repositories.AppUserRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.services.ViewEmployeesService;
@@ -10,11 +12,13 @@ import com.sparta.tma.utils.PopulateModelAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -23,14 +27,18 @@ import java.util.Optional;
 @Controller
 public class ViewEmployees {
     Logger logger = LoggerFactory.getLogger(getClass());
+    private final ViewEmployeesService viewEmployeesService;
+    private final AppUserRepository appUserRepository;
+    private final EmployeeRepository employeeRepository;
+    private final PopulateModelAttributes modelUtil;
+
     @Autowired
-    private ViewEmployeesService viewEmployeesService;
-    @Autowired
-    private AppUserRepository appUserRepository;
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private PopulateModelAttributes modelUtil;
+    public ViewEmployees(ViewEmployeesService viewEmployeesService, AppUserRepository appUserRepository, EmployeeRepository employeeRepository, PopulateModelAttributes modelUtil) {
+        this.viewEmployeesService = viewEmployeesService;
+        this.appUserRepository = appUserRepository;
+        this.employeeRepository = employeeRepository;
+        this.modelUtil = modelUtil;
+    }
 
     /**
      * ADMIN ACCESS
@@ -59,17 +67,12 @@ public class ViewEmployees {
         logger.info("view employee by id GET method active");
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
 
-        Optional<Employee> employeeOptional = Optional.ofNullable(employeeRepository.findEmployeeById(id));
-
-        modelUtil.getAuthorityRoleModelAttribute(model, user);
-
-        if (employeeOptional.isEmpty()) {
-            logger.info("employee is not present");
-            model.addAttribute("not_found", true);
-            return "status-code";
+        Employee employee = employeeRepository.findEmployeeById(id);
+        if (employee == null) {
+            throw new EmployeeNotFoundException("Employee not found");
         }
 
-        Employee employee = employeeOptional.get();
+        modelUtil.getAuthorityRoleModelAttribute(model, user);
 
         model.addAttribute("employee", employee);
 
@@ -110,21 +113,15 @@ public class ViewEmployees {
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
         modelUtil.getAuthorityRoleModelAttribute(model, user);
 
-        Optional<Employee> employeeOptional = Optional.ofNullable(employeeRepository.findEmployeeById(id));
-
-        if (employeeOptional.isEmpty()) {
-            logger.info("employee is not present");
-            model.addAttribute("not_found", true);
-            return "status-code";
+        Employee employee = employeeRepository.findEmployeeById(id);
+        if (employee == null) {
+            logger.info("Employee not found");
+            throw new EmployeeNotFoundException("Employee not found");
         }
 
-        Employee employee = employeeOptional.get();
-
         if (!employee.getDepartment().getId().equals(user.getEmployee().getDepartment().getId())) {
-            logger.info("user department: {}, does not match employee department: {}", user.getEmployee().getDepartment().getDepartment(), employee.getDepartment().getDepartment());
-            model.addAttribute("not_authorised", true);
-            return "status-code";
-
+            logger.info("User not authorized to view this employee");
+            throw new UnauthorizedAccessException("Sorry, you are not authorised to view this page. Please contact your administrator");
         }
 
         model.addAttribute("employee", employee);
@@ -139,7 +136,7 @@ public class ViewEmployees {
 
     // all colleagues with role employee, incl manager and admins
     @GetMapping("/employee/view/colleagues")
-    public String getColleaguesForEmployee(Model model, Authentication authentication) {
+    public String viewColleaguesForEmployee(Model model, Authentication authentication) {
         logger.info("view colleagues for employee GET method");
 
         AppUser user = appUserRepository.findByUsername(((AppUser) authentication.getPrincipal()).getUsername()).get();

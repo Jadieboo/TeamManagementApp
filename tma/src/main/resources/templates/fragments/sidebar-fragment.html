@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/output.css}"/>
+    <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div th:fragment="sidebar-nav">
+      <div class="fixed w-48 p-1 flex justify-between z-50 lg:hidden">
+        <button
+                onclick="toggle()"
+                id="show-nav-button"
+                class="z-50 w-max h-max text-3xl hover:font-medium p-2">
+          <i id="nav-closed-icon" class="fa-solid fa-bars bg-white px-1"></i>
+        </button>
+      </div>
+
+      <div id="sidebar" class="fixed top-0 left-0 z-40 h-screen w-full p-0
+              lg:w-48"
+      >
+        <div class="fixed w-48 p-1 flex justify-between z-50 lg:hidden">
+          <button
+                  id="hide-nav-button"
+                  onclick="toggle()"
+                  tabindex="-1"
+                  class="z-50 w-max h-max text-3xl hidden hover:font-medium p-2">
+            <i id="nav-open-icon" class="fa-solid fa-bars px-1"></i>
+          </button>
+        </div>
+
+        <nav th:replace="${isAdmin} ? ~{fragments/navbar-fragment :: admin-navbar} : ~{}"></nav>
+        <nav th:replace="${isManager} ? ~{fragments/navbar-fragment :: manager-navbar} : ~{}"></nav>
+        <nav th:replace="${isEmployee} ? ~{fragments/navbar-fragment :: employee-navbar} : ~{}"></nav>
+      </div>
+
+      <script type="text/javascript" th:src="@{/js/nav.js}" defer></script>
+    </div>
+
+
+  </body>
+</html>

@@ -7,7 +7,6 @@ import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
 import com.sparta.tma.exceptions.EmployeeNotFoundException;
 import com.sparta.tma.repositories.AppUserRepository;
-import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
 import com.sparta.tma.repositories.ProjectRepository;
 import com.sparta.tma.services.UserAccountService;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,19 +28,24 @@ import java.util.Objects;
 @RestController
 public class AdminController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private AppUserRepository appUserRepository;
-    @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private ProjectRepository projectRepository;
-    @Autowired
-    UserAccountService userAccountService;
-    @Autowired
-    ViewEmployeesService viewEmployeesService;
+    private final EmployeeRepository employeeRepository;
+    private final AppUserRepository appUserRepository;
+    private final DepartmentDAO departmentDAO;
+    private final ProjectRepository projectRepository;
+    private final UserAccountService userAccountService;
+    private final ViewEmployeesService viewEmployeesService;
+    private final com.sparta.tma.daos.employeeDAO employeeDAO;
 
+    @Autowired
+    public AdminController(EmployeeRepository employeeRepository, AppUserRepository appUserRepository, DepartmentDAO departmentDAO, ProjectRepository projectRepository, UserAccountService userAccountService, ViewEmployeesService viewEmployeesService, com.sparta.tma.daos.employeeDAO employeeDAO) {
+        this.employeeRepository = employeeRepository;
+        this.appUserRepository = appUserRepository;
+        this.departmentDAO = departmentDAO;
+        this.projectRepository = projectRepository;
+        this.userAccountService = userAccountService;
+        this.viewEmployeesService = viewEmployeesService;
+        this.employeeDAO = employeeDAO;
+    }
 
     @GetMapping("/admin/employees")
     public List<Employee> viewAllEmployees(Authentication authentication) {
@@ -63,7 +66,7 @@ public class AdminController {
     @PostMapping("/admin/register/employee")
     public Employee createSingleEmployeeAPI(@RequestBody EmployeeDTO employeeDetails) {
 
-        Employee newEmployee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
+        Employee newEmployee = employeeDAO.createNewEmployee(employeeDetails);
 
         Employee employee = employeeRepository.saveAndFlush(newEmployee);
         logger.info("New employee saved, {}", employee);
@@ -80,11 +83,12 @@ public class AdminController {
     @Transactional
     @PostMapping("/admin/register/employees")
     public ResponseEntity<String> createMultipleEmployeesAPI(@RequestBody EmployeesJSON employeesJSON) {
+        //TODO: Implement adding employees from csv file using this controller
         logger.info("creating multiple employees from JSON data");
         List<Employee> addedEmployeesList = new ArrayList<>();
 
         for (EmployeeDTO employeeDetails : employeesJSON.getEmployeeList()) {
-            Employee newEmployee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(employeeDetails);
+            Employee newEmployee = employeeDAO.createNewEmployee(employeeDetails);
 
             Employee employee = employeeRepository.saveAndFlush(newEmployee);
             logger.info("New employee saved, {}", employee);
@@ -124,8 +128,9 @@ public class AdminController {
             appUserRepository.saveAndFlush(updateUser);
         }
 
+        // TODO - does this work?? 23/02/2025
         if (!updateEmployee.getDepartment().toString().equals(employeeDetails.getDepartment())) {
-            updateEmployee.setDepartment(new DepartmentDAO(departmentRepository).getDepartment(employeeDetails));
+            updateEmployee.setDepartment(departmentDAO.getDepartment(employeeDetails));
             updateEmployee.setProject(projectRepository.findById(1));
         }
 

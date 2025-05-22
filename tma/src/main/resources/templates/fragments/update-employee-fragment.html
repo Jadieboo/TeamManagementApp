@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/output.css}"/>
+    </head>
+
+    <body>
+        <form th:fragment="admin-update-form" th:action="@{/admin/update/employees/{id}(id = ${employee.id})}" th:object="${employeeDetails}" method="POST"
+            class="flex flex-col justify-center gap-4">
+            <!-- Include a hidden input field to override the HTTP method to PATCH -->
+            <input type="hidden" name="_method" value="PATCH"/>
+
+            <div class="flex flex-col md:flex-row gap-4">
+                <div>
+                    <label for="firstName" class="font-medium text-gray-900 md:sr-only">First Name</label>
+                    <input id="firstName" name="firstName" type="text" th:value="${employee.firstName}" required
+                           class="w-full p-2 rounded-md border border-gray-300 bg-gray-50 text-gray-800">
+                </div>
+
+                <div>
+                    <label for="lastName" class="font-medium text-gray-900 md:sr-only">Last Name</label>
+                    <input id="lastName" name="lastName" type="text" th:value="${employee.lastName}" required
+                           class="w-full p-2 rounded-md border border-gray-300 bg-gray-50 text-gray-800">
+                </div>
+            </div>
+
+            <div class="md:flex md:flex-row md:gap-4 md:items-center">
+                <label class="font-medium text-gray-900" for="role">
+                    Role
+                </label>
+                <select id="role" name="role" class="w-full p-2 rounded-md border border-gray-300 bg-gray-50 text-gray-800">
+                    <option th:each="r : ${roleList}"
+                            th:value="${r}"
+                            th:text="${r}"
+                            th:selected="${#strings.toLowerCase(r) == #strings.toLowerCase(employee.role.toString())}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="md:flex md:flex-row md:gap-4 md:items-center">
+                <label for="department" class="font-medium text-gray-900">Department</label>
+                <select id="department" name="department" class="w-full p-2 rounded-md border border-gray-300 bg-gray-50 text-gray-800">
+                    <option th:each="dept : ${departmentList}"
+                            th:value="${dept}"
+                            th:text="${dept}"
+                            th:selected="${#strings.toLowerCase(dept) == #strings.toLowerCase(employee.department)}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="md:flex md:flex-row md:gap-4 md:items-center">
+                <label for="project" class="font-medium text-gray-900">Project</label>
+                <select id="project" name="project" class="w-full p-2 rounded-md border border-gray-300 bg-gray-50 text-gray-800">
+                    <option th:each="proj : ${projectList}"
+                            th:value="${proj}"
+                            th:text="${proj}"
+                            th:selected="${#strings.toLowerCase(proj) == #strings.toLowerCase(employee.project)}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="flex flex-col md:flex md:flex-row gap-4">
+                <input type="submit" value="Update" class="font-medium bg-blue-600 hover:bg-blue-700 text-white p-2 rounded border-2 border-black cursor-pointer md:w-full">
+                <!--                TODO: reset button - Yay or Nay?-->
+                <!--            <input type="reset" value="Reset" class="font-medium bg-gray-600 hover:bg-gray-700 text-white p-2 rounded border-2 border-black cursor-pointer">-->
+                <!--cancel form button-->
+                <a type="button" th:href="@{/admin/view/employees/{id}(id = ${employee.id})}" class="text-center font-medium bg-red-600 hover:bg-red-700 text-white p-2 rounded border-2 border-black cursor-pointer md:w-full">Cancel</a>
+            </div>
+
+        </form>
+
+        <form th:fragment="manager-update-form" th:action="@{/manager/update/employees/{id}(id = ${employee.id})}" th:object="${employeeDetails}"
+              method="post">
+            <!-- Include a hidden input field to override the HTTP method to PATCH -->
+            <input type="hidden" name="_method" value="PATCH"/>
+            <h1>Manager Form</h1>
+
+
+            <div>
+                <label for="project"> Project </label>
+
+                <div>
+                    <select id="project" name="project">
+                        <option th:each="proj : ${projectList}"
+                                th:value="${proj}"
+                                th:text="${proj}"
+                                th:selected="${#strings.toLowerCase(proj) == #strings.toLowerCase(employee.project)}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <input type="submit" value="Update" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded border-2 border-black cursor-pointer">
+            <!--cancel form button-->
+            <a type="button" th:href="@{/manager/view/employees/{id}(id = ${employee.id})}" class="bg-red-600 hover:bg-red-700 text-white p-2 rounded border-2 border-black cursor-pointer">Cancel</a>
+        </form>
+
+    </body>
+</html>

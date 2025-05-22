@@ -3,17 +3,49 @@
     <head>
         <meta charset="UTF-8">
         <title>Homepage</title>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}"/>
+<!--        <link rel="stylesheet" type="text/css" th:href="@{/static/css/employee-home.css}"/>-->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/output.css}"/>
+
     </head>
     <body>
 
-        <nav th:replace="~{fragments/employee-navbar-fragment :: employee-navbar}"></nav>
+        <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
 
+        <main class="flex flex-col w-3/4 h-screen pl-4 m-auto justify-evenly bg-red-400
+                    lg:ml-[190px]"
+        >
+            <section class="flex flex-col md:flex-row bg-green-500 w-1/2">
+                <div class="rounded-3xl w-1/4">
+                    <img
+                            th:src="@{/images/profile-unsplash.jpg}"
+                            alt="Employee profile picture"
+                            class="w-1/2"
+                    />
+                </div>
+                <div>
+                    <h1>Employee homepage</h1>
+                    <h2>Welcome,</h2>
+                    <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+                    <h4 th:text="'My department: ' + ${employee.getDepartment()}"></h4>
+                    <h4 th:text="'Assigned project: ' + ${employee.getProject()}"></h4>
+                </div>
+            </section>
 
-        <h1>Employee homepage</h1>
-        <h2>Welcome,</h2>
-        <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
+            <section th:if="${results_populated}" class="container bg-pink-500 w-1/2"
+                     style="display: flex; flex-wrap: wrap; gap: 20px 20px; max-width: 100%">
+                <section th:each="employee : ${employeeList}"
+                         style="background-color: #FFD1DC; border: 1px solid black; height: 150px; width: 150px;">
 
+                    <a th:if="${isEmployee}" th:replace="~{fragments/view-employees-populate :: employee-populate}"></a>
 
+                </section>
+            </section>
+
+            <section th:if="${results_not_found}">
+                <h2>No team available yet!</h2>
+            </section>
+        </main>
+
+        <script type="text/javascript" src="../js/nav.js" th:src="@{/js/nav.js}"></script>
     </body>
 </html>

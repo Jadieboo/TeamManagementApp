@@ -1,6 +1,5 @@
 package com.sparta.tma;
 
-import com.sparta.tma.daos.EmployeeDAO;
 import com.sparta.tma.daos.RoleDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
@@ -16,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Collections;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -30,6 +27,8 @@ public class RoleTests {
     private ProjectRepository projectRepository;
     @Autowired
     private AppUserRepository appUserRepository;
+    @Autowired
+    private com.sparta.tma.daos.employeeDAO employeeDAO;
 
     @ParameterizedTest
     @ValueSource(strings = {"admin", "MANAGER", " Employee "})
@@ -38,7 +37,7 @@ public class RoleTests {
 
         String role = fieldInput.toUpperCase().trim();
 
-        Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(utils.employeeDetails());
+        Employee employee = employeeDAO.createNewEmployee(utils.employeeDetails());
 
         EmployeeDTO setNewRole = new EmployeeDTO();
         setNewRole.setRole(fieldInput);
@@ -56,7 +55,7 @@ public class RoleTests {
     @ValueSource(strings = {"Supervisor", "admine", " ", "", "!", "</>", "ABC", "123"})
     @DisplayName("RoleDAO.getRole() method handles if an illegal argument is passed, returns Illegal Argument Exception Message: Role not found, please enter a valid role (Admin/Manager/Employee)")
     public void roleDaoMethod_IllegalArgumentInput_ReturnsIllegalArgumentExceptionMessage(String fieldInput) {
-        Employee employee = new EmployeeDAO(departmentRepository, projectRepository).createNewEmployee(utils.employeeDetails());
+        Employee employee = employeeDAO.createNewEmployee(utils.employeeDetails());
 
         EmployeeDTO employeeDetails = new EmployeeDTO();
         employeeDetails.setRole(fieldInput);

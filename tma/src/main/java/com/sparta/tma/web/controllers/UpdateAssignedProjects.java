@@ -1,14 +1,13 @@
 package com.sparta.tma.web.controllers;
 
-import com.sparta.tma.daos.EmployeeDAO;
 import com.sparta.tma.daos.UpdateEmployeeDAO;
 import com.sparta.tma.dtos.EmployeeDTO;
 import com.sparta.tma.entities.AppUser;
 import com.sparta.tma.entities.Employee;
+import com.sparta.tma.exceptions.EmployeeNotFoundException;
+import com.sparta.tma.exceptions.UnauthorizedAccessException;
 import com.sparta.tma.repositories.AppUserRepository;
-import com.sparta.tma.repositories.DepartmentRepository;
 import com.sparta.tma.repositories.EmployeeRepository;
-import com.sparta.tma.repositories.ProjectRepository;
 import com.sparta.tma.utils.PopulateEmployeeAttributes;
 import com.sparta.tma.utils.PopulateModelAttributes;
 import org.slf4j.Logger;
@@ -31,18 +30,19 @@ public class UpdateAssignedProjects {
     // TODO: find out why this is null
     //  also for create new employee web controller
 
+    private final PopulateEmployeeAttributes employeeUtil;
+    private final PopulateModelAttributes modelUtil;
+    private final EmployeeRepository employeeRepository;
+    private final AppUserRepository appUserRepository;
+    private final UpdateEmployeeDAO updateEmployeeDAO;
     @Autowired
-    private PopulateEmployeeAttributes employeeUtil;
-    @Autowired
-    private PopulateModelAttributes modelUtil;
-    @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private ProjectRepository projectRepository;
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private AppUserRepository appUserRepository;
+    public UpdateAssignedProjects(PopulateEmployeeAttributes employeeUtil, PopulateModelAttributes modelUtil, UpdateEmployeeDAO updateEmployeeDAO, EmployeeRepository employeeRepository, AppUserRepository appUserRepository) {
+        this.employeeUtil = employeeUtil;
+        this.modelUtil = modelUtil;
+        this.updateEmployeeDAO = updateEmployeeDAO;
+        this.employeeRepository = employeeRepository;
+        this.appUserRepository = appUserRepository;
+    }
 
     @GetMapping("/manager/view/employees/update/{id}")
     public String updateEmployeeDetailsPage(@PathVariable int id, Model model, Principal principal) {
@@ -56,13 +56,13 @@ public class UpdateAssignedProjects {
         if (employee == null) {
             logger.info("employee is not present");
             model.addAttribute("not_found", true);
-            return "status-code";
+            throw new EmployeeNotFoundException("Employee not found");
         }
 
         if (!employee.getDepartment().getId().equals(user.getEmployee().getDepartment().getId())) {
             logger.info("user department: {}, does not match employee department: {}", user.getEmployee().getDepartment().getDepartment(), employee.getDepartment().getDepartment());
             model.addAttribute("not_authorised", true);
-            return "status-code";
+            throw new UnauthorizedAccessException("Sorry, you are not authorised to view this page. Please contact your administrator");
         }
 
         model.addAttribute("employee", employee);
@@ -72,7 +72,7 @@ public class UpdateAssignedProjects {
         model.addAttribute("employeeDetails", employeeDetails);
         model.addAttribute("projectList", employeeUtil.populateProjectOptions());
 
-        return "manager-update-employee";
+        return "update-employee";
     }
 
     @Transactional
@@ -83,7 +83,7 @@ public class UpdateAssignedProjects {
         AppUser user = appUserRepository.findByUsername(principal.getName()).get();
         modelUtil.getAuthorityRoleModelAttribute(model, user);
 
-        Employee savedEmployee = employeeRepository.save(new UpdateEmployeeDAO(employeeRepository, projectRepository).updateAssignedProjectToEmployee(id, employeeDetails));
+        Employee savedEmployee = employeeRepository.save(updateEmployeeDAO.updateAssignedProjectToEmployee(id, employeeDetails));
         logger.info("saved employee with new assigned project {}", savedEmployee.getProject());
 
         model.addAttribute("employee", savedEmployee);

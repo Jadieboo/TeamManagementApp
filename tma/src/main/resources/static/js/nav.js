@@ -1,34 +1,119 @@
-const sidebar = document.querySelector('.sidebar');
-sidebar.querySelector('.blocker').onclick = hide;
 
-const showNavBtn = document.querySelector('.show-nav-btn');
-const hideNavBtn = document.querySelector('.hide-nav-btn');
 
-function show() { // swipe right
-    sidebar.classList.remove('hidden');
+const sidebar = document.getElementById('sidebar');
+const navElements = sidebar.querySelectorAll('button, [href], input, select, textarea, [tabindex]');
+const showNavBtn = document.getElementById('show-nav-button');
+const hideNavBtn = document.getElementById('hide-nav-button');
+let removeFocusTrap = null;
+
+console.log(navElements);
+
+console.log(showNavBtn.classList);
+
+
+function show() {
     sidebar.classList.remove('sidebar-hidden');
     sidebar.classList.add('sidebar-flex');
-
-    hideNavBtn.classList.remove('hidden');
     showNavBtn.classList.add('hidden');
+    hideNavBtn.classList.remove('hidden');
 
+    setTabIndex(navElements, 0);
 
-    // document.body.style.overflow = 'hidden';
-    console.log("SHOW");
+    if (window.innerWidth < 1024) {
+        document.body.classList.add('no-scroll');
+
+        if (!removeFocusTrap) {
+            removeFocusTrap = focusTrap(sidebar);
+        }
+    }
 
 }
-function hide() { // by blocker click, swipe left, or url change
+
+function hide() {
+    setTabIndex(navElements, -1);
     sidebar.classList.add('sidebar-hidden');
     sidebar.classList.remove('sidebar-flex');
-
     showNavBtn.classList.remove('hidden');
     hideNavBtn.classList.add('hidden');
 
+    if (removeFocusTrap) {
+        removeFocusTrap();
+        removeFocusTrap = null;
+        showNavBtn.focus();
+    }
 
+    if (window.innerWidth < 1024) {
+        document.body.classList.remove('no-scroll');
+    }
 
-    document.body.style.overflow = '';
-    console.log("HIDE");
 }
+
 function toggle() {
-    sidebar.classList.contains('hidden') || sidebar.classList.contains('sidebar-hidden') ? show() : hide();
+    if (sidebar.classList.contains('sidebar-hidden')) {
+        show();
+    } else {
+        hide();
+    }
+}
+
+function setSidebarClass() {
+    if (window.innerWidth >= 1024) {
+            show();
+    } else {
+            hide();
+    }
+}
+
+function setTabIndex(elements, value) {
+    elements.forEach(element => element.tabIndex = value);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.body.classList.add('js-loaded');
+  setSidebarClass();
+});
+
+window.addEventListener('resize', setSidebarClass);
+
+function focusTrap(element) {
+
+    const focusableElements = Array.from(element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+
+    if (focusableElements.length === 0) return () => {};
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    setTimeout(() => {
+        firstElement.focus();
+    }, 0);
+
+
+    function handleKeydown(e) {
+
+        if (e.key === 'Escape') {
+            hide();
+            return;
+        }
+
+        if (e.key !== 'Tab') return;
+
+        if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+            }
+        } else {
+            if (document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
+            }
+        }
+    }
+
+    element.addEventListener('keydown', handleKeydown);
+
+    return () => {
+        element.removeEventListener('keydown', handleKeydown);
+    };
 }
