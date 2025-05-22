@@ -31,10 +31,9 @@
                         <div class="mt-2 md:mt-4">
                             <form th:replace="${isAdmin} ? ~{fragments/update-employee-fragment :: admin-update-form} : ~{}"></form>
 
-                            <div th:if="${isManager}" class="flex flex-col justify-center">
+                            <div th:if="${isManager}" class="flex flex-col justify-center mb-1">
                                 <h1 class="text-3xl md:text-4xl md:mb-2 lg:text-5xl font-semibold" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h1>
                                 <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Team: ' + ${employee.getDepartment()}"></h2>
-                                <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Project: ' + ${employee.getProject()}"></h2>
                             </div>
 
                             <form th:replace="${isManager} ? ~{fragments/update-employee-fragment :: manager-update-form} : ~{}"></form>

@@ -72,16 +72,16 @@
         </form>
 
         <form th:fragment="manager-update-form" th:action="@{/manager/update/employees/{id}(id = ${employee.id})}" th:object="${employeeDetails}"
-              method="post">
+              method="post" class="flex flex-col gap-4">
             <!-- Include a hidden input field to override the HTTP method to PATCH -->
             <input type="hidden" name="_method" value="PATCH"/>
-            <h1>Manager Form</h1>
 
 
-            <div>
-                <label for="project"> Project </label>
+            <div class="flex flex-row gap-2 items-center">
+                <label for="project" class="text-1xl md:text-2xl text-gray-700"> Project: </label>
 
-                <div>
+                <div class="text-1xl md:text-2xl text-gray-700 gap-2
+                         p-1 rounded-md border border-gray-300 bg-gray-50">
                     <select id="project" name="project">
                         <option th:each="proj : ${projectList}"
                                 th:value="${proj}"
@@ -92,9 +92,11 @@
                 </div>
             </div>
 
-            <input type="submit" value="Update" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded border-2 border-black cursor-pointer">
-            <!--cancel form button-->
-            <a type="button" th:href="@{/manager/view/employees/{id}(id = ${employee.id})}" class="bg-red-600 hover:bg-red-700 text-white p-2 rounded border-2 border-black cursor-pointer">Cancel</a>
+            <div class="flex flex-col md:flex md:flex-row gap-4">
+                <input type="submit" value="Update" class="font-medium bg-blue-600 hover:bg-blue-700 text-white p-2 rounded border-2 border-black cursor-pointer w-full">
+                <!--cancel form button-->
+                <a type="button" th:href="@{/manager/view/employees/{id}(id = ${employee.id})}" class="text-center font-medium bg-red-600 hover:bg-red-700 text-white p-2 rounded border-2 border-black cursor-pointer w-full">Cancel</a>
+            </div>
         </form>
 
     </body>
