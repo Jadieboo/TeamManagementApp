@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Homepage</title>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/output.css}"/>
         <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
 <!--        <script src="https://cdn.tailwindcss.com"></script>-->
 
@@ -24,12 +24,11 @@
                 <div class="flex flex-row justify-center md:flex-row p-8 gap-6">
                     <div>
                         <img
-                                th:src="@{/static/images/profile-unsplash.jpg}"
+                                th:src="@{/images/profile-unsplash.jpg}"
                                 alt="Employee profile picture"
                                 class="w-40 h-40 rounded-full md:w-60 md:h-60 lg:w-80 lg:h-80"
                         />
                     </div>
-
                     <div class="flex flex-col justify-center">
                         <h1 class="text-3xl md:text-4xl md:mb-2 lg:text-5xl font-semibold" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h1>
                         <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Team: ' + ${employee.getDepartment()}"></h2>

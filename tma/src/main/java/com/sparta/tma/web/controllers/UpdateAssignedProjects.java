@@ -72,7 +72,7 @@ public class UpdateAssignedProjects {
         model.addAttribute("employeeDetails", employeeDetails);
         model.addAttribute("projectList", employeeUtil.populateProjectOptions());
 
-        return "manager-update-employee";
+        return "update-employee";
     }
 
     @Transactional

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Update Employee Details</title>
+        <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/output.css}"/>
+    </head>
+    <body>
+        <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
+
+        <main class="flex flex-col h-screen m-auto lg:ml-[190px] p-4">
+
+            <section class="w-full max-w-full">
+                <div class="flex flex-col justify-center items-center p-8 gap-6">
+                    <h1 th:text="'Update ' + ${employee.firstName} + ' ' + ${employee.lastName} + '\'s Details'"
+                        class="m-6 text-black text-2xl font-semibold"
+                    >
+                        Update Employee Details
+                    </h1>
+
+                    <div>
+                        <div class="justify-items-center">
+                            <img
+                                    th:src="@{/images/profile-unsplash.jpg}"
+                                    alt="Employee profile picture"
+                                    class="w-40 h-40 rounded-full md:w-60 md:h-60 lg:w-80 lg:h-80"
+                            />
+                        </div>
+                        <div class="mt-2 md:mt-4">
+                            <form th:replace="${isAdmin} ? ~{fragments/update-employee-fragment :: admin-update-form} : ~{}"></form>
+
+                            <div th:if="${isManager}" class="flex flex-col justify-center">
+                                <h1 class="text-3xl md:text-4xl md:mb-2 lg:text-5xl font-semibold" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h1>
+                                <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Team: ' + ${employee.getDepartment()}"></h2>
+                                <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Project: ' + ${employee.getProject()}"></h2>
+                            </div>
+
+                            <form th:replace="${isManager} ? ~{fragments/update-employee-fragment :: manager-update-form} : ~{}"></form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+    </body>
+</html>

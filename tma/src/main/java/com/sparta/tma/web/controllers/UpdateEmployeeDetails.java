@@ -58,7 +58,7 @@ public class UpdateEmployeeDetails {
         modelUtil.initializeEmployeeDetailsFormModel(model);
         model.addAttribute("employee", employee);
 
-        return "admin-update-employee";
+        return "update-employee";
     }
 
     @Transactional

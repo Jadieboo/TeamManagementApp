@@ -39,7 +39,7 @@ public class SecurityConfiguration {
     @Order(2)
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/login", "/static/**")
+                    auth.requestMatchers("/login", "/css/**", "/js/**", "/images/**")
                             .permitAll();
                     auth.requestMatchers("/admin/**")
                             .hasAuthority("ADMIN");

@@ -4,30 +4,35 @@
         <meta charset="UTF-8">
         <title>View Employees</title>
         <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/output.css}"/>
         <!--    <script src="https://cdn.tailwindcss.com"></script>-->
     </head>
 
     <body>
-    <!--TODO might need to pass role-->
         <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
 
-        <section class="flex flex-col items-center w-full border-t-2 border-black">
-            <section th:if="${results_populated}" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12"
-            >
-                <section th:each="employee : ${employeeList}" class="rounded-lg transition-all ease-in-out p-4 min-h-64 flex flex-col justify-between"
+        <main class="flex flex-col h-screen m-auto lg:ml-[190px]">
+
+
+            <section class="flex flex-col items-center w-full gap-16">
+                <h1 class="m-4 text-black text-2xl font-semibold">View Employees</h1>
+
+                <section th:if="${results_populated}" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12"
                 >
-                    <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: admin-populate} : ~{}"></a>
-                    <a th:replace="${isManager} ? ~{fragments/view-employees-populate :: manager-populate} : ~{}"></a>
-                    <a th:replace="${isEmployee} ? ~{fragments/view-employees-populate :: employee-populate} : ~{}"></a>
+                    <section th:each="employee : ${employeeList}" class="rounded-lg transition-all ease-in-out p-4 min-h-64 flex flex-col justify-between"
+                    >
+                        <a th:replace="${isAdmin} ? ~{fragments/view-employees-populate :: admin-populate} : ~{}"></a>
+                        <a th:replace="${isManager} ? ~{fragments/view-employees-populate :: manager-populate} : ~{}"></a>
+                        <a th:replace="${isEmployee} ? ~{fragments/view-employees-populate :: employee-populate} : ~{}"></a>
+                    </section>
                 </section>
             </section>
-        </section>
 
 
-        <section th:if="${results_not_found}">
-            <h2>No employees found</h2>
-        </section>
+            <section th:if="${results_not_found}">
+                <h2>No employees found</h2>
+            </section>
+        </main>
 
     </body>
 </html>

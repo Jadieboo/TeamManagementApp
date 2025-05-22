@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/output.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/output.css}"/>
     <script src="https://kit.fontawesome.com/ef4342f3da.js" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -34,7 +34,7 @@
         <nav th:replace="${isEmployee} ? ~{fragments/navbar-fragment :: employee-navbar} : ~{}"></nav>
       </div>
 
-      <script type="text/javascript" th:src="@{/static/js/nav.js}" defer></script>
+      <script type="text/javascript" th:src="@{/js/nav.js}" defer></script>
     </div>
 
 

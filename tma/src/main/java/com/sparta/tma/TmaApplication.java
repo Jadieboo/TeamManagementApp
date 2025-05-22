@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -38,6 +39,7 @@ public class TmaApplication {
 				Department department = new Department();
 				department.setDepartment(d);
 				departmentRepository.saveAndFlush(department);
+				System.out.println(d);
 			}
 
 			String[] projects = {"Unassigned", "New Starters", "Attendance", "Payroll", "Accounts", "Products", "Advertising", "Web App Frontend", "Web App Backend", "Logo", "Web App"};
