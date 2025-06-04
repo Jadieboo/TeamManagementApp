@@ -12,7 +12,10 @@ module.exports = {
     extend: {
         boxShadow: {
             'xl-mid': '0 15px 20px -10px rgba(0, 0, 0, 0.5)', // halfway vibes
-          }
+        },
+        outline: {
+            'black-1': '1px solid black',
+        }
     },
   },
   plugins: [],

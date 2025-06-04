@@ -54,8 +54,6 @@ public class CreateNewEmployee {
 
 
     //TODO: create a registration service - done
-    // and turn employee dao into a service or component - done but need to fix test
-    // need to fix tests for projectdao and department dao too
     // also check tests for services as i have refactored those, check chatgpt's help on tests and mock services from 23/02/2025
 
     @Transactional

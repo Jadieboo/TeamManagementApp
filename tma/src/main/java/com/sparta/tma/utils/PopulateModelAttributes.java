@@ -21,7 +21,7 @@ public class PopulateModelAttributes {
     }
 
     public void getAuthorityRoleModelAttribute(Model model, AppUser user) {
-        // TODO - do i need both isAdmin and role attributes? Am I still using isAdmin, isManager etc
+        // TODO - do i need both isAdmin and role attributes?
 
         model.addAttribute("isAdmin", false);
         model.addAttribute("isManager", false);

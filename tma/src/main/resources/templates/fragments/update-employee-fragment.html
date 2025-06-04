@@ -8,7 +8,7 @@
 
     <body>
         <form th:fragment="admin-update-form" th:action="@{/admin/update/employees/{id}(id = ${employee.id})}" th:object="${employeeDetails}" method="POST"
-            class="flex flex-col justify-center gap-4">
+            class="flex flex-col justify-center gap-5">
             <!-- Include a hidden input field to override the HTTP method to PATCH -->
             <input type="hidden" name="_method" value="PATCH"/>
 
@@ -60,13 +60,21 @@
                     </option>
                 </select>
             </div>
+<!--        TODO: see if the highlight bleeding still occurs when not on remote desktop remove this to test-->
+            <div class="h-2 pointer-events-none"></div>
+
 
             <div class="flex flex-col md:flex md:flex-row gap-4">
-                <input type="submit" value="Update" class="font-medium bg-blue-600 hover:bg-blue-700 text-white p-2 rounded border-2 border-black cursor-pointer md:w-full">
+                <input type="submit" value="Update"
+                       class="font-medium bg-blue-600 hover:bg-blue-700 text-white p-2 md:w-full
+                        rounded border-2 border-black focus:outline focus:outline-offset-1 cursor-pointer">
                 <!--                TODO: reset button - Yay or Nay?-->
                 <!--            <input type="reset" value="Reset" class="font-medium bg-gray-600 hover:bg-gray-700 text-white p-2 rounded border-2 border-black cursor-pointer">-->
                 <!--cancel form button-->
-                <a type="button" th:href="@{/admin/view/employees/{id}(id = ${employee.id})}" class="text-center font-medium bg-red-600 hover:bg-red-700 text-white p-2 rounded border-2 border-black cursor-pointer md:w-full">Cancel</a>
+                <a type="button" th:href="@{/admin/view/employees/{id}(id = ${employee.id})}"
+                   class="text-center font-medium bg-red-600 hover:bg-red-700 text-white p-2 md:w-full
+                    rounded border-2 border-black focus:outline cursor-pointer ">Cancel</a>
+<!--                        TODO: make sure outline-black-1 custom tailwind property works-->
             </div>
 
         </form>
@@ -80,9 +88,8 @@
             <div class="flex flex-row gap-2 items-center">
                 <label for="project" class="text-1xl md:text-2xl text-gray-700"> Project: </label>
 
-                <div class="text-1xl md:text-2xl text-gray-700 gap-2
-                         p-1 rounded-md border border-gray-300 bg-gray-50">
-                    <select id="project" name="project">
+                <div class="text-1xl md:text-2xl text-gray-700 gap-2">
+                    <select id="project" name="project" class="p-1 rounded-md border border-gray-300 bg-gray-50">
                         <option th:each="proj : ${projectList}"
                                 th:value="${proj}"
                                 th:text="${proj}"
@@ -93,9 +100,13 @@
             </div>
 
             <div class="flex flex-col md:flex md:flex-row gap-4">
-                <input type="submit" value="Update" class="font-medium bg-blue-600 hover:bg-blue-700 text-white p-2 rounded border-2 border-black cursor-pointer w-full">
+                <input type="submit" value="Update"
+                       class="font-medium bg-blue-600 hover:bg-blue-700 text-white p-2 w-full
+                       rounded border-2 border-black focus:outline focus:outline-offset-1 cursor-pointer">
                 <!--cancel form button-->
-                <a type="button" th:href="@{/manager/view/employees/{id}(id = ${employee.id})}" class="text-center font-medium bg-red-600 hover:bg-red-700 text-white p-2 rounded border-2 border-black cursor-pointer w-full">Cancel</a>
+                <a type="button" th:href="@{/manager/view/employees/{id}(id = ${employee.id})}"
+                   class="text-center font-medium bg-red-600 hover:bg-red-700 text-white p-2 w-full
+                   rounded border-2 border-black focus:outline focus:outline-offset-1 cursor-pointer">Cancel</a>
             </div>
         </form>
 
