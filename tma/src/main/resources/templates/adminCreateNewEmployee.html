@@ -9,83 +9,96 @@
 
     <body>
 
-    <!--TODO might need to pass role-->
         <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
 
         <main class="flex flex-col h-screen m-auto lg:ml-[190px] p-4">
 
-            <div class="w-full bg-red-400">
+            <section class="w-full">
+                <div class="flex flex-col justify-center items-center p-8 gap-6">
+                    <h1 class="m-6 text-black text-2xl font-semibold"
+                    >
+                        Create a new employee
+                    </h1>
 
-                <h1 class="text-2xl font-bold text-gray-900 mb-8 uppercase
-                lg:text-3xl lg:mt-8 text-center">
-                    Create a new employee
-                </h1>
+                    <div>
+                        <div class="justify-items-center">
+                            <img
+                                    th:src="@{/images/profile-unsplash.jpg}"
+                                    alt="Employee profile picture"
+                                    class="w-40 h-40 rounded-full md:w-60 md:h-60 lg:w-80 lg:h-80"
+                            />
+                        </div>
+                        <div class="mt-2 md:mt-4">
+                            <form th:action="@{/admin/web/register/employees}" th:object="${employeeDetails}" method="POST"
+                                  class="flex flex-col justify-center gap-5">
+                                <!--                    TODO: style form in the same style as the others-->
 
-                <form th:action="@{/admin/web/register/employees}" th:object="${employeeDetails}" method="POST"
-                      class="flex flex-col justify-center gap-5 bg-blue-500">
-<!--                    TODO: style form in the same style as the others-->
+                                <div class="flex flex-col md:flex-row gap-4">
 
-                    <div class="flex flex-wrap -mx-3 mb-6">
-                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   for="firstName">
-                                First Name
-                            </label>
-                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                   id="firstName" name="firstName" type="text" th:field="*{firstName}" placeholder="Jane"
-                                   required>
+                                    <div class="">
+                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                               for="firstName">
+                                            First Name
+                                        </label>
+                                        <input class="w-full p-2 rounded-md border border-gray-300 bg-gray-50 text-gray-800"
+                                               id="firstName" name="firstName" type="text" th:field="*{firstName}" placeholder="Jane"
+                                               required>
+                                    </div>
+
+                                    <div class="">
+                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                               for="lastName">
+                                            Last Name
+                                        </label>
+                                        <input class="w-full p-2 rounded-md border border-gray-300 bg-gray-50 text-gray-800"
+                                               id="lastName" name="lastName" type="text" th:field="*{lastName}" placeholder="Doe"
+                                               required>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-wrap -mx-3 md:mb-8 mb-5 ">
+                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="role">
+                                            Role
+                                        </label>
+
+                                        <div class="relative">
+                                            <select id="role" name="role"
+                                                    class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer">
+                                                <option th:each="r : ${roleList}" th:value="${r}" th:text="${r}"
+                                                        th:field="*{role}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                               for="department">
+                                            Department
+                                        </label>
+
+                                        <div class="relative">
+                                            <select id="department" name="department"
+                                                    class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer">
+                                                <option th:each="dept : ${departmentList}" th:value="${dept}" th:text="${dept}"
+                                                        th:field="*{department}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="submit" value="Create" class="btn">
+                            </form>
                         </div>
 
-                        <div class="w-full md:w-1/2 px-3">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   for="lastName">
-                                Last Name
-                            </label>
-                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                   id="lastName" name="lastName" type="text" th:field="*{lastName}" placeholder="Doe"
-                                   required>
+                        <div th:if="${showConfirmation}">
+                            <p>Form submission successful!</p>
+                            <p>New employee added to the database: <span th:text="${formEmployee}"></span></p>
                         </div>
                     </div>
-
-                    <div class="flex flex-wrap -mx-3 md:mb-8 mb-5 ">
-                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="role">
-                                Role
-                            </label>
-
-                            <div class="relative">
-                                <select id="role" name="role"
-                                        class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer">
-                                    <option th:each="r : ${roleList}" th:value="${r}" th:text="${r}"
-                                            th:field="*{role}"></option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   for="department">
-                                Department
-                            </label>
-
-                            <div class="relative">
-                                <select id="department" name="department"
-                                        class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer">
-                                    <option th:each="dept : ${departmentList}" th:value="${dept}" th:text="${dept}"
-                                            th:field="*{department}"></option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <input type="submit" value="Create" class="btn">
-                </form>
-
-                <div th:if="${showConfirmation}">
-                    <p>Form submission successful!</p>
-                    <p>New employee added to the database: <span th:text="${formEmployee}"></span></p>
                 </div>
-            </div>
+
+            </section>
         </main>
     </body>
 </html>
