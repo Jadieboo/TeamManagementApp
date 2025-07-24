@@ -42,7 +42,9 @@
                     <section th:each="employee : ${employeeList}"
                              class="rounded-lg transition-all ease-in-out
                                     p-4 min-h-64 flex flex-col justify-between">
-                        <a th:if="${isManager}" th:replace="~{fragments/view-employees-populate :: manager-populate}"></a>
+                        <div th:if="${isManager}">
+                            <div th:if="${isManager}" th:replace="~{fragments/view-employees-populate :: manager-populate}"></div>
+                        </div>
                     </section>
 
                 </section>

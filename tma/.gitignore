@@ -32,4 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 
+.DS_Store
+node_modules/
+tma/src/main/resources/static/css/output.css
+
+
 application.properties

@@ -87,7 +87,16 @@
                                     </div>
                                 </div>
 
-                                <input type="submit" value="Create" class="btn">
+<!--                                <input type="submit" value="Create" class="btn">-->
+                                <div class="flex flex-col md:flex md:flex-row gap-4">
+                                    <input type="submit" value="Create"
+                                           class="font-medium bg-blue-600 hover:bg-blue-700 text-white p-2 md:w-full
+                                           rounded border-2 border-black focus:outline focus:outline-offset-1 cursor-pointer"
+                                    >
+                                    <!--  TODO: reset button - Yay or Nay?-->
+                                    <input type="reset" value="Reset" class="font-medium bg-gray-600 hover:bg-gray-700 text-white p-2 rounded border-2 border-black cursor-pointer md:w-full">
+                                    <!--  TODO: make sure outline-black-1 custom tailwind property works-->
+                                </div>
                             </form>
                         </div>
 

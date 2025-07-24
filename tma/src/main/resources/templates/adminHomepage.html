@@ -12,7 +12,6 @@
 
 
 <!--        todo: need to add the side bar section to all pages with navigation
-            todo: mobile nav starts with menu on when logging in or refreshing
 -->
 
         <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
@@ -48,7 +47,9 @@
                     <section th:each="employee : ${employeeList}"
                              class="rounded-lg transition-all ease-in-out
                                     p-4 min-h-64 flex flex-col justify-between">
-                        <a th:if="${isAdmin}" th:replace="~{fragments/view-employees-populate :: admin-team}"></a>
+                        <div th:if="${isAdmin}">
+                            <div th:replace="~{fragments/view-employees-populate :: admin-team}"></div>
+                        </div>
                     </section>
 
                 </section>

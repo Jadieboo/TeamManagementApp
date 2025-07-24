@@ -11,40 +11,85 @@
 
         <div th:replace="~{fragments/sidebar-fragment :: sidebar-nav}"></div>
 
-        <main class="flex flex-col w-3/4 h-screen pl-4 m-auto justify-evenly bg-red-400
-                    lg:ml-[190px]"
-        >
-            <section class="flex flex-col md:flex-row bg-green-500 w-1/2">
-                <div class="rounded-3xl w-1/4">
-                    <img
-                            th:src="@{/images/profile-unsplash.jpg}"
-                            alt="Employee profile picture"
-                            class="w-1/2"
-                    />
-                </div>
-                <div>
-                    <h1>Employee homepage</h1>
-                    <h2>Welcome,</h2>
-                    <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>
-                    <h4 th:text="'My department: ' + ${employee.getDepartment()}"></h4>
-                    <h4 th:text="'Assigned project: ' + ${employee.getProject()}"></h4>
+        <main class="flex flex-col h-screen m-auto justify-evenly lg:ml-[190px]">
+
+            <section class="w-full max-w-full">
+                <div class="flex flex-row justify-center md:flex-row p-8 gap-6">
+                    <div>
+                        <img
+                                th:src="@{/images/profile-unsplash.jpg}"
+                                alt="Employee profile picture"
+                                class="w-40 h-40 rounded-full md:w-60 md:h-60 lg:w-80 lg:h-80"
+                        />
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <h1 class="text-3xl md:text-4xl md:mb-2 lg:text-5xl font-semibold" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h1>
+                        <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Team: ' + ${employee.getDepartment()}"></h2>
+                        <h2 class="text-1xl md:text-2xl text-gray-700" th:text="'Project: ' + ${employee.getProject()}"></h2>
+                    </div>
                 </div>
             </section>
 
-            <section th:if="${results_populated}" class="container bg-pink-500 w-1/2"
-                     style="display: flex; flex-wrap: wrap; gap: 20px 20px; max-width: 100%">
-                <section th:each="employee : ${employeeList}"
-                         style="background-color: #FFD1DC; border: 1px solid black; height: 150px; width: 150px;">
 
-                    <a th:if="${isEmployee}" th:replace="~{fragments/view-employees-populate :: employee-populate}"></a>
+            <section class="flex flex-col items-center w-full border-t-2 border-black">
+                <section>
+                    <h3 class="text-2xl font-medium m-3 lg:text-3xl">My Team</h3>
+                </section>
+                <section th:if="${results_populated}"
+                         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+
+                    <section th:each="employee : ${employeeList}"
+                             class="rounded-lg transition-all ease-in-out
+                                    p-4 min-h-64 flex flex-col justify-between">
+                        <div th:if="${isEmployee}">
+                            <div th:replace="~{fragments/view-employees-populate :: employee-populate}"></div>
+                        </div>
+
+                    </section>
 
                 </section>
-            </section>
 
-            <section th:if="${results_not_found}">
-                <h2>No team available yet!</h2>
+                <section th:if="${results_not_found}">
+                    <h2>No team available yet!</h2>
+                </section>
             </section>
         </main>
+
+
+        <!--        <main class="flex flex-col w-3/4 h-screen pl-4 m-auto justify-evenly bg-red-400-->
+<!--                    lg:ml-[190px]"-->
+<!--        >-->
+<!--            <section class="flex flex-col md:flex-row bg-green-500 w-1/2">-->
+<!--                <div class="rounded-3xl w-1/4">-->
+<!--                    <img-->
+<!--                            th:src="@{/images/profile-unsplash.jpg}"-->
+<!--                            alt="Employee profile picture"-->
+<!--                            class="w-1/2"-->
+<!--                    />-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <h1>Employee homepage</h1>-->
+<!--                    <h2>Welcome,</h2>-->
+<!--                    <h3 th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName()}">Name</h3>-->
+<!--                    <h4 th:text="'My department: ' + ${employee.getDepartment()}"></h4>-->
+<!--                    <h4 th:text="'Assigned project: ' + ${employee.getProject()}"></h4>-->
+<!--                </div>-->
+<!--            </section>-->
+
+<!--            <section th:if="${results_populated}" class="container bg-pink-500 w-1/2"-->
+<!--                     style="display: flex; flex-wrap: wrap; gap: 20px 20px; max-width: 100%">-->
+<!--                <section th:each="employee : ${employeeList}"-->
+<!--                         style="background-color: #FFD1DC; border: 1px solid black; height: 150px; width: 150px;">-->
+
+<!--                    <a th:if="${isEmployee}" th:replace="~{fragments/view-employees-populate :: employee-populate}"></a>-->
+
+<!--                </section>-->
+<!--            </section>-->
+
+<!--            <section th:if="${results_not_found}">-->
+<!--                <h2>No team available yet!</h2>-->
+<!--            </section>-->
+<!--        </main>-->
 
         <script type="text/javascript" src="../js/nav.js" th:src="@{/js/nav.js}"></script>
     </body>

@@ -25,3 +25,8 @@ replay_pid*
 
 .idea
 .application.properties
+
+.DS_Store
+node_modules/
+tma/src/main/resources/static/css/output.css
+
